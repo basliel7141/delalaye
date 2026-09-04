@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Delalaye</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: white;
+      padding: 30px 22px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-top: 70px;
+      margin-bottom: 50px;
+    }
+
+    .logo h1 {
+      font-size: 38px;
+      font-weight: 800;
+      color: #173b72;
+    }
+
+    .logo p {
+      margin-top: 8px;
+      color: #777;
+      font-size: 15px;
+    }
+
+    .language-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .language {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 35px;
+    }
+
+    .language button {
+      flex: 1;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .language button.active {
+      background: #173b72;
+      color: white;
+      border-color: #173b72;
+    }
+
+    .main-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #173b72;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid #173b72;
+      border-radius: 12px;
+      background: white;
+      color: #173b72;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back {
+      margin-bottom: 25px;
+      color: #173b72;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .page-title {
+      font-size: 27px;
+      font-weight: bold;
+      color: #173b72;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 7px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #173b72;
+    }
+
+    .role-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .role {
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      padding: 22px;
+      cursor: pointer;
+      background: white;
+    }
+
+    .role:hover {
+      border-color: #173b72;
+    }
+
+    .role-icon {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    .role h3 {
+      color: #173b72;
+      margin-bottom: 5px;
+    }
+
+    .role p {
+      color: #777;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #aaa;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HOME -->
+  <section id="home">
+
+    <div class="logo">
+      <h1>Delalaye</h1>
+      <p>Find what you need. Connect with the right broker.</p>
+    </div>
+
+    <div class="language-title">
+      ቋንቋ ይምረጡ / Choose Language
+    </div>
+
+    <div class="language">
+      <button id="amBtn" class="active" onclick="setLanguage('am')">
+        🇪🇹 አማርኛ
+      </button>
+
+      <button id="enBtn" onclick="setLanguage('en')">
+        🇬🇧 English
+      </button>
+    </div>
+
+    <button class="main-btn" onclick="showPage('register')">
+      Create Account
+    </button>
+
+    <button class="secondary-btn" onclick="showPage('login')">
+      Login
+    </button>
+
+    <div class="footer">
+      © 2026 Delalaye
+    </div>
+
+  </section>
+
+
+  <!-- REGISTER -->
+  <section id="register" class="hidden">
+
+    <div class="back" onclick="showPage('home')">
+      ← Back
+    </div>
+
+    <div class="page-title">
+      Create Account
+    </div>
+
+    <label>Phone Number</label>
+    <input type="tel" placeholder="+251 9XXXXXXXX">
+
+    <label>Password</label>
+    <input type="password" placeholder="Password">
+
+    <label>Confirm Password</label>
+    <input type="password" placeholder="Confirm Password">
+
+    <br><br>
+
+    <button class="main-btn" onclick="showPage('otp')">
+      Continue
+    </button>
+
+  </section>
+
+
+  <!-- OTP -->
+  <section id="otp" class="hidden">
+
+    <div class="back" onclick="showPage('register')">
+      ← Back
+    </div>
+
+    <div class="page-title">
+      Verify Phone
+    </div>
+
+    <p style="color:#777; margin-bottom:20px;">
+      ወደ ስልክዎ SMS verification code ይላካል።
+    </p>
+
+    <label>SMS Code</label>
+    <input type="number" placeholder="6-digit code">
+
+    <br><br>
+
+    <button class="main-btn" onclick="showPage('role')">
+      Verify
+    </button>
+
+  </section>
+
+
+  <!-- ROLE -->
+  <section id="role" class="hidden">
+
+    <div class="page-title">
+      እርስዎ ምን ነዎት?
+    </div>
+
+    <div class="role-container">
+
+      <div class="role" onclick="customerDashboard()">
+        <div class="role-icon">🧑</div>
+        <h3>Customer</h3>
+        <p>Buyer / Renter</p>
+      </div>
+
+      <div class="role" onclick="brokerDashboard()">
+        <div class="role-icon">🤝</div>
+        <h3>Broker</h3>
+        <p>Agent</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- LOGIN -->
+  <section id="login" class="hidden">
+
+    <div class="back" onclick="showPage('home')">
+      ← Back
+    </div>
+
+    <div class="page-title">
+      Login
+    </div>
+
+    <label>Phone Number</label>
+    <input type="tel" placeholder="+251 9XXXXXXXX">
+
+    <label>Password</label>
+    <input type="password" placeholder="Password">
+
+    <br><br>
+
+    <button class="main-btn" onclick="customerDashboard()">
+      Login
+    </button>
+
+    <p style="text-align:center; margin-top:20px; color:#173b72;">
+      Forgot Password?
+    </p>
+
+  </section>
+
+
+  <!-- CUSTOMER DASHBOARD -->
+  <section id="customer" class="hidden">
+
+    <div class="page-title">
+      ምን ይፈልጋሉ?
+    </div>
+
+    <div class="role-container">
+
+      <div class="role">
+        <div class="role-icon">🏠</div>
+        <h3>House</h3>
+        <p>Buy or Rent a house</p>
+      </div>
+
+      <div class="role">
+        <div class="role-icon">🌳</div>
+        <h3>Land</h3>
+        <p>Find land</p>
+      </div>
+
+      <div class="role">
+        <div class="role-icon">🚗</div>
+        <h3>Car</h3>
+        <p>Buy or Rent a car</p>
+      </div>
+
+      <div class="role">
+        <div class="role-icon">🏭</div>
+        <h3>Warehouse</h3>
+        <p>Buy or Rent a warehouse</p>
+      </div>
+
+      <div class="role">
+        <div class="role-icon">🏨</div>
+        <h3>Guest House</h3>
+        <p>Find a guest house</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- BROKER DASHBOARD -->
+  <section id="broker" class="hidden">
+
+    <div class="page-title">
+      Broker Dashboard
+    </div>
+
+    <div class="role-container">
+
+      <div class="role">
+        <div class="role-icon">🔔</div>
+        <h3>New Requests</h3>
+        <p>Requests sent by Admin</p>
+      </div>
+
+      <div class="role">
+        <div class="role-icon">📋</div>
+        <h3>My Requests</h3>
+        <p>View your assigned requests</p>
+      </div>
+
+      <div class="role">
+        <div class="role-icon">👤</div>
+        <h3>My Profile</h3>
+        <p>Broker information</p>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<script>
+
+function showPage(page) {
+
+  const pages = [
+    "home",
+    "register",
+    "otp",
+    "role",
+    "login",
+    "customer",
+    "broker"
+  ];
+
+  pages.forEach(function(p) {
+    document.getElementById(p).classList.add("hidden");
+  });
+
+  document.getElementById(page).classList.remove("hidden");
+}
+
+
+function setLanguage(lang) {
+
+  if (lang === "am") {
+    document.getElementById("amBtn").classList.add("active");
+    document.getElementById("enBtn").classList.remove("active");
+  }
+
+  if (lang === "en") {
+    document.getElementById("enBtn").classList.add("active");
+    document.getElementById("amBtn").classList.remove("active");
+  }
+
+}
+
+
+function customerDashboard() {
+  showPage("customer");
+}
+
+
+function brokerDashboard() {
+  showPage("broker");
+}
+
+</script>
+
+</body>
+</html>
