@@ -1,408 +1,424 @@
+
 <!DOCTYPE html>
 <html lang="am">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>DE LALAYE</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,"Noto Sans Ethiopic",sans-serif;
-  background:#f5f7fb;
-  color:#172033
-}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0}
-.hidden{display:none!important}
-.container{max-width:1100px;margin:auto;padding:20px}
-.card{
-  background:#fff;border-radius:18px;padding:20px;
-  box-shadow:0 5px 25px rgba(0,0,0,.07);margin-bottom:18px
-}
-header{
-  background:#fff;border-bottom:1px solid #eee;
-  position:sticky;top:0;z-index:10
-}
-.nav{
-  max-width:1100px;margin:auto;padding:14px 20px;
-  display:flex;align-items:center;justify-content:space-between
-}
-.logo{font-size:25px;font-weight:800;color:#1769aa}
-.logo span{color:#19a974}
-.btn{
-  padding:12px 18px;border-radius:10px;
-  background:#1769aa;color:#fff;font-weight:700
-}
-.btn.secondary{background:#eef3f8;color:#1769aa}
-.btn.danger{background:#d9363e}
-.btn.success{background:#159447}
-.btn.small{padding:8px 12px;font-size:14px}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-
-.hero{
-  text-align:center;padding:55px 20px 30px
-}
-.hero h1{font-size:38px;margin:10px 0}
-.hero p{color:#687386;font-size:17px}
-
-.auth{
-  max-width:470px;margin:35px auto
-}
-.tabs{display:flex;gap:5px;background:#eef2f7;padding:5px;border-radius:12px}
-.tab{
-  flex:1;padding:11px;border-radius:9px;
-  background:transparent
-}
-.tab.active{background:#fff;font-weight:bold}
-
-label{display:block;margin:14px 0 6px;font-weight:700}
-input,select,textarea{
-  width:100%;padding:13px;border:1px solid #d8dee8;
-  border-radius:10px;background:#fff;outline:none
-}
-input:focus,select:focus,textarea:focus{border-color:#1769aa}
-textarea{min-height:100px;resize:vertical}
-
-.message{
-  padding:12px;border-radius:10px;margin:12px 0;
-  display:none
-}
-.message.show{display:block}
-.message.error{background:#ffe9eb;color:#a51f29}
-.message.success{background:#e8f8ef;color:#08743a}
-.message.info{background:#eaf3ff;color:#12538d}
-
-.role-grid,.category-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:12px
-}
-.role,.category{
-  border:2px solid #e0e5ec;padding:20px;border-radius:14px;
-  text-align:center;background:#fff
-}
-.role.selected,.category.selected{
-  border-color:#1769aa;background:#eef7ff
-}
-.role strong,.category strong{display:block;font-size:18px}
-.icon{font-size:32px;margin-bottom:8px}
-
-.dashboard-head{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:15px;flex-wrap:wrap
-}
-.grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:15px
-}
-.stat{
-  background:#fff;padding:20px;border-radius:15px;
-  box-shadow:0 3px 15px rgba(0,0,0,.05)
-}
-.stat b{font-size:28px;display:block;margin-top:8px}
-
-.request{
-  border:1px solid #e1e6ed;border-radius:14px;
-  padding:16px;margin-bottom:12px
-}
-.request-head{
-  display:flex;justify-content:space-between;
-  gap:10px;align-items:center
-}
-.badge{
-  display:inline-block;padding:5px 10px;
-  border-radius:20px;background:#eef3f8;font-size:12px
-}
-.badge.pending{background:#fff4d6;color:#8a6100}
-.badge.active{background:#e7f7ed;color:#08743a}
-.badge.done{background:#e8f0ff;color:#1859a5}
-
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-
-.lang{
-  background:transparent;color:#1769aa;
-  font-weight:bold;margin-right:10px
-}
-
-.empty{
-  text-align:center;color:#7b8494;padding:30px
-}
-
-@media(max-width:700px){
-  .grid{grid-template-columns:1fr}
-  .role-grid,.category-grid{grid-template-columns:1fr}
-  .hero h1{font-size:30px}
-}
+* { b o x - s i z i n g : b o r d e r - b o x } b o d y { m a r g i n : 0 ; f o n t - f a m i l y : A r i a l , " N o t o S a n s E t h i o p i c " , s a n s -
+serif;background:#f5f7fb;color:#172033}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}
+. c o n t a i n e r { m a x - w i d t h : 1 1 0 0 p x ; m a r g i n : a u t o ; p a d d i n g : 2 0 p x } . c a r d { b a c k g r o u n d : # f f f ; b o r d e r -
+radius:18px;padding:20px;box-shadow:0 5px 25px rgba(0,0,0,.07);margin-bottom:18px}
+h e a d e r { b a c k g r o u n d : # f f f ; b o r d e r - b o t t o m : 1 p x s o l i d # e e e ; p o s i t i o n : s t i c k y ; t o p : 0 ; z - i n d e x : 1 0 } . n a v { m a x -
+width:1100px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:25px;font-weight:800;color:#1769aa}.logo span{color:#19a974}.btn{padding:12px 18px;border-
+r a d i u s : 1 0 p x ; b a c k g r o u n d : # 1 7 6 9 a a ; c o l o r : # f f f ; f o n t -
+weight:700}.btn.secondary{background:#eef3f8;color:#1769aa}.btn.danger{background:#d9363e}.btn.success{backg
+round:#159447}.btn.small{padding:8px 12px;font-size:14px}.btn:disabled{opacity:.55;cursor:not-allowed}
+.hero{text-align:center;padding:55px 20px 30px}.hero h1{font-size:38px;margin:10px 0}.hero p{color:#687386;font-
+size:17px}
+.auth{max-width:470px;margin:35px auto}.tabs{display:flex;gap:5px;background:#eef2f7;padding:5px;border-
+radius:12px}.tab{flex:1;padding:11px;border-radius:9px;background:transparent}.tab.active{background:#fff;font-
+weight:bold}
+label{display:block;margin:14px 0 6px;font-weight:700}input,select,textarea{width:100%;padding:13px;border:1px
+solid #d8dee8;border-radius:10px;background:#fff;outline:none}input:focus,select:focus,textarea:focus{border-
+color:#1769aa}textarea{min-height:100px;resize:vertical}
+. m e s s a g e { p a d d i n g : 1 2 p x ; b o r d e r - r a d i u s : 1 0 p x ; m a r g i n : 1 2 p x
+0;display:none}.message.show{display:block}.message.error{background:#ffe9eb;color:#a51f29}.message.success{b
+ackground:#e8f8ef;color:#08743a}.message.info{background:#eaf3ff;color:#12538d}
+.role-grid,.category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.role,.category{border:2px solid
+#e0e5ec;padding:20px;border-radius:14px;text-align:center;background:#fff}.role.selected,.category.selected{border-
+color:#1769aa;background:#eef7ff}.role strong,.category strong{display:block;font-size:18px}.icon{font-
+size:32px;margin-bottom:8px}
+. d a s h b o a r d - h e a d { d i s p l a y : f l e x ; j u s t i f y - c o n t e n t : s p a c e - b e t w e e n ; a l i g n - i t e m s : c e n t e r ; g a p : 1 5 p x ; f l e x -
+w r a p : w r a p } . g r i d { d i s p l a y : g r i d ; g r i d - t e m p l a t e -
+columns:repeat(3,1fr);gap:15px}.stat{background:#fff;padding:20px;border-radius:15px;box-shadow:0 3px 15px
+rgba(0,0,0,.05)}.stat b{font-size:28px;display:block;margin-top:8px}
+. r e q u e s t { b o r d e r : 1 p x s o l i d # e 1 e 6 e d ; b o r d e r - r a d i u s : 1 4 p x ; p a d d i n g : 1 6 p x ; m a r g i n - b o t t o m : 1 2 p x } . r e q u e s t -
+h e a d { d i s p l a y : f l e x ; j u s t i f y - c o n t e n t : s p a c e - b e t w e e n ; g a p : 1 0 p x ; a l i g n - i t e m s : c e n t e r } . b a d g e { d i s p l a y : i n l i n e -
+b l o c k ; p a d d i n g : 5 p x 1 0 p x ; b o r d e r - r a d i u s : 2 0 p x ; b a c k g r o u n d : # e e f 3 f 8 ; f o n t -
+size:12px}.badge.pending{background:#fff4d6;color:#8a6100}.badge.active{background:#e7f7ed;color:#08743a}.ba
+dge.done{background:#e8f0ff;color:#1859a5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.lang{background:transparent;color:#1769aa;font-
+weight:bold;margin-right:10px}.empty{text-align:center;color:#7b8494;padding:30px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.role-grid,.category-grid{grid-template-
+columns:1fr}.hero h1{font-size:30px}}
 </style>
 </head>
-
 <body>
-
-<header id="mainHeader" class="hidden">
-  <div class="nav">
-    <div class="logo">DE <span>LALAYE</span></div>
-    <div>
-      <button class="lang" onclick="toggleLanguage()">አማ / EN</button>
-      <button class="btn small danger" onclick="logout()">Logout</button>
-    </div>
-  </div>
-</header>
-
+< h e a d e r i d = " m a i n H e a d e r " c l a s s = " h i d d e n " > < d i v c l a s s = " n a v " > < d i v c l a s s = " l o g o " > D E
+<span>LALAYE</span></div><div><button class="lang" onclick="toggleLanguage()"> / EN</button><button
+class="btn small danger" onclick="logout()">Logout</button></div></div></header>
 <main>
-
-<!-- AUTH -->
 <section id="authScreen">
-  <div class="hero">
-    <div class="logo">DE <span>LALAYE</span></div>
-    <h1 id="welcomeTitle">እንኳን ወደ DE LALAYE በደህና መጡ</h1>
-    <p id="welcomeText">
-      ቤት፣ መሬት፣ መኪና እና ሌሎችን ንብረቶች ለመፈለግ
-    </p>
-  </div>
+<div class="hero"><div class="logo">DE <span>LALAYE</span></div><h1 id="welcomeTitle"> DE LALAYE
+</h1><p id="welcomeText"> </p></div>
+<div class="auth card">
+< d i v i d = " a u t h T a b s " c l a s s = " t a b s " > < b u t t o n i d = " l o g i n T a b " c l a s s = " t a b a c t i v e "
+o n c l i c k = " s h o w L o g i n ( ) " > L o g i n < / b u t t o n > < b u t t o n i d = " r e g i s t e r T a b " c l a s s = " t a b "
+onclick="showRegister()">Register</button></div>
+<div id="authMessage" class="message"></div>
+<div id="loginBox">
+<label>Phone Number</label><input id="loginPhone" type="tel" inputmode="tel" autocomplete="tel"
+placeholder="09xxxxxxxx">
+<label>Password</label><input id="loginPassword" type="password" autocomplete="current-password"
+placeholder="Password">
+<button id="loginBtn" class="btn" style="width:100%;margin-top:18px" onclick="loginUser()">Login</button>
+<button class="btn secondary" style="width:100%;margin-top:10px" onclick="showForgot()">Forgot
+Password?</button>
+</div>
+<div id="registerBox" class="hidden">
+<label>Phone Number</label><input id="registerPhone" type="tel" inputmode="tel" autocomplete="tel"
+placeholder="09xxxxxxxx">
+<label>Password</label><input id="registerPassword" type="password" autocomplete="new-password"
+placeholder="Create password">
+<label>Confirm Password</label><input id="registerConfirm" type="password" autocomplete="new-password"
+placeholder="Confirm password">
+< b u t t o n i d = " r e g i s t e r B t n " c l a s s = " b t n " s t y l e = " w i d t h : 1 0 0 % ; m a r g i n - t o p : 1 8 p x "
+onclick="registerUser()">Register</button>
+</div>
+<div id="otpBox" class="hidden"><h3>SMS Verification</h3><p> OTP </p><input id="otpCode" type="text"
+inputmode="numeric" maxlength="6" placeholder="6 digit OTP"><button id="verifyBtn" class="btn"
+style="width:100%;margin-top:15px" onclick="verifyOTP()">Verify</button><button class="btn secondary"
+style="width:100%;margin-top:10px" onclick="backAuth()">Back</button></div>
+<div id="forgotBox" class="hidden"><h3>Forgot Password</h3><label>Phone Number</label><input
+id="forgotPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx"><button id="forgotBtn" class="btn"
+style="width:100%;margin-top:15px" onclick="sendForgotOTP()">Send OTP</button><div id="resetBox"
+class="hidden"><label>OTP</label><input id="resetOtp" inputmode="numeric" maxlength="6"><label>New
+Password</label><input id="newPassword" type="password" autocomplete="new-password"><button class="btn
+success" style="width:100%;margin-top:15px" onclick="resetPassword()">Change Password</button></div><button
+class="btn secondary" style="width:100%;margin-top:10px" onclick="backAuth()">Back</button></div>
+</div></section>
 
-  <div class="auth card">
+<section id="roleScreen" class="hidden"><div class="container"><div class="card"><h2> </h2><p> </p><div
+c l a s s = " r o l e - g r i d " > < d i v i d = " c u s t o m e r R o l e " c l a s s = " r o l e " o n c l i c k = " c h o o s e R o l e ( ' c u s t o m e r ' ) " > < d i v
+class="icon"></div><strong>Customer</strong><span> / / </span></div><div id="brokerRole" class="role"
+o n c l i c k = " c h o o s e R o l e ( ' b r o k e r ' ) " > < d i v c l a s s = " i c o n " > < / d i v > < s t r o n g > B r o k e r < / s t r o n g > < s p a n >
+< / s p a n > < / d i v > < / d i v > < b u t t o n c l a s s = " b t n " s t y l e = " m a r g i n - t o p : 2 0 p x ; w i d t h : 1 0 0 % "
+onclick="saveRole()">Continue</button></div></div></section>
 
-    <div id="authTabs" class="tabs">
-      <button id="loginTab" class="tab active" onclick="showLogin()">Login</button>
-      <button id="registerTab" class="tab" onclick="showRegister()">Register</button>
-    </div>
+<section id="customerScreen" class="hidden"><div class="container"><div class="dashboard-head
+card"><div><h2>Customer Dashboard</h2><p> </p></div><button class="btn" onclick="showRequestForm()">+
+New Request</button></div>
+<div class="grid"><div class="stat"><span>My Requests</span><b id="customerRequestCount">0</b></div><div
+c l a s s = " s t a t " > < s p a n > P e n d i n g < / s p a n > < b i d = " c u s t o m e r P e n d i n g C o u n t " > 0 < / b > < / d i v > < d i v
+class="stat"><span>Completed</span><b id="customerCompletedCount">0</b></div></div>
+<div id="customerRequestForm" class="card hidden"><h2> </h2><label>Category</label><div class="category-
+g r i d " > < d i v c l a s s = " c a t e g o r y " o n c l i c k = " s e l e c t C a t e g o r y ( t h i s , ' H o u s e ' ) " > < d i v
+c l a s s = " i c o n " > < / d i v > < s t r o n g > H o u s e < / s t r o n g > < / d i v > < d i v c l a s s = " c a t e g o r y "
+onclick="selectCategory(this,'Land')"><div class="icon"></div><strong>Land</strong></div><div class="category"
+onclick="selectCategory(this,'Car')"><div class="icon"></div><strong>Car</strong></div><div class="category"
+onclick="selectCategory(this,'Warehouse')"><div class="icon"></div><strong>Warehouse</strong></div><div
+class="category" onclick="selectCategory(this,'Guest House')"><div class="icon"></div><strong>Guest
+House</strong></div></div><input id="requestCategory" type="hidden"><label>Sale / Rent</label><select
+id="transactionType"><option value="">Select</option><option value="Sale">Sale</option><option
+v a l u e = " R e n t " > R e n t < / o p t i o n > < / s e l e c t > < l a b e l > A r e a < / l a b e l > < i n p u t i d = " r e q u e s t A r e a " p l a c e h o l d e r = "
+B o l e " > < l a b e l > B u d g e t < / l a b e l > < i n p u t i d = " r e q u e s t B u d g e t " t y p e = " n u m b e r " m i n = " 0 "
+placeholder="Budget"><label>Additional Requirements</label><textarea id="requestRequirements" placeholder="
+"></textarea><div class="actions"><button class="btn success" onclick="submitRequest()">Submit
+Request</button><button class="btn secondary" onclick="hideRequestForm()">Cancel</button></div><div
+id="requestMessage" class="message"></div></div>
+<div class="card"><h2>My Requests</h2><div id="customerRequests"></div></div></div></section>
 
-    <div id="authMessage" class="message"></div>
+< s e c t i o n i d = " b r o k e r S c r e e n " c l a s s = " h i d d e n " > < d i v c l a s s = " c o n t a i n e r " > < d i v c l a s s = " d a s h b o a r d - h e a d
+card"><div><h2>Broker Dashboard</h2><p>Admin requests </p></div><span id="brokerStatus" class="badge
+pending">Pending</span></div>
+<div id="brokerRegistration" class="card hidden"><h2>Broker Registration</h2><label>Full Name</label><input
+id="brokerName"><label>Phone</label><input id="brokerPhone"><label>Working Areas</label><input
+id="brokerAreas" placeholder="Bole, Kazanchis..."><label>Categories</label><input id="brokerCategories"
+placeholder="House, Land, Car..."><label>Transaction Types</label><select id="brokerTransaction"><option
+value="">Select</option><option value="Sale">Sale</option><option value="Rent">Rent</option><option
+v a l u e = " B o t h " > B o t h < / o p t i o n > < / s e l e c t > < l a b e l > V e r i f i c a t i o n I n f o r m a t i o n < / l a b e l > < t e x t a r e a
+i d = " b r o k e r V e r i f i c a t i o n " > < / t e x t a r e a > < b u t t o n c l a s s = " b t n s u c c e s s " s t y l e = " m a r g i n - t o p : 1 5 p x "
+onclick="saveBroker()">Submit for Approval</button><div id="brokerMessage" class="message"></div></div>
+< d i v i d = " b r o k e r R e q u e s t s B o x " c l a s s = " c a r d h i d d e n " > < h 2 > A s s i g n e d R e q u e s t s < / h 2 > < d i v
+id="brokerRequests"></div></div></div></section>
 
-    <!-- LOGIN -->
-    <div id="loginBox">
-      <label>Phone Number</label>
-      <input id="loginPhone" type="tel" placeholder="09xxxxxxxx">
+< s e c t i o n i d = " a d m i n S c r e e n " c l a s s = " h i d d e n " > < d i v c l a s s = " c o n t a i n e r " > < d i v c l a s s = " d a s h b o a r d - h e a d
+card"><div><h2>Admin Dashboard</h2><p>DE LALAYE Management</p></div></div><div class="grid"><div
+c l a s s = " s t a t " > < s p a n > C u s t o m e r s < / s p a n > < b i d = " a d m i n C u s t o m e r s " > 0 < / b > < / d i v > < d i v
+c l a s s = " s t a t " > < s p a n > B r o k e r s < / s p a n > < b i d = " a d m i n B r o k e r s " > 0 < / b > < / d i v > < d i v
+class="stat"><span>Requests</span><b id="adminRequests">0</b></div></div><div class="card"><h2>Broker
+Approvals</h2><div id="adminBrokersList"></div></div><div class="card"><h2>Customer Requests</h2><div
+id="adminRequestsList"></div></div></div></section>
+</main>
 
-      <label>Password</label>
-      <input id="loginPassword" type="password" placeholder="Password">
+<script>
+(function(){
+"use strict";
 
-      <button class="btn" style="width:100%;margin-top:18px" onclick="loginUser()">
-        Login
-      </button>
+const SUPABASE_URL="https://tpmsqpwxomgfxqeqognf.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_7CfDLIIrEs158_WIkEkmJg_OmB-nHOx";
+l e t
+supabaseClient=null,currentUser=null,selectedRole=null,currentLanguage=localStorage.getItem("language")||"am",pe
+ndingPhone="",forgotPhone="";
 
-      <button class="btn secondary" style="width:100%;margin-top:10px"
-              onclick="showForgot()">
-        Forgot Password?
-      </button>
-    </div>
+function $(id){return document.getElementById(id)}
+function show(id){const e=$(id);if(e)e.classList.remove("hidden")}
+function hide(id){const e=$(id);if(e)e.classList.add("hidden")}
+function msg(id,text,type="info"){const e=$(id);if(!e)return;e.textContent=text;e.className="message show "+type}
+function clearMsg(id){const e=$(id);if(e)e.className="message"}
+f u n c t i o n n o r m a l i z e P h o n e ( v ) { v = ( v | | " " ) . t r i m ( ) . r e p l a c e ( / [ \ s ( ) - ] / g , " " ) ; i f ( v . s t a r t s W i t h ( " 0 9 " ) ) r e t u r n
+"+251"+v.slice(1);if(v.startsWith("9"))return "+251"+v;if(v.startsWith("251"))return "+"+v;return v}
+f u n c t i o n e s c a p e H t m l ( v ) { r e t u r n
+String(v==null?"":v).replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""").replace(/'
+/g,"'")}
+f u n c t i o n s e t B u s y ( i d , b u s y , t e x t ) { c o n s t
+e=$(id);if(!e)return;e.disabled=busy;if(busy){e.dataset.oldText=e.textContent;e.textContent=text||"Please wait..."}else
+if(e.dataset.oldText){e.textContent=e.dataset.oldText}}
 
-    <!-- REGISTER -->
-    <div id="registerBox" class="hidden">
+function applyLanguage(){
+i f ( c u r r e n t L a n g u a g e = = = " e n " ) { $ ( " w e l c o m e T i t l e " ) . t e x t C o n t e n t = " W e l c o m e t o D E
+LALAYE";$("welcomeText").textContent="Find houses, land, cars and other properties"; }
+else{$("welcomeTitle").textContent=" DE LALAYE ";$("welcomeText").textContent=" "}
+}
+window.toggleLanguage=function(){currentLanguage=currentLanguage==="am"?"en":"am";localStorage.setItem("la
+nguage",currentLanguage);applyLanguage()}
 
-      <label>Phone Number</label>
-      <input id="registerPhone" type="tel" placeholder="09xxxxxxxx">
+window.showLogin=function(){show("loginBox");hide("registerBox");hide("otpBox");hide("forgotBox");show("auth
+Tabs");$("loginTab").classList.add("active");$("registerTab").classList.remove("active");clearMsg("authMessage")}
+window.showRegister=function(){hide("loginBox");show("registerBox");hide("otpBox");hide("forgotBox");show("au
+thTabs");$("loginTab").classList.remove("active");$("registerTab").classList.add("active");clearMsg("authMessage")}
+window.showForgot=function(){hide("loginBox");hide("registerBox");hide("otpBox");hide("authTabs");show("forgot
+Box");clearMsg("authMessage")}
+window.backAuth=function(){showLogin()}
 
-      <label>Password</label>
-      <input id="registerPassword" type="password" placeholder="Create password">
+async function ensureClient(){
+if(supabaseClient)return true;
+if(!window.supabase||typeof window.supabase.createClient!=="function"){msg("authMessage","Supabase library
+Internet connection ","error");return false}
+try{supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{p
+ersistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});return true}
+catch(e){console.error(e);msg("authMessage","Supabase ","error");return false}
+}
 
-      <label>Confirm Password</label>
-      <input id="registerConfirm" type="password" placeholder="Confirm password">
+window.registerUser=async function(){
+if(!(await ensureClient()))return;
+c o n s t
+phone=normalizePhone($("registerPhone").value),password=$("registerPassword").value,confirm=$("registerConfirm
+").value;
+if(!phone||!password||!confirm)return msg("authMessage"," ","error");
+if(!/^\+2519\d{8}$/.test(phone))return msg("authMessage"," ","error");
+if(password.length<6)return msg("authMessage","Password 6 characters ","error");
+if(password!==confirm)return msg("authMessage","Password Confirm Password ","error");
+setBusy("registerBtn",true,"Sending...");
+try{
+pendingPhone=phone;
+const {data,error}=await supabaseClient.auth.signUp({phone,password});
+if(error)throw error;
+if(data&&data.user){currentUser=data.user}
+hide("registerBox");hide("authTabs");show("otpBox");
+msg("authMessage","OTP "+phone+" ","success");
+$("otpCode").focus();
+}catch(e){console.error(e);msg("authMessage",e.message||"Registration failed","error")}
+finally{setBusy("registerBtn",false)}
+}
 
-      <button class="btn" style="width:100%;margin-top:18px"
-              onclick="registerUser()">
-        Register
-      </button>
-    </div>
+window.verifyOTP=async function(){
+if(!(await ensureClient()))return;
+const token=$("otpCode").value.trim();
+if(!/^\d{6}$/.test(token))return msg("authMessage","6 digit OTP ","error");
+setBusy("verifyBtn",true,"Verifying...");
+try{
+const {data,error}=await supabaseClient.auth.verifyOtp({phone:pendingPhone,token,type:"sms"});
+if(error)throw error;
+currentUser=data.user;
+msg("authMessage"," ","success");
+await afterLogin();
+}catch(e){console.error(e);msg("authMessage",e.message||"OTP verification failed","error")}
+finally{setBusy("verifyBtn",false)}
+}
 
-    <!-- OTP -->
-    <div id="otpBox" class="hidden">
-      <h3>SMS Verification</h3>
-      <p>የላክንልህን OTP ኮድ ከታች አስገባ።</p>
+window.loginUser=async function(){
+if(!(await ensureClient()))return;
+const phone=normalizePhone($("loginPhone").value),password=$("loginPassword").value;
+if(!phone||!password)return msg("authMessage","Phone Password ","error");
+setBusy("loginBtn",true,"Logging in...");
+try{
+const {data,error}=await supabaseClient.auth.signInWithPassword({phone,password});
+if(error)throw error;
+currentUser=data.user;await afterLogin();
+}catch(e){console.error(e);msg("authMessage",e.message||"Login failed","error")}
+finally{setBusy("loginBtn",false)}
+}
 
-      <input id="otpCode" type="text" maxlength="6"
-             placeholder="6 digit OTP">
+window.sendForgotOTP=async function(){
+if(!(await ensureClient()))return;
+forgotPhone=normalizePhone($("forgotPhone").value);
+if(!/^\+2519\d{8}$/.test(forgotPhone))return msg("authMessage"," ","error");
+setBusy("forgotBtn",true,"Sending...");
+t r y { c o n s t { e r r o r } = a w a i t s u p a b a s e C l i e n t . a u t h . s i g n I n W i t h O t p ( { p h o n e : f o r g o t P h o n e } ) ; i f ( e r r o r ) t h r o w
+e r r o r ; s h o w ( " r e s e t B o x " ) ; m s g ( " a u t h M e s s a g e " , " O T P " + f o r g o t P h o n e + "
+","success")}catch(e){msg("authMessage",e.message||"Failed","error")}finally{setBusy("forgotBtn",false)}
+}
 
-      <button class="btn" style="width:100%;margin-top:15px"
-              onclick="verifyOTP()">
-        Verify
-      </button>
+window.resetPassword=async function(){
+const otp=$("resetOtp").value.trim(),newPassword=$("newPassword").value;
+if(!/^\d{6}$/.test(otp)||!newPassword)return msg("authMessage","OTP New Password ","error");
+if(newPassword.length<6)return msg("authMessage","Password 6 characters ","error");
+try{
+const {error}=await supabaseClient.auth.verifyOtp({phone:forgotPhone,token:otp,type:"sms"});if(error)throw
+error;
+const result=await supabaseClient.auth.updateUser({password:newPassword});if(result.error)throw result.error;
+msg("authMessage","Password ","success");setTimeout(showLogin,1200);
+}catch(e){msg("authMessage",e.message||"Password reset failed","error")}
+}
 
-      <button class="btn secondary" style="width:100%;margin-top:10px"
-              onclick="backAuth()">
-        Back
-      </button>
-    </div>
+window.chooseRole=function(role){selectedRole=role;$("customerRole").classList.toggle("selected",role==="custom
+er");$("brokerRole").classList.toggle("selected",role==="broker")}
 
-    <!-- FORGOT -->
-    <div id="forgotBox" class="hidden">
-      <h3>Forgot Password</h3>
+async function getUserProfile(){
+const {data,error}=await supabaseClient.from("User").select("*").eq("auth_user_id",currentUser.id).maybeSingle();
+if(error){console.warn("User profile:",error.message);return null}return data;
+}
 
-      <label>Phone Number</label>
-      <input id="forgotPhone" type="tel" placeholder="09xxxxxxxx">
+window.saveRole=async function(){
+if(!selectedRole)return alert("Customer Broker ");
+if(!currentUser)return;
+try{
+c o n s t { d a t a : e x i s t i n g , e r r o r : r e a d E r r o r } = a w a i t
+supabaseClient.from("User").select("id,role").eq("auth_user_id",currentUser.id).maybeSingle();
+if(readError)throw readError;
+if(existing&&existing.role){return existing.role==="broker"?openBroker():openCustomer()}
+c o n s t { e r r o r } = a w a i t
+supabaseClient.from("User").insert({auth_user_id:currentUser.id,phone:currentUser.phone||"",role:selectedRole,langu
+age:currentLanguage,status:"active"});
+if(error)throw error;
+selectedRole==="broker"?await openBroker():await openCustomer();
+}catch(e){console.error(e);alert("Role "+(e.message||""))}
+}
 
-      <button class="btn" style="width:100%;margin-top:15px"
-              onclick="sendForgotOTP()">
-        Send OTP
-      </button>
+async function afterLogin(){
+if(!currentUser)return;
+hide("authScreen");hide("roleScreen");show("mainHeader");
+const profile=await getUserProfile();
+if(profile&&profile.role){profile.role==="broker"?await openBroker():await openCustomer();return}
+show("roleScreen");
+}
 
-      <div id="resetBox" class="hidden">
-        <label>OTP</label>
-        <input id="resetOtp" maxlength="6">
+async function openCustomer(){hideAllScreens();show("mainHeader");show("customerScreen");await
+loadCustomer()}
+async function loadCustomer(){
+if(!currentUser)return;
+c o n s t { d a t a , e r r o r } = a w a i t
+supabaseClient.from("Request").select("*").eq("Customer_id",currentUser.id).order("created_at",{ascending:false});
+if(error){console.error(error);$("customerRequests").innerHTML='<div class="empty">Requests </div>';return}
+c o n s t
+list=data||[];$("customerRequestCount").textContent=list.length;$("customerPendingCount").textContent=list.filter(x=
+>x.status==="Pending").length;$("customerCompletedCount").textContent=list.filter(x=>x.status==="Completed").le
+ngth;
+$("customerRequests").innerHTML=list.length?list.map(r=>'<div class="request"><div class="request-
+h e a d " > < s t r o n g > ' + e s c a p e H t m l ( r . c a t e g o r y ) + ' < / s t r o n g > < s p a n
+c l a s s = " b a d g e " > ' + e s c a p e H t m l ( r . s t a t u s | | " P e n d i n g " ) + ' < / s p a n > < / d i v > < p > < b > T y p e : < / b >
+'+escapeHtml(r.transaction_type)+'</p><p><b>Area:</b> '+escapeHtml(r.area||"-")+'</p><p><b>Budget:</b>
+' + e s c a p e H t m l ( r . b u d g e t ? ? " - " ) + ' < / p > < p > < b > R e q u i r e m e n t s : < / b > ' + e s c a p e H t m l ( r . r e q u i r e m e n t s | | " -
+")+'</p></div>').join(""):'<div class="empty"> request </div>'
+}
+window.showRequestForm=function(){show("customerRequestForm")}
+window.hideRequestForm=function(){hide("customerRequestForm");clearMsg("requestMessage")}
+window.selectCategory=function(el,value){document.querySelectorAll(".category").forEach(x=>x.classList.remove("
+selected"));el.classList.add("selected");$("requestCategory").value=value}
+window.submitRequest=async function(){
+if(!currentUser)return;
+c o n s t
+category=$("requestCategory").value,transaction=$("transactionType").value,area=$("requestArea").value.trim(),budg
+et=$("requestBudget").value,requirements=$("requestRequirements").value.trim();
+if(!category)return msg("requestMessage","Category ","error");if(!transaction)return msg("requestMessage","Sale
+Rent ","error");
+try{
+c o n s t { e r r o r } = a w a i t
+supabaseClient.from("Request").insert({Customer_id:currentUser.id,category,transaction_type:transaction,area,budget
+:budget?Number(budget):null,requirements,status:"Pending"});
+if(error)throw error;msg("requestMessage","Request ","success");
+$("requestCategory").value="";$("transactionType").value="";$("requestArea").value="";$("requestBudget").value="
+";$("requestRequirements").value="";document.querySelectorAll(".category").forEach(x=>x.classList.remove("select
+ed"));await loadCustomer();setTimeout(hideRequestForm,900)
+}catch(e){msg("requestMessage",e.message||"Request failed","error")}
+}
 
-        <label>New Password</label>
-        <input id="newPassword" type="password">
+async function openBroker(){hideAllScreens();show("mainHeader");show("brokerScreen");await loadBroker()}
+async function loadBroker(){
+if(!currentUser)return;
+const {data,error}=await supabaseClient.from("Broker").select("*").eq("user_id",currentUser.id).maybeSingle();
+if(error)console.warn(error.message);
+if(!data){show("brokerRegistration");hide("brokerRequestsBox");$("brokerPhone").value=currentUser.phone||"";$("b
+rokerStatus").textContent="Pending";return}
+hide("brokerRegistration");$("brokerStatus").textContent=data.approval_status||"Pending";
+$("brokerStatus").className="badge "+(data.approval_status==="Approved"?"active":"pending");
+if(data.approval_status!=="Approved"){hide("brokerRequestsBox");return}show("brokerRequestsBox");await
+loadBrokerRequests()
+}
+window.saveBroker=async function(){
+c o n s t
+name=$("brokerName").value.trim(),phone=normalizePhone($("brokerPhone").value),areas=$("brokerAreas").value.t
+rim(),categories=$("brokerCategories").value.trim(),transaction=$("brokerTransaction").value,verification=$("broker
+Verification").value.trim();
+if(!name||!phone||!areas||!categories||!transaction)return msg("brokerMessage"," ","error");
+t r y { c o n s t { e r r o r } = a w a i t
+supabaseClient.from("Broker").insert({user_id:currentUser.id,name,phone,areas,categories,transaction_types:transacti
+on,verification_info:verification,approval_status:"Pending"});if(error)throw error;msg("brokerMessage"," Admin
+approval ","success");setTimeout(loadBroker,1000)}catch(e){msg("brokerMessage",e.message||"Failed","error")}
+}
+async function loadBrokerRequests(){
+c o n s t { d a t a , e r r o r } = a w a i t
+supabaseClient.from("Request_assignment").select("*").eq("broker_id",currentUser.id).order("created_at",{ascending
+:false});
+if(error){$("brokerRequests").innerHTML='<div class="empty">Requests </div>';return}
+const assignments=data||[];if(!assignments.length){$("brokerRequests").innerHTML='<div class="empty"> request
+</div>';return}
+let html="";
+f o r ( c o n s t a o f a s s i g n m e n t s ) { c o n s t { d a t a : r } = a w a i t
+supabaseClient.from("Request").select("*").eq("id",a.request_id).maybeSingle();if(!r)continue;html+='<div
+c l a s s = " r e q u e s t " > < d i v c l a s s = " r e q u e s t - h e a d " > < s t r o n g > ' + e s c a p e H t m l ( r . c a t e g o r y ) + ' < / s t r o n g > < s p a n
+c l a s s = " b a d g e " > ' + e s c a p e H t m l ( a . s t a t u s | | " s e n t " ) + ' < / s p a n > < / d i v > < p > < b > S a l e / R e n t : < / b >
+'+escapeHtml(r.transaction_type)+'</p><p><b>Area:</b> '+escapeHtml(r.area||"-")+'</p><p><b>Budget:</b>
+'+escapeHtml(r.budget??"-")+'</p><p><b>Requirements:</b> '+escapeHtml(r.requirements||"-")+'</p><div
+class="actions"><button class="btn success small" onclick="brokerAnswer('+a.id+','+r.id+',\'\')"></button><button
+class="btn danger small" onclick="brokerAnswer('+a.id+','+r.id+',\'\')"></button></div></div>'}
+$("brokerRequests").innerHTML=html||'<div class="empty">Request </div>'
+}
+window.brokerAnswer=async function(assignmentId,requestId,response){
+try{
+c o n s t { d a t a : a s s i g n m e n t } = a w a i t
+supabaseClient.from("Request_assignment").select("id").eq("id",assignmentId).eq("broker_id",currentUser.id).maybe
+Single();if(!assignment)throw new Error(" request ");
+c o n s t { e r r o r } = a w a i t
+supabaseClient.from("Broker_response").insert({request_id:requestId,Broker_id:currentUser.id,response});if(error)thr
+ow error;
+c o n s t { e r r o r : u p d a t e E r r o r } = a w a i t
+supabaseClient.from("Request_assignment").update({status:response===""?"available":"not_available"}).eq("id",assi
+gnmentId).eq("broker_id",currentUser.id);if(updateError)throw updateError;
+alert(response===""?" Admin ":" ");await loadBrokerRequests()
+}catch(e){alert(e.message||"Response failed")}
+}
 
-        <button class="btn success" style="width:100%;margin-top:15px"
-                onclick="resetPassword()">
-          Change Password
-        </button>
-      </div>
+f u n c t i o n
+hideAllScreens(){hide("authScreen");hide("roleScreen");hide("customerScreen");hide("brokerScreen");hide("adminS
+creen");hide("customerRequestForm")}
 
-      <button class="btn secondary" style="width:100%;margin-top:10px"
-              onclick="backAuth()">
-        Back
-      </button>
-    </div>
+w i n d o w . l o g o u t = a s y n c f u n c t i o n ( ) { i f ( s u p a b a s e C l i e n t ) a w a i t
+supabaseClient.auth.signOut();currentUser=null;selectedRole=null;hideAllScreens();hide("mainHeader");show("auth
+Screen");showLogin()}
 
-  </div>
-</section>
-
-
-<!-- ROLE SETUP -->
-<section id="roleScreen" class="hidden">
-  <div class="container">
-    <div class="card">
-      <h2>እባክዎ የሚጠቀሙበትን አይነት ይምረጡ</h2>
-      <p>ይህ ምርጫ አንድ ጊዜ ብቻ ይደረጋል።</p>
-
-      <div class="role-grid">
-        <div id="customerRole" class="role" onclick="chooseRole('customer')">
-          <div class="icon">👤</div>
-          <strong>Customer</strong>
-          <span>ቤት / መሬት / መኪና ለመፈለግ</span>
-        </div>
-
-        <div id="brokerRole" class="role" onclick="chooseRole('broker')">
-          <div class="icon">👨‍💼</div>
-          <strong>Broker</strong>
-          <span>የደንበኞችን ፍላጎት ለመቀበል</span>
-        </div>
-      </div>
-
-      <button class="btn" style="margin-top:20px;width:100%"
-              onclick="saveRole()">
-        Continue
-      </button>
-    </div>
-  </div>
-</section>
-
-
-<!-- CUSTOMER DASHBOARD -->
-<section id="customerScreen" class="hidden">
-  <div class="container">
-
-    <div class="dashboard-head card">
-      <div>
-        <h2>Customer Dashboard</h2>
-        <p>የሚፈልጉትን ንብረት ያስገቡ።</p>
-      </div>
-      <button class="btn" onclick="showRequestForm()">+ New Request</button>
-    </div>
-
-    <div class="grid">
-      <div class="stat">
-        <span>My Requests</span>
-        <b id="customerRequestCount">0</b>
-      </div>
-      <div class="stat">
-        <span>Pending</span>
-        <b id="customerPendingCount">0</b>
-      </div>
-      <div class="stat">
-        <span>Completed</span>
-        <b id="customerCompletedCount">0</b>
-      </div>
-    </div>
-
-    <div id="customerRequestForm" class="card hidden">
-      <h2>የፍላጎት መረጃ</h2>
-
-      <label>Category</label>
-      <div class="category-grid">
-        <div class="category" onclick="selectCategory(this,'House')">
-          <div class="icon">🏠</div><strong>House</strong>
-        </div>
-        <div class="category" onclick="selectCategory(this,'Land')">
-          <div class="icon">🌳</div><strong>Land</strong>
-        </div>
-        <div class="category" onclick="selectCategory(this,'Car')">
-          <div class="icon">🚗</div><strong>Car</strong>
-        </div>
-        <div class="category" onclick="selectCategory(this,'Warehouse')">
-          <div class="icon">🏭</div><strong>Warehouse</strong>
-        </div>
-        <div class="category" onclick="selectCategory(this,'Guest House')">
-          <div class="icon">🏨</div><strong>Guest House</strong>
-        </div>
-      </div>
-
-      <input id="requestCategory" type="hidden">
-
-      <label>Sale / Rent</label>
-      <select id="transactionType">
-        <option value="">Select</option>
-        <option value="Sale">Sale</option>
-        <option value="Rent">Rent</option>
-      </select>
-
-      <label>Area</label>
-      <input id="requestArea" placeholder="ለምሳሌ Bole">
-
-      <label>Budget</label>
-      <input id="requestBudget" type="number" placeholder="Budget">
-
-      <label>Additional Requirements</label>
-      <textarea id="requestRequirements"
-        placeholder="የሚፈልጉትን ተጨማሪ መረጃ ይጻፉ"></textarea>
-
-      <div class="actions">
-        <button class="btn success" onclick="submitRequest()">Submit Request</button>
-        <button class="btn secondary" onclick="hideRequestForm()">Cancel</button>
-      </div>
-
-      <div id="requestMessage" class="message"></div>
-    </div>
-
-    <div class="card">
-      <h2>My Requests</h2>
-      <div id="customerRequests"></div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- BROKER DASHBOARD -->
-<section id="brokerScreen" class="hidden">
-  <div class="container">
-
-    <div class="dashboard-head card">
-      <div>
-        <h2>Broker Dashboard</h2>
-        <p>Admin የላከልዎትን requests ብቻ ያያሉ።</p>
-      </div>
-      <span id="brokerStatus" class="badge">Pending</span>
-    </div>
-
-    <div id="brokerRegistration" class="card hidden">
-      <h2>Broker Registration</h2>
-
-      <label>Full Name</label>
-      <input id="brokerName">
-
-      <label>Phone</label>
-      <input id="brokerPhone">
-
-      <label>Working Areas</label>
-      <input id="brokerAreas" placeholder="Bole, Kazanchis...">
-
-      <label>Categories</label>
-      <input id="brokerCategories"
-             placeholder="House, Land, Car...">
-
-      <label>Transaction Types</label>
-      <select id="brokerTransaction">
-        <option value="">Select</
+async function initialize(){
+applyLanguage();
+if(!(await ensureClient()))return;
+const {data,error}=await supabaseClient.auth.getSession();
+if(error){console.warn(error.message);return}
+i f ( d a t a & & d a t a . s e s s i o n & & d a t a . s e s s i o n . u s e r ) { c u r r e n t U s e r = d a t a . s e s s i o n . u s e r ; a w a i t
+afterLogin()}else{hideAllScreens();hide("mainHeader");show("authScreen");showLogin()}
+supabaseClient.auth.onAuthStateChange((event,session)=>{if(session&&session.user){currentUser=session.user}else
+if(event==="SIGNED_OUT"){currentUser=null;hideAllScreens();hide("mainHeader");show("authScreen");showLogi
+n()}})
+}
+window.addEventListener("error",function(e){console.error(e.error||e.message);});
+window.addEventListener("unhandledrejection",function(e){console.error(e.reason);});
+initialize();
+})();
+</script>
+</body>
+</html>
+10 / 10
