@@ -1,494 +1,1238 @@
-
 <!DOCTYPE html>
 <html lang="am">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1769aa">
 <title>DE LALAYE</title>
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- IMPORTANT: no defer here. Supabase must load before our app code. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Noto Sans Ethiopic",sans-serif;background:#f5f7fb;color:#172033}
+
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Ethiopic",sans-serif;
+  background:#f5f7fb;
+  color:#172033;
+}
+
 button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
 .hidden{display:none!important}
-.container{max-width:1100px;margin:auto;padding:20px}
-.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 5px 25px rgba(0,0,0,.07);margin-
-bottom:18px}
-header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
-.nav{max-width:1100px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-
-between}
-.logo{font-size:25px;font-weight:800;color:#1769aa}.logo span{color:#19a974}
-.btn{padding:12px 18px;border-radius:10px;background:#1769aa;color:#fff;font-weight:700}
-.btn.secondary{background:#eef3f8;color:#1769aa}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 5px 25px rgba(0,0,0,.07);
+  margin-bottom:18px;
+}
+
+header{
+  background:#fff;
+  border-bottom:1px solid #eee;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.nav{
+  max-width:1100px;
+  margin:auto;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+  color:#1769aa;
+}
+
+.logo span{color:#19a974}
+
+.btn{
+  padding:12px 18px;
+  border-radius:10px;
+  background:#1769aa;
+  color:#fff;
+  font-weight:700;
+}
+
+.btn.secondary{
+  background:#eef3f8;
+  color:#1769aa;
+}
+
 .btn.danger{background:#d9363e}
 .btn.success{background:#159447}
-.btn.small{padding:8px 12px;font-size:14px}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-.hero{text-align:center;padding:55px 20px 30px}
-.hero h1{font-size:38px;margin:10px 0}.hero p{color:#687386;font-size:17px}
-.auth{max-width:470px;margin:35px auto}
-.tabs{display:flex;gap:5px;background:#eef2f7;padding:5px;border-radius:12px}
-.tab{flex:1;padding:11px;border-radius:9px;background:transparent}.tab.active{background:#fff;font-weight:bold}
-label{display:block;margin:14px 0 6px;font-weight:700}
-i n p u t , s e l e c t , t e x t a r e a { w i d t h : 1 0 0 % ; p a d d i n g : 1 3 p x ; b o r d e r : 1 p x s o l i d # d 8 d e e 8 ; b o r d e r -
-radius:10px;background:#fff;outline:none}
-input:focus,select:focus,textarea:focus{border-color:#1769aa}
-textarea{min-height:100px;resize:vertical}
-.message{padding:12px;border-radius:10px;margin:12px 0;display:none}
-.message.show{display:block}.message.error{background:#ffe9eb;color:#a51f29}
-.message.success{background:#e8f8ef;color:#08743a}.message.info{background:#eaf3ff;color:#12538d}
-.role-grid,.category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.role,.category{border:2px solid #e0e5ec;padding:20px;border-radius:14px;text-align:center;background:#fff}
-.role.selected,.category.selected{border-color:#1769aa;background:#eef7ff}
-.role strong,.category strong{display:block;font-size:18px}
-.icon{font-size:32px;margin-bottom:8px}
-.dashboard-head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.stat{background:#fff;padding:20px;border-radius:15px;box-shadow:0 3px 15px rgba(0,0,0,.05)}
-.stat b{font-size:28px;display:block;margin-top:8px}
-.request{border:1px solid #e1e6ed;border-radius:14px;padding:16px;margin-bottom:12px}
-.request-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.badge{display:inline-block;padding:5px 10px;border-radius:20px;background:#eef3f8;font-size:12px}
-.badge.pending{background:#fff4d6;color:#8a6100}.badge.active{background:#e7f7ed;color:#08743a}
-.badge.done{background:#e8f0ff;color:#1859a5}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.lang{background:transparent;color:#1769aa;font-weight:bold;margin-right:10px}
-.empty{text-align:center;color:#7b8494;padding:30px}
+
+.btn.small{
+  padding:8px 12px;
+  font-size:14px;
+}
+
+.btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.hero{
+  text-align:center;
+  padding:55px 20px 30px;
+}
+
+.hero h1{
+  font-size:38px;
+  margin:10px 0;
+}
+
+.hero p{
+  color:#687386;
+  font-size:17px;
+}
+
+.auth{
+  max-width:470px;
+  margin:35px auto;
+}
+
+.tabs{
+  display:flex;
+  gap:5px;
+  background:#eef2f7;
+  padding:5px;
+  border-radius:12px;
+}
+
+.tab{
+  flex:1;
+  padding:11px;
+  border-radius:9px;
+  background:transparent;
+}
+
+.tab.active{
+  background:#fff;
+  font-weight:bold;
+}
+
+label{
+  display:block;
+  margin:14px 0 6px;
+  font-weight:700;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #d8dee8;
+  border-radius:10px;
+  background:#fff;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#1769aa;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.message{
+  padding:12px;
+  border-radius:10px;
+  margin:12px 0;
+  display:none;
+  line-height:1.5;
+}
+
+.message.show{display:block}
+
+.message.error{
+  background:#ffe9eb;
+  color:#a51f29;
+}
+
+.message.success{
+  background:#e8f8ef;
+  color:#08743a;
+}
+
+.message.info{
+  background:#eaf3ff;
+  color:#12538d;
+}
+
+.role-grid,
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.role,
+.category{
+  border:2px solid #e0e5ec;
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+  background:#fff;
+}
+
+.role.selected,
+.category.selected{
+  border-color:#1769aa;
+  background:#eef7ff;
+}
+
+.role strong,
+.category strong{
+  display:block;
+  font-size:18px;
+}
+
+.icon{
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.dashboard-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.stat{
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.stat b{
+  font-size:28px;
+  display:block;
+  margin-top:8px;
+}
+
+.request{
+  border:1px solid #e1e6ed;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.request-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#eef3f8;
+  font-size:12px;
+}
+
+.badge.pending{
+  background:#fff4d6;
+  color:#8a6100;
+}
+
+.badge.active{
+  background:#e7f7ed;
+  color:#08743a;
+}
+
+.badge.done{
+  background:#e8f0ff;
+  color:#1859a5;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.lang{
+  background:transparent;
+  color:#1769aa;
+  font-weight:bold;
+  margin-right:10px;
+}
+
+.empty{
+  text-align:center;
+  color:#7b8494;
+  padding:30px;
+}
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:#687386;
+}
+
+.small-text{
+  color:#687386;
+  font-size:14px;
+}
+
+.section-title{
+  margin-top:0;
+}
+
+.divider{
+  height:1px;
+  background:#eee;
+  margin:20px 0;
+}
+
 @media(max-width:700px){
-.grid{grid-template-columns:1fr}.role-grid,.category-grid{grid-template-columns:1fr}
-.hero h1{font-size:30px}.container{padding:14px}.nav{padding:12px 14px}
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .role-grid,
+  .category-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .container{
+    padding:14px;
+  }
+
+  .nav{
+    padding:12px 14px;
+  }
 }
 </style>
 </head>
+
 <body>
 
+<!-- HEADER -->
 <header id="mainHeader" class="hidden">
-<div class="nav">
-<div class="logo">DE <span>LALAYE</span></div>
-<div>
-<button class="lang" onclick="toggleLanguage()">AM / EN</button>
-<button class="btn small danger" onclick="logout()">Logout</button>
-</div>
-</div>
+  <div class="nav">
+    <div class="logo">DE <span>LALAYE</span></div>
+
+    <div>
+      <button class="lang" type="button" onclick="toggleLanguage()">
+        AM / EN
+      </button>
+
+      <button class="btn small danger" type="button" onclick="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
 </header>
 
 <main>
+
+<!-- ================= AUTH SCREEN ================= -->
 <section id="authScreen">
-<div class="hero">
-<div class="logo">DE <span>LALAYE</span></div>
-<h1 id="welcomeTitle">DE LALAYE</h1>
-<p id="welcomeText"> </p>
-</div>
 
-<div class="auth card">
-<div id="authTabs" class="tabs">
-<button id="loginTab" type="button" class="tab active">Login</button>
-<button id="registerTab" type="button" class="tab">Register</button>
-</div>
+  <div class="hero">
+    <div class="logo">DE <span>LALAYE</span></div>
 
-<div id="authMessage" class="message"></div>
+    <h1 id="welcomeTitle">DE LALAYE</h1>
 
-<div id="loginBox">
-<label>Phone Number</label>
-<input id="loginPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxx">
-<label>Password</label>
-<input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password">
-<button id="loginBtn" type="button" class="btn" style="width:100%;margin-top:18px">Login</button>
-<button id="forgotBtn" type="button" class="btn secondary" style="width:100%;margin-top:10px">Forgot
-Password?</button>
-</div>
+    <p id="welcomeText">
+      ቤት፣ መሬት፣ መኪና እና ሌሎች ንብረቶችን በቀላሉ ያግኙ
+    </p>
+  </div>
 
-<div id="registerBox" class="hidden">
-<label>Phone Number</label>
-<input id="registerPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxx">
-<label>Password</label>
-<input id="registerPassword" type="password" autocomplete="new-password" placeholder="Create password">
-<label>Confirm Password</label>
-<input id="registerConfirm" type="password" autocomplete="new-password" placeholder="Confirm password">
-<button id="registerBtn" type="button" class="btn" style="width:100%;margin-top:18px">Register</button>
-</div>
+  <div class="auth card">
 
-<div id="forgotBox" class="hidden">
-<h3>Forgot Password</h3>
-<p>OTP Password reset Admin </p>
-< b u t t o n i d = " b a c k A u t h B t n " t y p e = " b u t t o n " c l a s s = " b t n s e c o n d a r y " s t y l e = " w i d t h : 1 0 0 % ; m a r g i n -
-top:10px">Back</button>
-</div>
-</div>
-</div>
+    <!-- AUTH TABS -->
+    <div id="authTabs" class="tabs">
+
+      <button
+        id="loginTab"
+        type="button"
+        class="tab active">
+        Login
+      </button>
+
+      <button
+        id="registerTab"
+        type="button"
+        class="tab">
+        Register
+      </button>
+
+    </div>
+
+    <!-- AUTH MESSAGE -->
+    <div id="authMessage" class="message"></div>
+
+    <!-- LOGIN -->
+    <div id="loginBox">
+
+      <label for="loginPhone">
+        Phone Number
+      </label>
+
+      <input
+        id="loginPhone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        placeholder="09xxxxxxxx">
+
+      <label for="loginPassword">
+        Password
+      </label>
+
+      <input
+        id="loginPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Password">
+
+      <button
+        id="loginBtn"
+        type="button"
+        class="btn"
+        style="width:100%;margin-top:18px">
+        Login
+      </button>
+
+      <button
+        id="forgotBtn"
+        type="button"
+        class="btn secondary"
+        style="width:100%;margin-top:10px">
+        Forgot Password?
+      </button>
+
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerBox" class="hidden">
+
+      <label for="registerPhone">
+        Phone Number
+      </label>
+
+      <input
+        id="registerPhone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        placeholder="09xxxxxxxx">
+
+      <label for="registerPassword">
+        Password
+      </label>
+
+      <input
+        id="registerPassword"
+        type="password"
+        autocomplete="new-password"
+        placeholder="Create password">
+
+      <label for="registerConfirm">
+        Confirm Password
+      </label>
+
+      <input
+        id="registerConfirm"
+        type="password"
+        autocomplete="new-password"
+        placeholder="Confirm password">
+
+      <button
+        id="registerBtn"
+        type="button"
+        class="btn"
+        style="width:100%;margin-top:18px">
+        Register
+      </button>
+
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div id="forgotBox" class="hidden">
+
+      <h3>Forgot Password</h3>
+
+      <p class="small-text">
+        የPassword መልሶ ለማስጀመር Admin ያነጋግሩ።
+      </p>
+
+      <button
+        id="backAuthBtn"
+        type="button"
+        class="btn secondary"
+        style="width:100%;margin-top:10px">
+        Back
+      </button>
+
+    </div>
+
+  </div>
 </section>
 
+
+<!-- ================= ROLE SCREEN ================= -->
+<section id="roleScreen" class="hidden">
+
+  <div class="container">
+
+    <div class="card">
+
+      <h2>Choose Your Role</h2>
+
+      <p class="small-text">
+        እባክዎ በDE LALAYE ላይ የሚጠቀሙትን አይነት ይምረጡ።
+      </p>
+
+      <div class="role-grid">
+
+        <button
+          type="button"
+          class="role"
+          onclick="selectRole(this,'customer')">
+
+          <div class="icon">👤</div>
+
+          <strong>Customer</strong>
+
+          <span class="small-text">
+            ቤት፣ መሬት፣ መኪና ወዘተ ለመፈለግ
+          </span>
+
+        </button>
+
+        <button
+          type="button"
+          class="role"
+          onclick="selectRole(this,'broker')">
+
+          <div class="icon">🏢</div>
+
+          <strong>Broker</strong>
+
+          <span class="small-text">
+            የንብረት ደላላ ሆነው ለመስራት
+          </span>
+
+        </button>
+
+      </div>
+
+      <input
+        type="hidden"
+        id="selectedRole">
+
+      <button
+        id="continueRoleBtn"
+        type="button"
+        class="btn"
+        style="width:100%;margin-top:20px"
+        onclick="saveRole()"
+        disabled>
+        Continue
+      </button>
+
+      <div id="roleMessage" class="message"></div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= CUSTOMER SCREEN ================= -->
+<section id="customerScreen" class="hidden">
+
+  <div class="container">
+
+    <div class="dashboard-head card">
+
+      <div>
+        <h2 class="section-title">
+          Customer Dashboard
+        </h2>
+
+        <p class="small-text">
+          የሚፈልጉትን ንብረት ይጠይቁ።
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="btn success"
+        onclick="showRequestForm()">
+        + New Request
+      </button>
+
+    </div>
+
+
+    <!-- CUSTOMER STATS -->
+    <div class="grid">
+
+      <div class="stat">
+        <span>Total Requests</span>
+        <b id="customerRequestCount">0</b>
+      </div>
+
+      <div class="stat">
+        <span>Pending</span>
+        <b id="customerPendingCount">0</b>
+      </div>
+
+      <div class="stat">
+        <span>Completed</span>
+        <b id="customerCompletedCount">0</b>
+      </div>
+
+    </div>
+
+
+    <!-- REQUEST FORM -->
+    <div
+      id="customerRequestForm"
+      class="card hidden">
+
+      <h2>New Property Request</h2>
+
+      <p class="small-text">
+        የሚፈልጉትን ንብረት መረጃ ያስገቡ።
+      </p>
+
+      <div id="requestMessage" class="message"></div>
+
+      <label>
+        Category
+      </label>
+
+      <div class="category-grid">
+
+        <button
+          type="button"
+          class="category"
+          onclick="selectCategory(this,'House')">
+
+          <div class="icon">🏠</div>
+          <strong>House</strong>
+
+        </button>
+
+        <button
+          type="button"
+          class="category"
+          onclick="selectCategory(this,'Land')">
+
+          <div class="icon">🌳</div>
+          <strong>Land</strong>
+
+        </button>
+
+        <button
+          type="button"
+          class="category"
+          onclick="selectCategory(this,'Car')">
+
+          <div class="icon">🚗</div>
+          <strong>Car</strong>
+
+        </button>
+
+        <button
+          type="button"
+          class="category"
+          onclick="selectCategory(this,'Other')">
+
+          <div class="icon">📦</div>
+          <strong>Other</strong>
+
+        </button>
+
+      </div>
+
+      <input
+        type="hidden"
+        id="requestCategory">
+
+
+      <label for="transactionType">
+        Transaction Type
+      </label>
+
+      <select id="transactionType">
+
+        <option value="">
+          Select
+        </option>
+
+        <option value="Sale">
+          Sale
+        </option>
+
+        <option value="Rent">
+          Rent
+        </option>
+
+      </select>
+
+
+      <label for="requestArea">
+        Preferred Area
+      </label>
+
+      <input
+        id="requestArea"
+        placeholder="Bole, CMC, Kazanchis...">
+
+
+      <label for="requestBudget">
+        Budget
+      </label>
+
+      <input
+        id="requestBudget"
+        type="number"
+        inputmode="decimal"
+        placeholder="Budget in ETB">
+
+
+      <label for="requestRequirements">
+        Requirements
+      </label>
+
+      <textarea
+        id="requestRequirements"
+        placeholder="ስለሚፈልጉት ንብረት ተጨማሪ መረጃ..."></textarea>
+
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="btn success"
+          onclick="submitRequest()">
+          Submit Request
+        </button>
+
+        <button
+          type="button"
+          class="btn secondary"
+          onclick="hideRequestForm()">
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- CUSTOMER REQUESTS -->
+    <div class="card">
+
+      <h2>My Requests</h2>
+
+      <div id="customerRequests">
+        <div class="loading">
+          Loading...
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= BROKER SCREEN ================= -->
 <section id="brokerScreen" class="hidden">
-<div class="container">
-<div class="dashboard-head card">
-<div><h2>Broker Dashboard</h2><p>Admin </p></div>
-<span id="brokerStatus" class="badge pending">Pending</span>
-</div>
 
-<div id="brokerRegistration" class="card hidden">
-<h2>Broker Registration</h2>
-<label>Full Name</label><input id="brokerName">
-<label>Phone</label><input id="brokerPhone">
-<label>Working Areas</label><input id="brokerAreas" placeholder="Bole, Kazanchis...">
-<label>Categories</label><input id="brokerCategories" placeholder="House, Land, Car...">
-<label>Transaction Types</label>
-<select id="brokerTransaction">
-<option value="">Select</option><option value="Sale">Sale</option><option value="Rent">Rent</option><option
-value="Both">Both</option>
-</select>
-<label>Verification Information</label>
-<textarea id="brokerVerification"></textarea>
-<button class="btn success" style="margin-top:15px" onclick="saveBroker()">Submit for Approval</button>
-<div id="brokerMessage" class="message"></div>
-</div>
+  <div class="container">
 
-<div id="brokerRequestsBox" class="card hidden">
-<h2>Assigned Requests</h2><div id="brokerRequests"></div>
-</div>
-</div>
+    <div class="dashboard-head card">
+
+      <div>
+
+        <h2>
+          Broker Dashboard
+        </h2>
+
+        <p class="small-text">
+          የBroker ማስተዳደሪያ
+        </p>
+
+      </div>
+
+      <span
+        id="brokerStatus"
+        class="badge pending">
+        Pending
+      </span>
+
+    </div>
+
+
+    <!-- BROKER REGISTRATION -->
+    <div
+      id="brokerRegistration"
+      class="card hidden">
+
+      <h2>Broker Registration</h2>
+
+      <p class="small-text">
+        የBroker መረጃዎን ያስገቡ። Admin ካጸደቀው በኋላ Requests ያገኛሉ።
+      </p>
+
+      <div id="brokerMessage" class="message"></div>
+
+      <label for="brokerName">
+        Full Name
+      </label>
+
+      <input
+        id="brokerName"
+        placeholder="Full name">
+
+
+      <label for="brokerPhone">
+        Phone
+      </label>
+
+      <input
+        id="brokerPhone"
+        type="tel"
+        placeholder="09xxxxxxxx">
+
+
+      <label for="brokerAreas">
+        Working Areas
+      </label>
+
+      <input
+        id="brokerAreas"
+        placeholder="Bole, Kazanchis...">
+
+
+      <label for="brokerCategories">
+        Categories
+      </label>
+
+      <input
+        id="brokerCategories"
+        placeholder="House, Land, Car...">
+
+
+      <label for="brokerTransaction">
+        Transaction Types
+      </label>
+
+      <select id="brokerTransaction">
+
+        <option value="">
+          Select
+        </option>
+
+        <option value="Sale">
+          Sale
+        </option>
+
+        <option value="Rent">
+          Rent
+        </option>
+
+        <option value="Both">
+          Both
+        </option>
+
+      </select>
+
+
+      <label for="brokerVerification">
+        Verification Information
+      </label>
+
+      <textarea
+        id="brokerVerification"
+        placeholder="የሚያረጋግጥ መረጃ..."></textarea>
+
+
+      <button
+        type="button"
+        class="btn success"
+        style="margin-top:15px"
+        onclick="saveBroker()">
+        Submit for Approval
+      </button>
+
+    </div>
+
+
+    <!-- BROKER REQUESTS -->
+    <div
+      id="brokerRequestsBox"
+      class="card hidden">
+
+      <h2>
+        Assigned Requests
+      </h2>
+
+      <div id="brokerRequests">
+        <div class="loading">
+          Loading...
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
+
+<!-- ================= ADMIN SCREEN ================= -->
 <section id="adminScreen" class="hidden">
-<div class="container">
-<div class="dashboard-head card">
-<div><h2>Admin Dashboard</h2><p>DE LALAYE Management</p></div>
-</div>
-<div class="grid">
-<div class="stat"><span>Customers</span><b id="adminCustomers">0</b></div>
-<div class="stat"><span>Brokers</span><b id="adminBrokers">0</b></div>
-<div class="stat"><span>Requests</span><b id="adminRequests">0</b></div>
-</div>
-<div class="card"><h2>Broker Approvals</h2><div id="adminBrokersList"></div></div>
-<div class="card"><h2>Customer Requests</h2><div id="adminRequestsList"></div></div>
-</div>
+
+  <div class="container">
+
+    <div class="dashboard-head card">
+
+      <div>
+
+        <h2>
+          Admin Dashboard
+        </h2>
+
+        <p class="small-text">
+          DE LALAYE Management
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="stat">
+        <span>Customers</span>
+        <b id="adminCustomers">0</b>
+      </div>
+
+      <div class="stat">
+        <span>Brokers</span>
+        <b id="adminBrokers">0</b>
+      </div>
+
+      <div class="stat">
+        <span>Requests</span>
+        <b id="adminRequests">0</b>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Broker Approvals
+      </h2>
+
+      <div id="adminBrokersList">
+        <div class="loading">
+          Loading...
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Customer Requests
+      </h2>
+
+      <div id="adminRequestsList">
+        <div class="loading">
+          Loading...
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </section>
+
 </main>
+
 
 <script>
 (function(){
+
 "use strict";
 
-const SUPABASE_URL="https://tpmsqpwxomgfxqeqognf.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_7CfDLIIrEs158_WIkEkmJg_OmB-nHOx";
+/* =========================================================
+   SUPABASE CONFIG
+   ========================================================= */
 
-let supabaseClient=null;
-let currentUser=null;
-let selectedRole=null;
-let currentLanguage=localStorage.getItem("language")||"am";
-let forgotPhone="";
+const SUPABASE_URL =
+  "https://tpmsqpwxomgfxqeqognf.supabase.co";
 
-function $(id){return document.getElementById(id)}
-function show(id){const e=$(id);if(e)e.classList.remove("hidden")}
-function hide(id){const e=$(id);if(e)e.classList.add("hidden")}
-function msg(id,text,type="info"){const e=$(id);if(!e)return;e.textContent=text;e.className="message show "+type}
-function clearMsg(id){const e=$(id);if(e)e.className="message"}
-function normalizePhone(v){
-v=(v||"").trim().replace(/[\s()-]/g,"");
-if(v.startsWith("09"))return "+251"+v.slice(1);
-if(v.startsWith("9"))return "+251"+v;
-if(v.startsWith("251"))return "+"+v;
-return v;
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_7CfDLIIrEs158_WIkEkmJg_OmB-nHOx";
+
+
+/* =========================================================
+   APP STATE
+   ========================================================= */
+
+let supabaseClient = null;
+let currentUser = null;
+let selectedRole = null;
+
+let currentLanguage =
+  localStorage.getItem("language") || "am";
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function $(id){
+  return document.getElementById(id);
 }
-function escapeHtml(v){
-return String(v==null?"":v)
-.replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">")
-.replace(/"/g,""").replace(/'/g,"'");
+
+function show(id){
+  const el = $(id);
+  if(el){
+    el.classList.remove("hidden");
+  }
 }
+
+function hide(id){
+  const el = $(id);
+  if(el){
+    el.classList.add("hidden");
+  }
+}
+
+function msg(id,text,type="info"){
+  const el = $(id);
+
+  if(!el){
+    return;
+  }
+
+  el.textContent = text;
+  el.className = "message show " + type;
+}
+
+function clearMsg(id){
+  const el = $(id);
+
+  if(el){
+    el.className = "message";
+    el.textContent = "";
+  }
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(value){
+
+  return String(value == null ? "" : value)
+
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   PHONE NORMALIZATION
+   ========================================================= */
+
+function normalizePhone(value){
+
+  let phone = (value || "")
+    .trim()
+    .replace(/[\s()-]/g,"");
+
+  if(phone.startsWith("09")){
+    return "+251" + phone.slice(1);
+  }
+
+  if(phone.startsWith("9")){
+    return "+251" + phone;
+  }
+
+  if(phone.startsWith("251")){
+    return "+" + phone;
+  }
+
+  if(phone.startsWith("+251")){
+    return phone;
+  }
+
+  return phone;
+}
+
+
+/* =========================================================
+   BUSY BUTTON
+   ========================================================= */
+
 function setBusy(id,busy,text){
-const e=$(id);if(!e)return;
-e.disabled=busy;
-if(busy){e.dataset.oldText=e.textContent;e.textContent=text||"Please wait..."}
-else if(e.dataset.oldText){e.textContent=e.dataset.oldText}
+
+  const el = $(id);
+
+  if(!el){
+    return;
+  }
+
+  if(busy){
+
+    el.disabled = true;
+
+    if(!el.dataset.oldText){
+      el.dataset.oldText = el.textContent;
+    }
+
+    el.textContent = text || "Please wait...";
+
+  }else{
+
+    el.disabled = false;
+
+    if(el.dataset.oldText){
+      el.textContent = el.dataset.oldText;
+      delete el.dataset.oldText;
+    }
+
+  }
 }
+
+
+/* =========================================================
+   LANGUAGE
+   ========================================================= */
 
 function applyLanguage(){
-if(currentLanguage==="en"){
-$("welcomeTitle").textContent="Welcome to DE LALAYE";
-$("welcomeText").textContent="Find houses, land, cars and other properties";
-}else{
-$("welcomeTitle").textContent="DE LALAYE";
-$("welcomeText").textContent=" ";
-}
-}
-window.toggleLanguage=function(){
-currentLanguage=currentLanguage==="am"?"en":"am";
-localStorage.setItem("language",currentLanguage);
-applyLanguage();
-};
 
-window.showLogin=function(){
-show("loginBox");hide("registerBox");hide("forgotBox");show("authTabs");
-$("loginTab").classList.add("active");$("registerTab").classList.remove("active");clearMsg("authMessage");
-};
-window.showRegister=function(){
-hide("loginBox");show("registerBox");hide("forgotBox");show("authTabs");
-$("loginTab").classList.remove("active");$("registerTab").classList.add("active");clearMsg("authMessage");
-};
-window.showForgot=function(){
-hide("loginBox");hide("registerBox");hide("authTabs");show("forgotBox");clearMsg("authMessage");
-};
-window.backAuth=function(){showLogin()};
+  if(currentLanguage === "en"){
 
-async function ensureClient(){
-if(supabaseClient)return true;
-if(!window.supabase||typeof window.supabase.createClient!=="function"){
-msg("authMessage","Supabase library Internet connection ","error");return false;
-}
-try{
-supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
-auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
-});
-return true;
-}catch(e){console.error(e);msg("authMessage","Supabase ","error");return false}
+    $("welcomeTitle").textContent =
+      "Welcome to DE LALAYE";
+
+    $("welcomeText").textContent =
+      "Find houses, land, cars and other properties";
+
+  }else{
+
+    $("welcomeTitle").textContent =
+      "DE LALAYE";
+
+    $("welcomeText").textContent =
+      "ቤት፣ መሬት፣ መኪና እና ሌሎች ንብረቶችን በቀላሉ ያግኙ";
+
+  }
+
 }
 
-window.registerUser=async function(){
-if(!(await ensureClient()))return;
-const phone=normalizePhone($("registerPhone").value);
-const password=$("registerPassword").value;
-const confirm=$("registerConfirm").value;
-if(!phone||!password||!confirm)return msg("authMessage"," ","error");
-if(!/^\+2519\d{8}$/.test(phone))return msg("authMessage"," ","error");
-if(password.length<6)return msg("authMessage","Password 6 characters ","error");
-if(password!==confirm)return msg("authMessage","Password Confirm Password ","error");
-setBusy("registerBtn",true,"Registering...");
-try{
-const {data,error}=await supabaseClient.auth.signUp({
-phone,password,
-options:{data:{phone:phone}}
-});
-if(error)throw error;
-if(!data||!data.user)throw new Error("Registration failed.");
-currentUser=data.user;
-if(data.session){
-await afterLogin();
-}else{
-msg("authMessage","Account Supabase Phone Confirmation Authentication Providers Phone Confirm phone
-","error");
-}
-}catch(e){console.error(e);msg("authMessage",e.message||"Registration failed","error")}
-finally{setBusy("registerBtn",false)}
-};
+window.toggleLanguage = function(){
 
-window.loginUser=async function(){
-if(!(await ensureClient()))return;
-const phone=normalizePhone($("loginPhone").value);
-const password=$("loginPassword").value;
-if(!phone||!password)return msg("authMessage","Phone Password ","error");
-setBusy("loginBtn",true,"Logging in...");
-try{
-const {data,error}=await supabaseClient.auth.signInWithPassword({phone,password});
-if(error)throw error;
-currentUser=data.user;
-await afterLogin();
-}catch(e){console.error(e);msg("authMessage",e.message||"Login failed","error")}
-finally{setBusy("loginBtn",false)}
-};
-window.sendForgotOTP=async function(){
-msg("authMessage","OTP Phone Password Reset ","info");
-};
-window.resetPassword=async function(){
-msg("authMessage","OTP Password Reset ","info");
+  currentLanguage =
+    currentLanguage === "am" ? "en" : "am";
+
+  localStorage.setItem(
+    "language",
+    currentLanguage
+  );
+
+  applyLanguage();
 };
 
 
-async function getUserProfile(){
-const {data,error}=await supabaseClient.from("User").select("*").eq("auth_user_id",currentUser.id).maybeSingle();
-if(error){console.warn("User profile:",error.message);return null}
-return data;
-}
+/* =========================================================
+   AUTH BOXES
+   ========================================================= */
 
-window.saveRole=async function(){
-if(!selectedRole)return alert("Customer Broker ");
-if(!currentUser)return;
-try{
-c o n s t { d a t a : e x i s t i n g , e r r o r : r e a d E r r o r } = a w a i t
-supabaseClient.from("User").select("id,role").eq("auth_user_id",currentUser.id).maybeSingle();
-if(readError)throw readError;
-if(existing&&existing.role){
-existing.role==="broker"?await openBroker():await openCustomer();return;
-}
-const {error}=await supabaseClient.from("User").insert({
-auth_user_id:currentUser.id,
-phone:currentUser.phone||"",
-role:selectedRole,
-language:currentLanguage,
-status:"active"
-});
-if(error)throw error;
-selectedRole==="broker"?await openBroker():await openCustomer();
-}catch(e){console.error(e);alert("Role "+(e.message||""))}
+window.showLogin = function(){
+
+  show("loginBox");
+  hide("registerBox");
+  hide("forgotBox");
+  show("authTabs");
+
+  $("loginTab").classList.add("active");
+  $("registerTab").classList.remove("active");
+
+  clearMsg("authMessage");
 };
 
-async function afterLogin(){
-if(!currentUser)return;
-hide("authScreen");hide("roleScreen");show("mainHeader");
-const profile=await getUserProfile();
-if(profile&&profile.role){
-profile.role==="broker"?await openBroker():await openCustomer();
-return;
-}
-show("roleScreen");
-}
 
-function hideAllScreens(){
-hide("authScreen");hide("roleScreen");hide("customerScreen");hide("brokerScreen");hide("adminScreen");hide("cust
-omerRequestForm");
-}
-async function openCustomer(){hideAllScreens();show("mainHeader");show("customerScreen");await
-loadCustomer()}
+window.showRegister = function(){
 
-async function loadCustomer(){
-if(!currentUser)return;
-c o n s t { d a t a , e r r o r } = a w a i t
-supabaseClient.from("Request").select("*").eq("Customer_id",currentUser.id).order("created_at",{ascending:false});
-if(error){console.error(error);$("customerRequests").innerHTML='<div class="empty">Requests </div>';return}
-const list=data||[];
-$("customerRequestCount").textContent=list.length;
-$("customerPendingCount").textContent=list.filter(x=>x.status==="Pending").length;
-$("customerCompletedCount").textContent=list.filter(x=>x.status==="Completed").length;
-$("customerRequests").innerHTML=list.length?list.map(r=>`
-<div class="request">
-< d i v c l a s s = " r e q u e s t - h e a d " > < s t r o n g > $ { e s c a p e H t m l ( r . c a t e g o r y ) } < / s t r o n g > < s p a n
-class="badge">${escapeHtml(r.status||"Pending")}</span></div>
-<p><b>Type:</b> ${escapeHtml(r.transaction_type)}</p>
-<p><b>Area:</b> ${escapeHtml(r.area||"-")}</p>
-<p><b>Budget:</b> ${escapeHtml(r.budget??"-")}</p>
-<p><b>Requirements:</b> ${escapeHtml(r.requirements||"-")}</p>
-</div>`).join(""):'<div class="empty">No requests yet.</div>';
-}
-window.showRequestForm=function(){show("customerRequestForm")}
-window.hideRequestForm=function(){hide("customerRequestForm");clearMsg("requestMessage")}
-window.selectCategory=function(el,value){
-document.querySelectorAll(".category").forEach(x=>x.classList.remove("selected"));
-el.classList.add("selected");$("requestCategory").value=value;
-}
-window.submitRequest=async function(){
-if(!currentUser)return;
-const category=$("requestCategory").value;
-const transaction=$("transactionType").value;
-const area=$("requestArea").value.trim();
-const budget=$("requestBudget").value;
-const requirements=$("requestRequirements").value.trim();
-if(!category)return msg("requestMessage","Category ","error");
-if(!transaction)return msg("requestMessage","Sale Rent ","error");
-try{
-const {error}=await supabaseClient.from("Request").insert({
-Customer_id:currentUser.id,category,transaction_type:transaction,area,
-budget:budget?Number(budget):null,requirements,status:"Pending"
-});
-if(error)throw error;
-msg("requestMessage","Request ","success");
-$("requestCategory").value="";$("transactionType").value="";$("requestArea").value="";
-$("requestBudget").value="";$("requestRequirements").value="";
-document.querySelectorAll(".category").forEach(x=>x.classList.remove("selected"));
-await loadCustomer();setTimeout(hideRequestForm,900);
-}catch(e){msg("requestMessage",e.message||"Request failed","error")}
+  hide("loginBox");
+  show("registerBox");
+  hide("forgotBox");
+  show("authTabs");
+
+  $("loginTab").classList.remove("active");
+  $("registerTab").classList.add("active");
+
+  clearMsg("authMessage");
 };
 
-async function openBroker(){hideAllScreens();show("mainHeader");show("brokerScreen");await loadBroker()}
-async function loadBroker(){
-if(!currentUser)return;
-const {data,error}=await supabaseClient.from("Broker").select("*").eq("user_id",currentUser.id).maybeSingle();
-if(error)console.warn(error.message);
-if(!data){
-show("brokerRegistration");hide("brokerRequestsBox");
-$("brokerPhone").value=currentUser.phone||"";$("brokerStatus").textContent="Pending";return;
-}
-hide("brokerRegistration");
-$("brokerStatus").textContent=data.approval_status||"Pending";
-$("brokerStatus").className="badge "+(data.approval_status==="Approved"?"active":"pending");
-if(data.approval_status!=="Approved"){hide("brokerRequestsBox");return}
-show("brokerRequestsBox");await loadBrokerRequests();
-}
-window.saveBroker=async function(){
-const name=$("brokerName").value.trim();
-const phone=normalizePhone($("brokerPhone").value);
-const areas=$("brokerAreas").value.trim();
-const categories=$("brokerCategories").value.trim();
-const transaction=$("brokerTransaction").value;
-const verification=$("brokerVerification").value.trim();
-if(!name||!phone||!areas||!categories||!transaction)return msg("brokerMessage"," ","error");
-try{
-const {error}=await supabaseClient.from("Broker").insert({
-user_id:currentUser.id,name,phone,areas,categories,
-transaction_types:transaction,verification_info:verification,approval_status:"Pending"
-});
-if(error)throw error;
-msg("brokerMessage","Admin ","success");
-setTimeout(loadBroker,1000);
-}catch(e){msg("brokerMessage",e.message||"Failed","error")}
-}
-async function loadBrokerRequests(){
-c o n s t { d a t a , e r r o r } = a w a i t
-supabaseClient.from("Request_assignment").select("*").eq("broker_id",currentUser.id).order("created_at",{ascending
-:false});
-if(error){$("brokerRequests").innerHTML='<div class="empty">Requests </div>';return}
-const assignments=data||[];
-if(!assignments.length){$("brokerRequests").innerHTML='<div class="empty"> request </div>';return}
-let html="";
-for(const a of assignments){
-const {data:r}=await supabaseClient.from("Request").select("*").eq("id",a.request_id).maybeSingle();
-if(!r)continue;
-html+=`<div class="request">
-< d i v c l a s s = " r e q u e s t - h e a d " > < s t r o n g > $ { e s c a p e H t m l ( r . c a t e g o r y ) } < / s t r o n g > < s p a n
-class="badge">${escapeHtml(a.status||"sent")}</span></div>
-<p><b>Sale / Rent:</b> ${escapeHtml(r.transaction_type)}</p>
-<p><b>Area:</b> ${escapeHtml(r.area||"-")}</p>
-<p><b>Budget:</b> ${escapeHtml(r.budget??"-")}</p>
-<p><b>Requirements:</b> ${escapeHtml(r.requirements||"-")}</p>
-<div class="actions">
-<button class="btn success small" onclick="brokerAnswer(${a.id},${r.id},'available')">Available</button>
-<button class="btn danger small" onclick="brokerAnswer(${a.id},${r.id},'not_available')">Not Available</button>
-</div></div>`;
-}
-$("brokerRequests").innerHTML=html||'<div class="empty">Request </div>';
-}
-window.brokerAnswer=async function(assignmentId,requestId,response){
-try{
-c o n s t { d a t a : a s s i g n m e n t } = a w a i t
-supabaseClient.from("Request_assignment").select("id").eq("id",assignmentId).eq("broker_id",currentUser.id).maybe
-Single();
-if(!assignment)throw new Error(" request ");
-c o n s t { e r r o r } = a w a i t
-supabaseClient.from("Broker_response").insert({request_id:requestId,Broker_id:currentUser.id,response});
-if(error)throw error;
-c o n s t { e r r o r : u p d a t e E r r o r } = a w a i t
-supabaseClient.from("Request_assignment").update({status:response}).eq("id",assignmentId).eq("broker_id",current
-User.id);
-if(updateError)throw updateError;
-alert("Response ");await loadBrokerRequests();
-}catch(e){alert(e.message||"Response failed")}
-};
 
-window.logout=async function(){
-if(supabaseClient)await supabaseClient.auth.signOut();
-currentUser=null;selectedRole=null;hideAllScreens();hide("mainHeader");show("authScreen");showLogin();
-};
+window.showForgot = function(){
 
-async function initialize(){
-applyLanguage();
-if(!(await ensureClient()))return;
-const {data,error}=await supabaseClient.auth.getSession();
-if(error){console.warn(error.message);return}
-if(data&&data.session&&data.session.user){
-currentUser=data.session.user;await afterLogin();
-}else{
-hideAllScreens();hide("mainHeader");show("authScreen");showLogin();
-}
-supabaseClient.auth.onAuthStateChange((event,session)=>{
-if(session&&session.user)currentUser=session.user;
-else if(event==="SIGNED_OUT"){
-currentUser=null;hideAllScreens();hide("mainHeader");show("authScreen");showLogin();
-}
-});
-}
-window.addEventListener("error",e=>console.error(e.error||e.message));
-window.addEventListener("unhandledrejection",e=>console.error(e.reason));
-initialize();
-})();
-</script>
-</body>
-</html>
-11 / 11
+  hide("
