@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>DE LALAYE</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,"Noto Sans Ethiopic",sans-serif;background:#f5f7fb;color:#172033}
@@ -83,8 +83,8 @@ textarea{min-height:100px;resize:vertical}
 
 <div class="auth card">
 <div id="authTabs" class="tabs">
-<button id="loginTab" class="tab active" onclick="showLogin()">Login</button>
-<button id="registerTab" class="tab" onclick="showRegister()">Register</button>
+<button id="loginTab" type="button" class="tab active">Login</button>
+<button id="registerTab" type="button" class="tab">Register</button>
 </div>
 
 <div id="authMessage" class="message"></div>
@@ -94,8 +94,8 @@ textarea{min-height:100px;resize:vertical}
 <input id="loginPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxx">
 <label>Password</label>
 <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password">
-<button id="loginBtn" class="btn" style="width:100%;margin-top:18px" onclick="loginUser()">Login</button>
-<button class="btn secondary" style="width:100%;margin-top:10px" onclick="showForgot()">Forgot
+<button id="loginBtn" type="button" class="btn" style="width:100%;margin-top:18px">Login</button>
+<button id="forgotBtn" type="button" class="btn secondary" style="width:100%;margin-top:10px">Forgot
 Password?</button>
 </div>
 
@@ -106,14 +106,14 @@ Password?</button>
 <input id="registerPassword" type="password" autocomplete="new-password" placeholder="Create password">
 <label>Confirm Password</label>
 <input id="registerConfirm" type="password" autocomplete="new-password" placeholder="Confirm password">
-< b u t t o n i d = " r e g i s t e r B t n " c l a s s = " b t n " s t y l e = " w i d t h : 1 0 0 % ; m a r g i n - t o p : 1 8 p x "
-onclick="registerUser()">Register</button>
+<button id="registerBtn" type="button" class="btn" style="width:100%;margin-top:18px">Register</button>
 </div>
 
 <div id="forgotBox" class="hidden">
 <h3>Forgot Password</h3>
 <p>OTP Password reset Admin </p>
-<button class="btn secondary" style="width:100%;margin-top:10px" onclick="backAuth()">Back</button>
+< b u t t o n i d = " b a c k A u t h B t n " t y p e = " b u t t o n " c l a s s = " b t n s e c o n d a r y " s t y l e = " w i d t h : 1 0 0 % ; m a r g i n -
+top:10px">Back</button>
 </div>
 </div>
 </div>
