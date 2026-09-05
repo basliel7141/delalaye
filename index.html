@@ -249,7 +249,7 @@ const phone=normalizePhone($("registerPhone").value);
 const password=$("registerPassword").value;
 const confirm=$("registerConfirm").value;
 if(!phone||!password||!confirm)return msg("authMessage"," ","error");
-if(!/^\\+2519\\d{8}$/.test(phone))return msg("authMessage"," ","error");
+if(!/^\+2519\d{8}$/.test(phone))return msg("authMessage"," ","error");
 if(password.length<6)return msg("authMessage","Password 6 characters ","error");
 if(password!==confirm)return msg("authMessage","Password Confirm Password ","error");
 setBusy("registerBtn",true,"Registering...");
@@ -264,7 +264,8 @@ currentUser=data.user;
 if(data.session){
 await afterLogin();
 }else{
-msg("authMessage","Account Supabase Phone Confirmation ","info");
+msg("authMessage","Account Supabase Phone Confirmation Authentication Providers Phone Confirm phone
+","error");
 }
 }catch(e){console.error(e);msg("authMessage",e.message||"Registration failed","error")}
 finally{setBusy("registerBtn",false)}
@@ -319,6 +320,7 @@ if(error)throw error;
 selectedRole==="broker"?await openBroker():await openCustomer();
 }catch(e){console.error(e);alert("Role "+(e.message||""))}
 };
+
 async function afterLogin(){
 if(!currentUser)return;
 hide("authScreen");hide("roleScreen");show("mainHeader");
