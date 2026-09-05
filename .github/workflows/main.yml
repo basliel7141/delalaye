@@ -16,6 +16,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Prepare Web App
+        run: |
+          mkdir -p www
+          cp index.html www/index.html
+
       - name: Install Capacitor
         run: |
           npm init -y
@@ -30,7 +35,7 @@ jobs:
           const config: CapacitorConfig = {
             appId: 'com.delalaye.app',
             appName: 'Delalaye',
-            webDir: '.'
+            webDir: 'www'
           };
 
           export default config;
