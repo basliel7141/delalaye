@@ -215,7 +215,6 @@ label{
 
 <div class="page">
 
-<!-- LOGIN -->
 <section id="loginPage" class="card">
 
   <h1 id="loginTitle">ግባ</h1>
@@ -252,7 +251,6 @@ label{
 </section>
 
 
-<!-- REGISTER -->
 <section id="registerPage" class="card hidden">
 
   <h1>መለያ ፍጠር</h1>
@@ -292,7 +290,6 @@ label{
 </section>
 
 
-<!-- FORGOT -->
 <section id="forgotPage" class="card hidden">
 
   <h1>የይለፍ ቃል ረስተዋል?</h1>
@@ -308,7 +305,6 @@ label{
 </section>
 
 
-<!-- ROLE -->
 <section id="rolePage" class="card hidden">
 
   <h1>የመለያ አይነት ምረጥ</h1>
@@ -317,50 +313,47 @@ label{
 
   <div class="roleGrid">
 
-    <div
-      id="roleCustomer"
-      class="role"
-      onclick="selectRole('customer')"
-    >
+    <div id="roleCustomer"
+         class="role"
+         onclick="selectRole('customer')">
+
       <h3>👤</h3>
       <strong>Customer</strong>
       <p class="small">ገዢ / ተከራይ</p>
+
     </div>
 
-    <div
-      id="roleBroker"
-      class="role"
-      onclick="selectRole('broker')"
-    >
+    <div id="roleBroker"
+         class="role"
+         onclick="selectRole('broker')">
+
       <h3>🏢</h3>
       <strong>Broker</strong>
       <p class="small">ደላላ</p>
+
     </div>
 
-    <div
-      id="roleAdmin"
-      class="role"
-      onclick="selectRole('admin')"
-    >
+    <div id="roleAdmin"
+         class="role"
+         onclick="selectRole('admin')">
+
       <h3>⚙️</h3>
       <strong>Admin</strong>
       <p class="small">አስተዳዳሪ</p>
+
     </div>
 
   </div>
 
-  <button
-    id="saveRoleBtn"
-    class="primary"
-    onclick="saveRole()"
-  >
+  <button id="saveRoleBtn"
+          class="primary"
+          onclick="saveRole()">
     ቀጥል
   </button>
 
 </section>
 
 
-<!-- CUSTOMER -->
 <section id="customerPage" class="hidden">
 
   <div class="card">
@@ -397,66 +390,47 @@ label{
 
     <div id="requestMessage"></div>
 
-    <form
-      id="customerRequestForm"
-      onsubmit="submitRequest(event)"
-    >
+    <form id="customerRequestForm"
+          onsubmit="submitRequest(event)">
 
       <label>የንብረት አይነት</label>
 
       <select id="requestCategory" required>
-
         <option value="">ምረጥ</option>
         <option value="House">ቤት</option>
         <option value="Land">መሬት</option>
         <option value="Apartment">አፓርታማ</option>
         <option value="Vehicle">መኪና</option>
         <option value="Other">ሌላ</option>
-
       </select>
-
 
       <label>የግብይት አይነት</label>
 
       <select id="transactionType" required>
-
         <option value="">ምረጥ</option>
         <option value="Buy">መግዛት</option>
         <option value="Rent">መከራየት</option>
-
       </select>
-
 
       <label>አካባቢ</label>
 
-      <input
-        id="requestArea"
-        placeholder="ለምሳሌ ቦሌ"
-      >
-
+      <input id="requestArea"
+             placeholder="ለምሳሌ ቦሌ">
 
       <label>Budget</label>
 
-      <input
-        id="requestBudget"
-        type="number"
-        placeholder="በብር"
-      >
-
+      <input id="requestBudget"
+           type="number"
+           placeholder="በብር">
 
       <label>ተጨማሪ መስፈርቶች</label>
 
-      <textarea
-        id="requestRequirements"
-        placeholder="የምትፈልገውን ንብረት ዝርዝር ጻፍ"
-      ></textarea>
+      <textarea id="requestRequirements"
+                placeholder="የምትፈልገውን ንብረት ዝርዝር ጻፍ"></textarea>
 
-
-      <button
-        id="requestBtn"
-        class="primary"
-        type="submit"
-      >
+      <button id="requestBtn"
+              class="primary"
+              type="submit">
         ጥያቄ ላክ
       </button>
 
@@ -478,7 +452,6 @@ label{
 </section>
 
 
-<!-- BROKER -->
 <section id="brokerPage" class="hidden">
 
   <div class="card">
@@ -498,36 +471,32 @@ label{
       <input id="brokerPhone" placeholder="09xxxxxxxx">
 
       <label>የምትሰራባቸው አካባቢዎች</label>
-      <input
-        id="brokerAreas"
-        placeholder="ለምሳሌ ቦሌ, መገናኛ"
-      >
+
+      <input id="brokerAreas"
+             placeholder="ለምሳሌ ቦሌ, መገናኛ">
 
       <label>የንብረት አይነት</label>
-      <input
-        id="brokerCategories"
-        placeholder="ቤት, መሬት, መኪና"
-      >
+
+      <input id="brokerCategories"
+             placeholder="ቤት, መሬት, መኪና">
 
       <label>የግብይት አይነት</label>
 
       <select id="brokerTransaction">
+
         <option value="Both">ሁለቱም</option>
         <option value="Buy">ሽያጭ</option>
         <option value="Rent">ኪራይ</option>
+
       </select>
 
       <label>Verification</label>
 
-      <input
-        id="brokerVerification"
-        placeholder="ማረጋገጫ መረጃ"
-      >
+      <input id="brokerVerification"
+             placeholder="ማረጋገጫ መረጃ">
 
-      <button
-        class="primary"
-        onclick="saveBroker()"
-      >
+      <button class="primary"
+              onclick="saveBroker()">
         የBroker መረጃ አስቀምጥ
       </button>
 
@@ -553,7 +522,6 @@ label{
 </section>
 
 
-<!-- ADMIN -->
 <section id="adminPage" class="hidden">
 
   <div class="card">
@@ -614,10 +582,6 @@ label{
 
 <script>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
-
 const SUPABASE_URL =
 "https://tpmsqpwxomgfxqeqognf.supabase.co";
 
@@ -627,30 +591,15 @@ const SUPABASE_KEY =
 const client =
 window.supabase.createClient(
   SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true,
-      detectSessionInUrl:true
-    }
-  }
+  SUPABASE_KEY
 );
 
-
-/* =====================================================
-   GLOBAL VARIABLES
-===================================================== */
 
 let currentUser = null;
 let currentProfile = null;
 let selectedRole = null;
 let english = false;
 
-
-/* =====================================================
-   BASIC HELPERS
-===================================================== */
 
 function $(id){
   return document.getElementById(id);
@@ -696,6 +645,7 @@ function showMessage(id,message,type){
     '">' +
     escapeHtml(message) +
     '</div>';
+
 }
 
 
@@ -740,16 +690,13 @@ function setBusy(id,busy,text){
         el.dataset.oldText;
 
       delete el.dataset.oldText;
+
     }
 
   }
 
 }
 
-
-/* =====================================================
-   PHONE NORMALIZATION
-===================================================== */
 
 function normalizePhone(value){
 
@@ -759,94 +706,60 @@ function normalizePhone(value){
   phone =
     phone.replace(/[^\d+]/g,"");
 
-  /*
-    09xxxxxxxx
-    -> +2519xxxxxxxx
-  */
 
   if(/^09\d{8}$/.test(phone)){
 
     return "+251" +
       phone.substring(1);
+
   }
 
-
-  /*
-    9xxxxxxxx
-    -> +2519xxxxxxxx
-  */
 
   if(/^9\d{8}$/.test(phone)){
 
     return "+251" +
       phone;
+
   }
 
-
-  /*
-    2519xxxxxxxx
-    -> +2519xxxxxxxx
-  */
 
   if(/^2519\d{8}$/.test(phone)){
 
     return "+" +
       phone;
+
   }
 
-
-  /*
-    +2519xxxxxxxx
-  */
 
   if(/^\+2519\d{8}$/.test(phone)){
 
     return phone;
+
   }
 
 
   return phone;
+
 }
 
-
-/* =====================================================
-   PHONE VALIDATION
-===================================================== */
 
 function isValidEthiopianPhone(phone){
 
   return /^\+2519\d{8}$/.test(phone);
+
 }
 
-
-/* =====================================================
-   INTERNAL EMAIL
-===================================================== */
-
-function phoneToEmail(phone){
-
-  const normalized =
-    normalizePhone(phone);
-
-  const digits =
-    normalized.replace(/\D/g,"");
-
-  return digits +
-    "@delalaye.app";
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
 
 function showLogin(){
 
   hideAllPages();
 
-  $("loginPage").classList.remove("hidden");
+  $("loginPage")
+    .classList
+    .remove("hidden");
 
   clearMessage("loginMessage");
+
 }
 
 
@@ -854,9 +767,12 @@ function showRegister(){
 
   hideAllPages();
 
-  $("registerPage").classList.remove("hidden");
+  $("registerPage")
+    .classList
+    .remove("hidden");
 
   clearMessage("registerMessage");
+
 }
 
 
@@ -864,7 +780,10 @@ function showForgot(){
 
   hideAllPages();
 
-  $("forgotPage").classList.remove("hidden");
+  $("forgotPage")
+    .classList
+    .remove("hidden");
+
 }
 
 
@@ -888,10 +807,6 @@ async function register(){
     $("registerPassword2").value;
 
 
-  /*
-    Check phone
-  */
-
   if(!isValidEthiopianPhone(phone)){
 
     showMessage(
@@ -900,12 +815,9 @@ async function register(){
     );
 
     return;
+
   }
 
-
-  /*
-    Check password
-  */
 
   if(password.length < 6){
 
@@ -915,12 +827,9 @@ async function register(){
     );
 
     return;
+
   }
 
-
-  /*
-    Check password confirmation
-  */
 
   if(password !== password2){
 
@@ -930,6 +839,7 @@ async function register(){
     );
 
     return;
+
   }
 
 
@@ -942,67 +852,63 @@ async function register(){
 
   try{
 
-    const email =
-      phoneToEmail(phone);
-
-
     const result =
-      await client.auth.signUp({
-
-        email:email,
-
-        password:password,
-
-        options:{
-          data:{
-            phone:phone
+      await client.functions.invoke(
+        "auth",
+        {
+          body:{
+            action:"register",
+            phone:phone,
+            password:password
           }
         }
-
-      });
+      );
 
 
     if(result.error){
 
       throw result.error;
+
     }
 
 
-    currentUser =
-      result.data.user;
+    const data =
+      result.data;
 
 
-    /*
-      Confirm Email OFF হলে
-      session በቀጥታ ይመጣል።
-    */
+    if(!data || !data.success){
 
-    if(result.data.session){
-
-      currentUser =
-        result.data.session.user;
-
-      await afterLogin();
-
-    }else{
-
-      showMessage(
-        "registerMessage",
-        "መለያው ተፈጥሯል። Login አድርግ።",
-        "success"
+      throw new Error(
+        data?.message ||
+        "Registration failed."
       );
 
-      $("loginPhone").value =
-        phone;
-
-      $("loginPassword").value =
-        password;
-
-      setTimeout(
-        showLogin,
-        1200
-      );
     }
+
+
+    currentUser = {
+
+      id:data.id,
+
+      phone:data.phone,
+
+      user_metadata:{
+        phone:data.phone
+      }
+
+    };
+
+
+    localStorage.setItem(
+      "delalaye_session",
+      JSON.stringify({
+        id:data.id,
+        phone:data.phone
+      })
+    );
+
+
+    await afterLogin();
 
 
   }catch(error){
@@ -1013,25 +919,10 @@ async function register(){
     );
 
 
-    let message =
-      error?.message ||
-      "Registration failed.";
-
-
-    if(
-      message
-        .toLowerCase()
-        .includes("already registered")
-    ){
-
-      message =
-        "ይህ ስልክ ቁጥር አስቀድሞ ተመዝግቧል። Login አድርግ።";
-    }
-
-
     showMessage(
       "registerMessage",
-      message
+      error?.message ||
+      "መመዝገብ አልተቻለም።"
     );
 
 
@@ -1072,6 +963,7 @@ async function login(){
     );
 
     return;
+
   }
 
 
@@ -1083,6 +975,7 @@ async function login(){
     );
 
     return;
+
   }
 
 
@@ -1095,28 +988,60 @@ async function login(){
 
   try{
 
-    const email =
-      phoneToEmail(phone);
-
-
     const result =
-      await client.auth.signInWithPassword({
-
-        email:email,
-
-        password:password
-
-      });
+      await client.functions.invoke(
+        "auth",
+        {
+          body:{
+            action:"login",
+            phone:phone,
+            password:password
+          }
+        }
+      );
 
 
     if(result.error){
 
       throw result.error;
+
     }
 
 
-    currentUser =
-      result.data.user;
+    const data =
+      result.data;
+
+
+    if(!data || !data.success){
+
+      throw new Error(
+        data?.message ||
+        "Invalid phone number or password"
+      );
+
+    }
+
+
+    currentUser = {
+
+      id:data.id,
+
+      phone:data.phone,
+
+      user_metadata:{
+        phone:data.phone
+      }
+
+    };
+
+
+    localStorage.setItem(
+      "delalaye_session",
+      JSON.stringify({
+        id:data.id,
+        phone:data.phone
+      })
+    );
 
 
     await afterLogin();
@@ -1132,6 +1057,7 @@ async function login(){
 
     showMessage(
       "loginMessage",
+      error?.message ||
       "የስልክ ቁጥሩ ወይም Password ትክክል አይደለም።"
     );
 
@@ -1156,24 +1082,43 @@ async function initialize(){
 
   try{
 
-    const result =
-      await client.auth.getSession();
+    const saved =
+      localStorage.getItem(
+        "delalaye_session"
+      );
 
-    const session =
-      result.data.session;
+
+    if(saved){
+
+      const session =
+        JSON.parse(saved);
 
 
-    if(session){
+      if(session.id && session.phone){
 
-      currentUser =
-        session.user;
+        currentUser = {
 
-      await afterLogin();
+          id:session.id,
 
-    }else{
+          phone:session.phone,
 
-      showLogin();
+          user_metadata:{
+            phone:session.phone
+          }
+
+        };
+
+
+        await afterLogin();
+
+        return;
+
+      }
+
     }
+
+
+    showLogin();
 
 
   }catch(error){
@@ -1183,33 +1128,17 @@ async function initialize(){
       error
     );
 
+
+    localStorage.removeItem(
+      "delalaye_session"
+    );
+
+
+    currentUser = null;
+
     showLogin();
+
   }
-
-
-  client.auth.onAuthStateChange(
-    function(event,session){
-
-      if(session){
-
-        currentUser =
-          session.user;
-
-      }else{
-
-        currentUser = null;
-
-        currentProfile = null;
-
-        $("logoutBtn")
-          .classList
-          .add("hidden");
-
-        showLogin();
-      }
-
-    }
-  );
 
 }
 
@@ -1225,6 +1154,7 @@ async function afterLogin(){
     showLogin();
 
     return;
+
   }
 
 
@@ -1239,7 +1169,10 @@ async function afterLogin(){
       await client
         .from("User")
         .select("*")
-        .eq("id",currentUser.id)
+        .eq(
+          "id",
+          currentUser.id
+        )
         .maybeSingle();
 
 
@@ -1250,11 +1183,13 @@ async function afterLogin(){
         result.error
       );
 
+
       currentProfile = null;
 
       showRolePage();
 
       return;
+
     }
 
 
@@ -1270,6 +1205,7 @@ async function afterLogin(){
       showRolePage();
 
       return;
+
     }
 
 
@@ -1283,13 +1219,14 @@ async function afterLogin(){
     console.error(error);
 
     showRolePage();
+
   }
 
 }
 
 
 /* =====================================================
-   ROLE PAGE
+   ROLE
 ===================================================== */
 
 function showRolePage(){
@@ -1310,7 +1247,9 @@ function showRolePage(){
     "roleAdmin"
   ].forEach(function(id){
 
-    $(id).classList.remove("active");
+    $(id)
+      .classList
+      .remove("active");
 
   });
 
@@ -1329,7 +1268,9 @@ function selectRole(role){
     "roleAdmin"
   ].forEach(function(id){
 
-    $(id).classList.remove("active");
+    $(id)
+      .classList
+      .remove("active");
 
   });
 
@@ -1373,6 +1314,7 @@ async function saveRole(){
     );
 
     return;
+
   }
 
 
@@ -1381,6 +1323,7 @@ async function saveRole(){
     showLogin();
 
     return;
+
   }
 
 
@@ -1394,6 +1337,7 @@ async function saveRole(){
   try{
 
     const phone =
+      currentUser.phone ||
       currentUser.user_metadata?.phone ||
       "";
 
@@ -1417,6 +1361,7 @@ async function saveRole(){
     if(result.error){
 
       throw result.error;
+
     }
 
 
@@ -1477,7 +1422,7 @@ function openDashboard(role){
 
     const phone =
       currentProfile?.phone ||
-      currentUser?.user_metadata?.phone ||
+      currentUser?.phone ||
       "";
 
 
@@ -1510,10 +1455,10 @@ function openDashboard(role){
 
     loadAdmin();
 
-
   }else{
 
     showRolePage();
+
   }
 
 }
@@ -1535,6 +1480,7 @@ async function submitRequest(event){
     showLogin();
 
     return;
+
   }
 
 
@@ -1567,6 +1513,7 @@ async function submitRequest(event){
     );
 
     return;
+
   }
 
 
@@ -1613,6 +1560,7 @@ async function submitRequest(event){
     if(result.error){
 
       throw result.error;
+
     }
 
 
@@ -1687,6 +1635,7 @@ async function loadCustomerRequests(){
     if(result.error){
 
       throw result.error;
+
     }
 
 
@@ -1729,6 +1678,7 @@ async function loadCustomerRequests(){
         "<p>እስካሁን ምንም ጥያቄ የለህም።</p>";
 
       return;
+
     }
 
 
@@ -1859,6 +1809,7 @@ async function saveBroker(){
     if(result.error){
 
       throw result.error;
+
     }
 
 
@@ -1916,6 +1867,7 @@ async function loadBroker(){
       );
 
       return;
+
     }
 
 
@@ -1946,9 +1898,11 @@ async function loadBroker(){
     $("brokerVerification").value =
       data.verification || "";
 
+
   }catch(error){
 
     console.error(error);
+
   }
 
 }
@@ -1990,6 +1944,7 @@ async function loadAdminCustomers(){
     if(result.error){
 
       throw result.error;
+
     }
 
 
@@ -2033,6 +1988,7 @@ async function loadAdminBrokers(){
     if(result.error){
 
       throw result.error;
+
     }
 
 
@@ -2051,6 +2007,7 @@ async function loadAdminBrokers(){
         "<p>Broker አልተገኘም።</p>";
 
       return;
+
     }
 
 
@@ -2138,6 +2095,7 @@ async function loadAdminRequests(){
     if(result.error){
 
       throw result.error;
+
     }
 
 
@@ -2156,6 +2114,7 @@ async function loadAdminRequests(){
         "<p>ጥያቄ የለም።</p>";
 
       return;
+
     }
 
 
@@ -2238,6 +2197,7 @@ function escapeHtml(value){
   .replace(/>/g,"&gt;")
   .replace(/"/g,"&quot;")
   .replace(/'/g,"&#039;");
+
 }
 
 
@@ -2245,17 +2205,11 @@ function escapeHtml(value){
    LOGOUT
 ===================================================== */
 
-async function logout(){
+function logout(){
 
-  try{
-
-    await client.auth.signOut();
-
-  }catch(error){
-
-    console.error(error);
-  }
-
+  localStorage.removeItem(
+    "delalaye_session"
+  );
 
   currentUser = null;
 
@@ -2264,7 +2218,6 @@ async function logout(){
   $("logoutBtn")
     .classList
     .add("hidden");
-
 
   showLogin();
 
@@ -2299,7 +2252,7 @@ function toggleLanguage(){
 
 
 /* =====================================================
-   START APP
+   START
 ===================================================== */
 
 document.addEventListener(
