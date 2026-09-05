@@ -110,97 +110,12 @@ Password?</button>
 onclick="registerUser()">Register</button>
 </div>
 
-<div id="otpBox" class="hidden">
-<h3>SMS Verification</h3>
-<p> OTP </p>
-<input id="otpCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 digit OTP">
-<button id="verifyBtn" class="btn" style="width:100%;margin-top:15px" onclick="verifyOTP()">Verify</button>
-<button class="btn secondary" style="width:100%;margin-top:10px" onclick="backAuth()">Back</button>
-</div>
-
 <div id="forgotBox" class="hidden">
 <h3>Forgot Password</h3>
-<label>Phone Number</label>
-<input id="forgotPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx">
-<button id="forgotBtn" class="btn" style="width:100%;margin-top:15px" onclick="sendForgotOTP()">Send
-OTP</button>
-<div id="resetBox" class="hidden">
-<label>OTP</label>
-<input id="resetOtp" inputmode="numeric" maxlength="6">
-<label>New Password</label>
-<input id="newPassword" type="password" autocomplete="new-password">
-<button class="btn success" style="width:100%;margin-top:15px" onclick="resetPassword()">Change
-Password</button>
-</div>
+<p>OTP Password reset Admin </p>
 <button class="btn secondary" style="width:100%;margin-top:10px" onclick="backAuth()">Back</button>
 </div>
 </div>
-</section>
-
-<section id="roleScreen" class="hidden">
-<div class="container">
-<div class="card">
-<h2>Choose Your Role</h2>
-<p> </p>
-<div class="role-grid">
-<div id="customerRole" class="role" onclick="chooseRole('customer')">
-<div class="icon"></div><strong>Customer</strong><span> / </span>
-</div>
-<div id="brokerRole" class="role" onclick="chooseRole('broker')">
-<div class="icon"></div><strong>Broker</strong><span></span>
-</div>
-</div>
-<button class="btn" style="margin-top:20px;width:100%" onclick="saveRole()">Continue</button>
-</div>
-</div>
-</section>
-
-<section id="customerScreen" class="hidden">
-<div class="container">
-<div class="dashboard-head card">
-<div><h2>Customer Dashboard</h2><p> </p></div>
-<button class="btn" onclick="showRequestForm()">+ New Request</button>
-</div>
-
-<div class="grid">
-<div class="stat"><span>My Requests</span><b id="customerRequestCount">0</b></div>
-<div class="stat"><span>Pending</span><b id="customerPendingCount">0</b></div>
-<div class="stat"><span>Completed</span><b id="customerCompletedCount">0</b></div>
-</div>
-
-<div id="customerRequestForm" class="card hidden">
-<h2>New Request</h2>
-<label>Category</label>
-<div class="category-grid">
-< d i v c l a s s = " c a t e g o r y " o n c l i c k = " s e l e c t C a t e g o r y ( t h i s , ' H o u s e ' ) " > < d i v
-class="icon"></div><strong>House</strong></div>
-<div class="category" onclick="selectCategory(this,'Land')"><div class="icon"></div><strong>Land</strong></div>
-<div class="category" onclick="selectCategory(this,'Car')"><div class="icon"></div><strong>Car</strong></div>
-< d i v c l a s s = " c a t e g o r y " o n c l i c k = " s e l e c t C a t e g o r y ( t h i s , ' W a r e h o u s e ' ) " > < d i v
-class="icon"></div><strong>Warehouse</strong></div>
-<div class="category" onclick="selectCategory(this,'Guest House')"><div class="icon"></div><strong>Guest
-House</strong></div>
-</div>
-<input id="requestCategory" type="hidden">
-
-<label>Sale / Rent</label>
-<select id="transactionType">
-<option value="">Select</option><option value="Sale">Sale</option><option value="Rent">Rent</option>
-</select>
-<label>Area</label>
-<input id="requestArea" placeholder="Bole">
-<label>Budget</label>
-<input id="requestBudget" type="number" min="0" placeholder="Budget">
-<label>Additional Requirements</label>
-<textarea id="requestRequirements" placeholder=" "></textarea>
-<div class="actions">
-<button class="btn success" onclick="submitRequest()">Submit Request</button>
-<button class="btn secondary" onclick="hideRequestForm()">Cancel</button>
-</div>
-<div id="requestMessage" class="message"></div>
-</div>
-
-<div class="card"><h2>My Requests</h2><div id="customerRequests"></div></div>
 </div>
 </section>
 
@@ -227,6 +142,7 @@ value="Both">Both</option>
 <button class="btn success" style="margin-top:15px" onclick="saveBroker()">Submit for Approval</button>
 <div id="brokerMessage" class="message"></div>
 </div>
+
 <div id="brokerRequestsBox" class="card hidden">
 <h2>Assigned Requests</h2><div id="brokerRequests"></div>
 </div>
@@ -260,7 +176,6 @@ let supabaseClient=null;
 let currentUser=null;
 let selectedRole=null;
 let currentLanguage=localStorage.getItem("language")||"am";
-let pendingPhone="";
 let forgotPhone="";
 
 function $(id){return document.getElementById(id)}
@@ -303,16 +218,15 @@ applyLanguage();
 };
 
 window.showLogin=function(){
-show("loginBox");hide("registerBox");hide("otpBox");hide("forgotBox");show("authTabs");
+show("loginBox");hide("registerBox");hide("forgotBox");show("authTabs");
 $("loginTab").classList.add("active");$("registerTab").classList.remove("active");clearMsg("authMessage");
 };
 window.showRegister=function(){
-hide("loginBox");show("registerBox");hide("otpBox");hide("forgotBox");show("authTabs");
+hide("loginBox");show("registerBox");hide("forgotBox");show("authTabs");
 $("loginTab").classList.remove("active");$("registerTab").classList.add("active");clearMsg("authMessage");
 };
 window.showForgot=function(){
-hide("loginBox");hide("registerBox");hide("otpBox");hide("authTabs");show("forgotBox");clearMsg("authMessage")
-;
+hide("loginBox");hide("registerBox");hide("authTabs");show("forgotBox");clearMsg("authMessage");
 };
 window.backAuth=function(){showLogin()};
 
@@ -335,35 +249,25 @@ const phone=normalizePhone($("registerPhone").value);
 const password=$("registerPassword").value;
 const confirm=$("registerConfirm").value;
 if(!phone||!password||!confirm)return msg("authMessage"," ","error");
-if(!/^\+2519\d{8}$/.test(phone))return msg("authMessage"," ","error");
+if(!/^\\+2519\\d{8}$/.test(phone))return msg("authMessage"," ","error");
 if(password.length<6)return msg("authMessage","Password 6 characters ","error");
 if(password!==confirm)return msg("authMessage","Password Confirm Password ","error");
-setBusy("registerBtn",true,"Sending...");
+setBusy("registerBtn",true,"Registering...");
 try{
-pendingPhone=phone;
-const {data,error}=await supabaseClient.auth.signUp({phone,password});
+const {data,error}=await supabaseClient.auth.signUp({
+phone,password,
+options:{data:{phone:phone}}
+});
 if(error)throw error;
-if(data&&data.user)currentUser=data.user;
-hide("registerBox");hide("authTabs");show("otpBox");
-msg("authMessage","OTP "+phone+" ","success");
-$("otpCode").focus();
+if(!data||!data.user)throw new Error("Registration failed.");
+currentUser=data.user;
+if(data.session){
+await afterLogin();
+}else{
+msg("authMessage","Account Supabase Phone Confirmation ","info");
+}
 }catch(e){console.error(e);msg("authMessage",e.message||"Registration failed","error")}
 finally{setBusy("registerBtn",false)}
-};
-
-window.verifyOTP=async function(){
-if(!(await ensureClient()))return;
-const token=$("otpCode").value.trim();
-if(!/^\d{6}$/.test(token))return msg("authMessage","6 digit OTP ","error");
-setBusy("verifyBtn",true,"Verifying...");
-try{
-const {data,error}=await supabaseClient.auth.verifyOtp({phone:pendingPhone,token,type:"sms"});
-if(error)throw error;
-currentUser=data.user;
-msg("authMessage"," ","success");
-await afterLogin();
-}catch(e){console.error(e);msg("authMessage",e.message||"OTP verification failed","error")}
-finally{setBusy("verifyBtn",false)}
 };
 
 window.loginUser=async function(){
@@ -380,40 +284,13 @@ await afterLogin();
 }catch(e){console.error(e);msg("authMessage",e.message||"Login failed","error")}
 finally{setBusy("loginBtn",false)}
 };
-
 window.sendForgotOTP=async function(){
-if(!(await ensureClient()))return;
-forgotPhone=normalizePhone($("forgotPhone").value);
-if(!/^\+2519\d{8}$/.test(forgotPhone))return msg("authMessage"," ","error");
-setBusy("forgotBtn",true,"Sending...");
-try{
-const {error}=await supabaseClient.auth.signInWithOtp({phone:forgotPhone});
-if(error)throw error;
-show("resetBox");
-msg("authMessage","OTP "+forgotPhone+" ","success");
-}catch(e){msg("authMessage",e.message||"Failed","error")}
-finally{setBusy("forgotBtn",false)}
+msg("authMessage","OTP Phone Password Reset ","info");
 };
-
 window.resetPassword=async function(){
-const otp=$("resetOtp").value.trim(),newPassword=$("newPassword").value;
-if(!/^\d{6}$/.test(otp)||!newPassword)return msg("authMessage","OTP New Password ","error");
-if(newPassword.length<6)return msg("authMessage","Password 6 characters ","error");
-try{
-const {error}=await supabaseClient.auth.verifyOtp({phone:forgotPhone,token:otp,type:"sms"});
-if(error)throw error;
-const result=await supabaseClient.auth.updateUser({password:newPassword});
-if(result.error)throw result.error;
-msg("authMessage","Password ","success");
-setTimeout(showLogin,1200);
-}catch(e){msg("authMessage",e.message||"Password reset failed","error")}
+msg("authMessage","OTP Password Reset ","info");
 };
 
-window.chooseRole=function(role){
-selectedRole=role;
-$("customerRole").classList.toggle("selected",role==="customer");
-$("brokerRole").classList.toggle("selected",role==="broker");
-};
 
 async function getUserProfile(){
 const {data,error}=await supabaseClient.from("User").select("*").eq("auth_user_id",currentUser.id).maybeSingle();
@@ -442,7 +319,6 @@ if(error)throw error;
 selectedRole==="broker"?await openBroker():await openCustomer();
 }catch(e){console.error(e);alert("Role "+(e.message||""))}
 };
-
 async function afterLogin(){
 if(!currentUser)return;
 hide("authScreen");hide("roleScreen");show("mainHeader");
@@ -613,4 +489,4 @@ initialize();
 </script>
 </body>
 </html>
-14 / 14
+11 / 11
