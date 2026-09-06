@@ -1,241 +1,162 @@
-<!DOCTYPE html>
-<html lang="am">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ደላላዬ</title>
+
+<!DOCTYPE html> <html lang="am"> <head> <meta charset="UTF-8"> <meta name="viewport"
+content="width=device-width,initial-scale=1.0"> <title></title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Noto Sans Ethiopic",sans-serif;background:#f5f7fb;color:#172033}
-header{background:#123b6d;color:white;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:10}
-header h2{margin:0;font-size:22px}
-button{border:0;border-radius:8px;padding:12px 16px;cursor:pointer;font-weight:bold;background:#123b6d;color:white}
-button:disabled{opacity:.6;cursor:not-allowed}
-.headerBtn{background:white;color:#123b6d;padding:8px 12px}
-.page{max-width:900px;margin:auto;padding:20px}
-.card{background:white;border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 3px 15px rgba(0,0,0,.08)}
-.hidden{display:none!important}
-h1,h2,h3{margin-top:0}
-input,select,textarea{width:100%;padding:13px;border:1px solid #ccd3df;border-radius:8px;margin:7px 0 14px;font-size:16px;background:white}
-textarea{min-height:110px;resize:vertical}
-label{font-weight:bold;display:block;margin-top:8px}
-.primary{width:100%;background:#123b6d;margin-top:5px}
-.secondary{background:#eef3f9;color:#123b6d;width:100%;margin-top:8px}
-.success{color:#087443;background:#eaf8f0;padding:12px;border-radius:8px;margin-bottom:12px}
-.error{color:#a61b1b;background:#fff0f0;padding:12px;border-radius:8px;margin-bottom:12px}
-.roleGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.role{border:2px solid #d8dfeb;border-radius:12px;padding:22px 10px;text-align:center;cursor:pointer;background:white}
-.role.active{border-color:#123b6d;background:#eef5ff}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.stat{background:#f1f5fa;padding:18px;border-radius:10px;text-align:center}
-.stat strong{display:block;font-size:28px;margin-top:5px}
-.request{border:1px solid #dde3ec;border-radius:10px;padding:15px;margin:10px 0}
-.topActions{display:flex;gap:8px;flex-wrap:wrap}
-.small{font-size:13px;color:#687386}
-@media(max-width:650px){.roleGrid,.stats{grid-template-columns:1fr}header h2{font-size:18px}.page{padding:12px}}
-</style>
-</head>
-<body>
-<header>
-<h2>ደላላዬ</h2>
-<div class="topActions">
-<button class="headerBtn" onclick="toggleLanguage()">EN / አማ</button>
-<button id="logoutBtn" class="headerBtn hidden" onclick="logout()">Logout</button>
-</div>
-</header>
+* { b o x - s i z i n g : b o r d e r - b o x } b o d y { m a r g i n : 0 ; f o n t - f a m i l y : A r i a l , " N o t o S a n s E t h i o p i c " , s a n s -
+serif;background:#f5f7fb;color:#172033}
+header{background:#123b6d;color:white;padding:15px 20px;display:flex;align-items:center;justify-content:space-
+between;gap:10px;position:sticky;top:0;z-index:10}
+header h2{margin:0;font-size:22px} button{border:0;border-radius:8px;padding:12px 16px;cursor:pointer;font-
+weight:bold;background:#123b6d;color:white} button:disabled{opacity:.6;cursor:not-allowed}
+. h e a d e r B t n { b a c k g r o u n d : w h i t e ; c o l o r : # 1 2 3 b 6 d ; p a d d i n g : 8 p x 1 2 p x } . p a g e { m a x -
+width:900px;margin:auto;padding:20px}.card{background:white;border-radius:14px;padding:22px;margin-
+bottom:18px;box-shadow:0 3px 15px rgba(0,0,0,.08)}
+.hidden{display:none!important} h1,h2,h3{margin-top:0} input,select,textarea{width:100%;padding:13px;border:1px
+solid #ccd3df;border-radius:8px;margin:7px 0 14px;font-size:16px;background:white}
+t e x t a r e a { m i n - h e i g h t : 1 1 0 p x ; r e s i z e : v e r t i c a l } l a b e l { f o n t - w e i g h t : b o l d ; d i s p l a y : b l o c k ; m a r g i n -
+t o p : 8 p x } . p r i m a r y { w i d t h : 1 0 0 % ; b a c k g r o u n d : # 1 2 3 b 6 d ; m a r g i n -
+top:5px}.secondary{background:#eef3f9;color:#123b6d;width:100%;margin-top:8px}
+. s u c c e s s { c o l o r : # 0 8 7 4 4 3 ; b a c k g r o u n d : # e a f 8 f 0 ; p a d d i n g : 1 2 p x ; b o r d e r - r a d i u s : 8 p x ; m a r g i n -
+bottom:12px}.error{color:#a61b1b;background:#fff0f0;padding:12px;border-radius:8px;margin-bottom:12px}
+.roleGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.role{border:2px solid #d8dfeb;border-
+radius:12px;padding:22px 10px;text-align:center;cursor:pointer;background:white}.role.active{border-
+color:#123b6d;background:#eef5ff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#f1f5fa;padding:18px;border-
+radius:10px;text-align:center}.stat strong{display:block;font-size:28px;margin-top:5px}
+. r e q u e s t { b o r d e r : 1 p x s o l i d # d d e 3 e c ; b o r d e r - r a d i u s : 1 0 p x ; p a d d i n g : 1 5 p x ; m a r g i n : 1 0 p x
+0}.topActions{display:flex;gap:8px;flex-wrap:wrap}.small{font-size:13px;color:#687386}
+@ m e d i a ( m a x - w i d t h : 6 5 0 p x ) { . r o l e G r i d , . s t a t s { g r i d - t e m p l a t e - c o l u m n s : 1 f r } h e a d e r h 2 { f o n t -
+size:18px}.page{padding:12px}}
+</style></head><body>
+<header><h2></h2><div class="topActions"><button class="headerBtn" onclick="toggleLanguage()">EN /
+</button><button id="logoutBtn" class="headerBtn hidden" onclick="logout()">Logout</button></div></header>
 <div class="page">
-<section id="loginPage" class="card">
-<h1 id="loginTitle">ግባ</h1>
-<div id="loginMessage"></div>
-<label>ስልክ ቁጥር</label>
-<input id="loginPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx">
-<label>የይለፍ ቃል</label>
-<input id="loginPassword" type="password" placeholder="Password">
-<button id="loginBtn" class="primary" onclick="login()">ግባ</button>
-<button class="secondary" onclick="showRegister()">አዲስ መለያ ፍጠር</button>
-<button class="secondary" onclick="showForgot()">የይለፍ ቃሌን ረሳሁ</button>
-</section>
-<section id="registerPage" class="card hidden">
-<h1>መለያ ፍጠር</h1>
-<div id="registerMessage"></div>
-<label>ስልክ ቁጥር</label>
-<input id="registerPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx">
-<label>የይለፍ ቃል</label>
-<input id="registerPassword" type="password" placeholder="ቢያንስ 6 ቁምፊ">
-<label>የይለፍ ቃል እንደገና</label>
-<input id="registerPassword2" type="password" placeholder="Password again">
-<button id="registerBtn" class="primary" onclick="register()">መለያ ፍጠር</button>
-<button class="secondary" onclick="showLogin()">ወደ Login ተመለስ</button>
-</section>
-<section id="forgotPage" class="card hidden">
-<h1>የይለፍ ቃል ረስተዋል?</h1>
-<p class="small">Password reset ሂደት በኋላ እንጨምረዋለን።</p>
-<button class="secondary" onclick="showLogin()">ወደ Login ተመለስ</button>
-</section>
-<section id="rolePage" class="card hidden">
-<h1>የመለያ አይነት ምረጥ</h1>
-<div id="roleMessage"></div>
-<div class="roleGrid">
-<div id="roleCustomer" class="role" onclick="selectRole('customer')"><h3>👤</h3><strong>Customer</strong><p class="small">ገዢ / ተከራይ</p></div>
-<div id="roleBroker" class="role" onclick="selectRole('broker')"><h3>🏢</h3><strong>Broker</strong><p class="small">ደላላ</p></div>
-<div id="roleAdmin" class="role" onclick="selectRole('admin')"><h3>⚙️</h3><strong>Admin</strong><p class="small">አስተዳዳሪ</p></div>
-</div>
-<button id="saveRoleBtn" class="primary" onclick="saveRole()">ቀጥል</button>
-</section>
-<section id="customerPage" class="hidden">
-<div class="card">
-<h1>Customer Dashboard</h1>
-<p id="customerPhone" class="small"></p>
-<div class="stats">
-<div class="stat"><span>ጠቅላላ ጥያቄ</span><strong id="customerRequestCount">0</strong></div>
-<div class="stat"><span>Pending</span><strong id="customerPendingCount">0</strong></div>
-<div class="stat"><span>Completed</span><strong id="customerCompletedCount">0</strong></div>
-</div>
-</div>
-<div class="card">
-<h2>የንብረት ጥያቄ ላክ</h2>
-<div id="requestMessage"></div>
-<form id="customerRequestForm" onsubmit="submitRequest(event)">
-<label>የንብረት አይነት</label>
-<select id="requestCategory" required>
-<option value="">ምረጥ</option><option value="House">ቤት</option><option value="Land">መሬት</option><option value="Apartment">አፓርታማ</option><option value="Vehicle">መኪና</option><option value="Other">ሌላ</option>
-</select>
-<label>የግብይት አይነት</label>
-<select id="transactionType" required>
-<option value="">ምረጥ</option><option value="Buy">መግዛት</option><option value="Rent">መከራየት</option>
-</select>
-<label>አካባቢ</label><input id="requestArea" placeholder="ለምሳሌ ቦሌ">
-<label>Budget</label><input id="requestBudget" type="number" placeholder="በብር">
-<label>ተጨማሪ መስፈርቶች</label><textarea id="requestRequirements" placeholder="የምትፈልገውን ንብረት ዝርዝር ጻፍ"></textarea>
-<button id="requestBtn" class="primary" type="submit">ጥያቄ ላክ</button>
-</form>
-</div>
-<div class="card"><h2>የእኔ ጥያቄዎች</h2><div id="customerRequests">ጥያቄዎች በመጫን ላይ...</div></div>
-</section>
-<section id="brokerPage" class="hidden">
-<div class="card">
-<h1>Broker Dashboard</h1><div id="brokerStatus"></div><h2>የBroker ምዝገባ</h2>
-<div id="brokerRegistration">
-<label>ስም</label><input id="brokerName" placeholder="ሙሉ ስም">
-<label>ስልክ</label><input id="brokerPhone" placeholder="09xxxxxxxx">
-<label>የምትሰራባቸው አካባቢዎች</label><input id="brokerAreas" placeholder="ለምሳሌ ቦሌ, መገናኛ">
-<label>የንብረት አይነት</label><input id="brokerCategories" placeholder="ቤት, መሬት, መኪና">
-<label>የግብይት አይነት</label>
-<select id="brokerTransaction"><option value="Both">ሁለቱም</option><option value="Buy">ሽያጭ</option><option value="Rent">ኪራይ</option></select>
-<label>Verification</label><input id="brokerVerification" placeholder="ማረጋገጫ መረጃ">
-<button class="primary" onclick="saveBroker()">የBroker መረጃ አስቀምጥ</button>
-</div>
-</div>
-<div class="card"><h2>የተመደቡ ጥያቄዎች</h2><div id="brokerRequestsBox"><div id="brokerRequests">ምንም ጥያቄ የለም።</div></div></div>
-</section>
-<section id="adminPage" class="hidden">
-<div class="card">
-<h1>Admin Dashboard</h1><p class="small">የደላላዬ ስርዓት አስተዳደር</p>
-<div class="stats">
-<div class="stat"><span>Customers</span><strong id="adminCustomers">0</strong></div>
-<div class="stat"><span>Brokers</span><strong id="adminBrokers">0</strong></div>
-<div class="stat"><span>Requests</span><strong id="adminRequests">0</strong></div>
-</div>
-</div>
-<div class="card"><h2>የተመዘገቡ Brokers</h2><div id="adminBrokersList">በመጫን ላይ...</div></div>
-<div class="card"><h2>የCustomer ጥያቄዎች</h2><div id="adminRequestsList">በመጫን ላይ...</div></div>
-</section>
+<section id="loginPage" class="card"><h1 id="loginTitle"></h1><div id="loginMessage"></div><label>
+</label><input id="loginPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx"><label> </label><input
+id="loginPassword" type="password" placeholder="Password"><button id="loginBtn" class="primary"
+onclick="login()"></button><button class="secondary" onclick="showRegister()"> </button><button
+class="secondary" onclick="showForgot()"> </button></section>
+<section id="registerPage" class="card hidden"><h1> </h1><div id="registerMessage"></div><label>
+</label><input id="registerPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx"><label> </label><input
+id="registerPassword" type="password" placeholder=" 6 "><label> </label><input id="registerPassword2"
+type="password" placeholder="Password again"><button id="registerBtn" class="primary" onclick="register()">
+</button><button class="secondary" onclick="showLogin()"> Login </button></section>
+<section id="forgotPage" class="card hidden"><h1> ?</h1><p class="small">Password reset </p><button
+class="secondary" onclick="showLogin()"> Login </button></section>
+<section id="rolePage" class="card hidden"><h1> </h1><div id="roleMessage"></div><div class="roleGrid"><div
+id="roleCustomer" class="role" onclick="selectRole('customer')"><h3></h3><strong>Customer</strong><p
+c l a s s = " s m a l l " > / < / p > < / d i v > < d i v i d = " r o l e B r o k e r " c l a s s = " r o l e "
+onclick="selectRole('broker')"><h3></h3><strong>Broker</strong><p class="small"></p></div><div
+id="roleAdmin" class="role" onclick="selectRole('admin')"><h3></h3><strong>Admin</strong><p
+c l a s s = " s m a l l " > < / p > < / d i v > < / d i v > < b u t t o n i d = " s a v e R o l e B t n " c l a s s = " p r i m a r y "
+onclick="saveRole()"></button></section>
+< s e c t i o n i d = " c u s t o m e r P a g e " c l a s s = " h i d d e n " > < d i v c l a s s = " c a r d " > < h 1 > C u s t o m e r D a s h b o a r d < / h 1 > < p
+id="customerPhone" class="small"></p><div class="stats"><div class="stat"><span> </span><strong
+i d = " c u s t o m e r R e q u e s t C o u n t " > 0 < / s t r o n g > < / d i v > < d i v c l a s s = " s t a t " > < s p a n > P e n d i n g < / s p a n > < s t r o n g
+i d = " c u s t o m e r P e n d i n g C o u n t " > 0 < / s t r o n g > < / d i v > < d i v c l a s s = " s t a t " > < s p a n > C o m p l e t e d < / s p a n > < s t r o n g
+id="customerCompletedCount">0</strong></div></div></div>
+<div class="card"><h2> </h2><div id="requestMessage"></div><form id="customerRequestForm"
+onsubmit="submitRequest(event)"><label> </label><select id="requestCategory" required><option
+v a l u e = " " > < / o p t i o n > < o p t i o n v a l u e = " H o u s e " > < / o p t i o n > < o p t i o n v a l u e = " L a n d " > < / o p t i o n > < o p t i o n
+value="Apartment"></option><option value="Vehicle"></option><option value="Other"></option></select><label>
+</label><select id="transactionType" required><option value=""></option><option value="Buy"></option><option
+v a l u e = " R e n t " > < / o p t i o n > < / s e l e c t > < l a b e l > < / l a b e l > < i n p u t i d = " r e q u e s t A r e a " p l a c e h o l d e r = "
+"><label>Budget</label><input id="requestBudget" type="number" placeholder=""><label> </label><textarea
+id="requestRequirements" placeholder=" "></textarea><button id="requestBtn" class="primary" type="submit">
+</button></form></div>
+<div class="card"><h2> </h2><div id="customerRequests"> ...</div></div></section>
+< s e c t i o n i d = " b r o k e r P a g e " c l a s s = " h i d d e n " > < d i v c l a s s = " c a r d " > < h 1 > B r o k e r D a s h b o a r d < / h 1 > < d i v
+id="brokerStatus"></div><h2>Broker </h2><div id="brokerRegistration"><label></label><input id="brokerName"
+placeholder=" "><label></label><input id="brokerPhone" placeholder="09xxxxxxxx"><label> </label><input
+id="brokerAreas" placeholder=" , "><label> </label><input id="brokerCategories" placeholder=", , "><label>
+</label><select id="brokerTransaction"><option value="Both"></option><option value="Buy"></option><option
+value="Rent"></option></select><label>Verification</label><input id="brokerVerification" placeholder="
+"><button class="primary" onclick="saveBroker()">Broker </button></div></div><div class="card"><h2>
+</h2><div id="brokerRequestsBox"><div id="brokerRequests"> </div></div></div></section>
+<section id="adminPage" class="hidden"><div class="card"><h1>Admin Dashboard</h1><p class="small">
+< / p > < d i v c l a s s = " s t a t s " > < d i v c l a s s = " s t a t " > < s p a n > C u s t o m e r s < / s p a n > < s t r o n g
+i d = " a d m i n C u s t o m e r s " > 0 < / s t r o n g > < / d i v > < d i v c l a s s = " s t a t " > < s p a n > B r o k e r s < / s p a n > < s t r o n g
+i d = " a d m i n B r o k e r s " > 0 < / s t r o n g > < / d i v > < d i v c l a s s = " s t a t " > < s p a n > R e q u e s t s < / s p a n > < s t r o n g
+i d = " a d m i n R e q u e s t s " > 0 < / s t r o n g > < / d i v > < / d i v > < / d i v > < d i v c l a s s = " c a r d " > < h 2 > B r o k e r s < / h 2 > < d i v
+id="adminBrokersList"> ...</div></div><div class="card"><h2>Customer </h2><div id="adminRequestsList">
+...</div></div></section>
 </div>
 <script>
 const SUPABASE_URL="https://tpmsqpwxomgfxqeqognf.supabase.co";
 const SUPABASE_KEY="sb_publishable_7CfDLIIrEs158_WIkEkmJg_OmB-nHOx";
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let currentUser=null;
-let currentProfile=null;
-let selectedRole=null;
-let english=false;
-
+let currentUser=null,currentProfile=null,selectedRole=null,english=false;
 function $(id){return document.getElementById(id)}
-function hideAllPages(){
-["loginPage","registerPage","forgotPage","rolePage","customerPage","brokerPage","adminPage"].forEach(function(id){const el=$(id);if(el){el.classList.add("hidden")}})
-}
-function showMessage(id,message,type){
-const el=$(id);if(!el){return}type=type||"error";
-el.innerHTML='<div class="'+type+'">'+escapeHtml(message)+'</div>';
-}
-function clearMessage(id){const el=$(id);if(el){el.innerHTML=""}}
-function setBusy(id,busy,text){
-const el=$(id);if(!el){return}
-if(busy){el.disabled=true;if(!el.dataset.oldText){el.dataset.oldText=el.textContent}el.textContent=text||"Please wait..."}
-else{el.disabled=false;if(el.dataset.oldText){el.textContent=el.dataset.oldText;delete el.dataset.oldText}}
-}
-function normalizePhone(value){
-let phone=String(value||"").trim();phone=phone.replace(/[^\d+]/g,"");
-if(/^09\d{8}$/.test(phone)){return "+251"+phone.substring(1)}
-if(/^9\d{8}$/.test(phone)){return "+251"+phone}
-if(/^2519\d{8}$/.test(phone)){return "+"+phone}
-if(/^\+2519\d{8}$/.test(phone)){return phone}
-return phone;
-}
+f u n c t i o n
+hideAllPages(){["loginPage","registerPage","forgotPage","rolePage","customerPage","brokerPage","adminPage"].for
+Each(id=>{const el=$(id);if(el)el.classList.add("hidden")})}
+function showMessage(id,message,type){const el=$(id);if(!el)return;type=type||"error";el.innerHTML='<div
+class="'+type+'">'+escapeHtml(message)+'</div>'}
+function clearMessage(id){const el=$(id);if(el)el.innerHTML=""}
+f u n c t i o n s e t B u s y ( i d , b u s y , t e x t ) { c o n s t
+el=$(id);if(!el)return;if(busy){el.disabled=true;if(!el.dataset.oldText)el.dataset.oldText=el.textContent;el.textContent=
+text||"Please wait..."}else{el.disabled=false;if(el.dataset.oldText){el.textContent=el.dataset.oldText;delete
+el.dataset.oldText}}}
+f u n c t i o n n o r m a l i z e P h o n e ( v a l u e ) { l e t
+p h o n e = S t r i n g ( v a l u e | | " " ) . t r i m ( ) . r e p l a c e ( / [ ^ \ d + ] / g , " " ) ; i f ( / ^ 0 9 \ d { 8 } $ / . t e s t ( p h o n e ) ) r e t u r n
+"+251"+phone.substring(1);if(/^9\d{8}$/.test(phone))return "+251"+phone;if(/^2519\d{8}$/.test(phone))return
+"+"+phone;if(/^\+2519\d{8}$/.test(phone))return phone;return phone}
 function isValidEthiopianPhone(phone){return /^\+2519\d{8}$/.test(phone)}
 function showLogin(){hideAllPages();$("loginPage").classList.remove("hidden");clearMessage("loginMessage")}
-function showRegister(){hideAllPages();$("registerPage").classList.remove("hidden");clearMessage("registerMessage")}
+f u n c t i o n
+showRegister(){hideAllPages();$("registerPage").classList.remove("hidden");clearMessage("registerMessage")}
 function showForgot(){hideAllPages();$("forgotPage").classList.remove("hidden")}
 
 async function register(){
 clearMessage("registerMessage");
-const phone=normalizePhone($("registerPhone").value);
-const password=$("registerPassword").value;
-const password2=$("registerPassword2").value;
-if(!isValidEthiopianPhone(phone)){showMessage("registerMessage","ትክክለኛ የኢትዮጵያ ስልክ ቁጥር አስገባ። ለምሳሌ 0912345678");return}
-if(password.length<6){showMessage("registerMessage","Password ቢያንስ 6 ቁምፊ መሆን አለበት።");return}
-if(password!==password2){showMessage("registerMessage","ሁለቱ Password አንድ አይደሉም።");return}
-setBusy("registerBtn",true,"በመመዝገብ ላይ...");
+c o n s t
+phone=normalizePhone($("registerPhone").value),password=$("registerPassword").value,password2=$("registerPass
+word2").value;
+if(!isValidEthiopianPhone(phone)){showMessage("registerMessage"," 0912345678");return}
+if(password.length<6){showMessage("registerMessage","Password 6 ");return}
+if(password!==password2){showMessage("registerMessage"," Password ");return}
+setBusy("registerBtn",true," ...");
 try{
-const result=await client.functions.invoke("delalaye-auth",{body:{action:"register",phone:phone,password:password}});
-if(result.error){throw result.error}
+const result=await client.functions.invoke("delalaye-auth",{body:{action:"register",phone,password}});
+if(result.error)throw result.error;
 const data=result.data;
-if(!data||!data.success){throw new Error(data?.message||"Registration failed.")}
+if(!data||!data.success)throw new Error(data?.message||"Registration failed.");
 currentUser={id:data.id,phone:data.phone,user_metadata:{phone:data.phone}};
 localStorage.setItem("delalaye_session",JSON.stringify({id:data.id,phone:data.phone}));
 await afterLogin();
-}catch(error){
-console.error("REGISTER ERROR:",error);
-showMessage("registerMessage",error?.message||"መመዝገብ አልተቻለም።");
-}finally{setBusy("registerBtn",false)}
+}catch(error){console.error("REGISTER ERROR:",error);showMessage("registerMessage",error?.message||" ")}
+finally{setBusy("registerBtn",false)}
 }
 
 async function login(){
 clearMessage("loginMessage");
-const phone=normalizePhone($("loginPhone").value);
-const password=$("loginPassword").value;
-if(!isValidEthiopianPhone(phone)){showMessage("loginMessage","ትክክለኛ የኢትዮጵያ ስልክ ቁጥር አስገባ። ለምሳሌ 0912345678");return}
-if(!password){showMessage("loginMessage","Password አስገባ።");return}
-setBusy("loginBtn",true,"በመግባት ላይ...");
+const phone=normalizePhone($("loginPhone").value),password=$("loginPassword").value;
+if(!isValidEthiopianPhone(phone)){showMessage("loginMessage"," 0912345678");return}
+if(!password){showMessage("loginMessage","Password ");return}
+setBusy("loginBtn",true," ...");
 try{
-const result=await client.functions.invoke("delalaye-auth",{body:{action:"login",phone:phone,password:password}});
-if(result.error){throw result.error}
+const result=await client.functions.invoke("delalaye-auth",{body:{action:"login",phone,password}});
+if(result.error)throw result.error;
 const data=result.data;
-if(!data||!data.success){throw new Error(data?.message||"Invalid phone number or password")}
+if(!data||!data.success)throw new Error(data?.message||"Invalid phone number or password");
 currentUser={id:data.id,phone:data.phone,user_metadata:{phone:data.phone}};
 localStorage.setItem("delalaye_session",JSON.stringify({id:data.id,phone:data.phone}));
 await afterLogin();
-}catch(error){
-console.error("LOGIN ERROR:",error);
-showMessage("loginMessage",error?.message||"የስልክ ቁጥሩ ወይም Password ትክክል አይደለም።");
-}finally{setBusy("loginBtn",false)}
+}catch(error){console.error("LOGIN ERROR:",error);showMessage("loginMessage",error?.message||" Password
+")}
+finally{setBusy("loginBtn",false)}
 }
 
 async function initialize(){
 try{
 const saved=localStorage.getItem("delalaye_session");
-if(saved){
-const session=JSON.parse(saved);
-if(session.id&&session.phone){
-currentUser={id:session.id,phone:session.phone,user_metadata:{phone:session.phone}};
-await afterLogin();return;
-}}
+i f ( s a v e d ) { c o n s t
+session=JSON.parse(saved);if(session.id&&session.phone){currentUser={id:session.id,phone:session.phone,user_met
+adata:{phone:session.phone}};await afterLogin();return}}
 showLogin();
-}catch(error){
-console.error("SESSION ERROR:",error);
-localStorage.removeItem("delalaye_session");currentUser=null;showLogin();
-}
+} c a t c h ( e r r o r ) { c o n s o l e . e r r o r ( " S E S S I O N
+ERROR:",error);localStorage.removeItem("delalaye_session");currentUser=null;showLogin()}
 }
 
 async function afterLogin(){
@@ -252,190 +173,128 @@ openDashboard(currentProfile.role);
 
 function showRolePage(){
 hideAllPages();$("rolePage").classList.remove("hidden");selectedRole=null;
-["roleCustomer","roleBroker","roleAdmin"].forEach(function(id){$(id).classList.remove("active")});
+["roleCustomer","roleBroker","roleAdmin"].forEach(id=>$(id).classList.remove("active"))
 }
 function selectRole(role){
-selectedRole=role;
-["roleCustomer","roleBroker","roleAdmin"].forEach(function(id){$(id).classList.remove("active")});
-const map={customer:"roleCustomer",broker:"roleBroker",admin:"roleAdmin"};
-if(map[role]){$(map[role]).classList.add("active")}
+selectedRole=role;["roleCustomer","roleBroker","roleAdmin"].forEach(id=>$(id).classList.remove("active"));
+c o n s t
+map={customer:"roleCustomer",broker:"roleBroker",admin:"roleAdmin"};if(map[role])$(map[role]).classList.add("a
+ctive")
 }
-
 async function saveRole(){
 clearMessage("roleMessage");
-if(!selectedRole){showMessage("roleMessage","የመለያ አይነት ምረጥ።");return}
+if(!selectedRole){showMessage("roleMessage"," ");return}
 if(!currentUser){showLogin();return}
-setBusy("saveRoleBtn",true,"በማስቀመጥ ላይ...");
+setBusy("saveRoleBtn",true," ...");
 try{
-const phone=currentUser.phone||currentUser.user_metadata?.phone||"";
-const result=await client.from("User").upsert({id:currentUser.id,phone:phone,role:selectedRole}).select().single();
-if(result.error){throw result.error}
+c o n s t r e s u l t = a w a i t
+client.from("User").upsert({id:currentUser.id,phone:currentUser.phone||currentUser.user_metadata?.phone||"",role:sel
+ectedRole}).select().single();
+if(result.error)throw result.error;
 currentProfile=result.data;openDashboard(selectedRole);
-}catch(error){
-console.error("ROLE ERROR:",error);
-showMessage("roleMessage","Role ማስቀመጥ አልተቻለም። Supabase User table/RLS መፈተሽ ያስፈልጋል።");
-}finally{setBusy("saveRoleBtn",false)}
+}catch(error){console.error("ROLE ERROR:",error);showMessage("roleMessage","Role Supabase User table/RLS
+")}
+finally{setBusy("saveRoleBtn",false)}
 }
-
 function openDashboard(role){
 hideAllPages();$("logoutBtn").classList.remove("hidden");
-if(role==="customer"){
-$("customerPage").classList.remove("hidden");
-const phone=currentProfile?.phone||currentUser?.phone||"";
-$("customerPhone").textContent=phone?"ስልክ: "+phone:"";
-loadCustomerRequests();
-}else if(role==="broker"){
-$("brokerPage").classList.remove("hidden");loadBroker();
-}else if(role==="admin"){
-$("adminPage").classList.remove("hidden");loadAdmin();
-}else{showRolePage()}
+if(role==="customer"){$("customerPage").classList.remove("hidden");$("customerPhone").textContent=(currentProfi
+le?.phone||currentUser?.phone)?": "+(currentProfile?.phone||currentUser?.phone):"";loadCustomerRequests()}
+else if(role==="broker"){$("brokerPage").classList.remove("hidden");loadBroker()}
+else if(role==="admin"){$("adminPage").classList.remove("hidden");loadAdmin()}
+else showRolePage()
 }
 
 async function submitRequest(event){
-event.preventDefault();clearMessage("requestMessage");
-if(!currentUser){showLogin();return}
-const category=$("requestCategory").value;
-const transaction=$("transactionType").value;
-const area=$("requestArea").value.trim();
-const budget=$("requestBudget").value;
-const requirements=$("requestRequirements").value.trim();
-if(!category||!transaction){showMessage("requestMessage","የንብረት እና የግብይት አይነት ምረጥ።");return}
-setBusy("requestBtn",true,"በመላክ ላይ...");
+event.preventDefault();clearMessage("requestMessage");if(!currentUser){showLogin();return}
+c o n s t
+category=$("requestCategory").value,transaction=$("transactionType").value,area=$("requestArea").value.trim(),budg
+et=$("requestBudget").value,requirements=$("requestRequirements").value.trim();
+if(!category||!transaction){showMessage("requestMessage"," ");return}
+setBusy("requestBtn",true," ...");
 try{
-const result=await client.from("Request").insert({customer_id:currentUser.id,category:category,transaction_type:transaction,area:area,budget:budget?Number(budget):null,requirements:requirements,status:"Pending"});
-if(result.error){throw result.error}
-$("customerRequestForm").reset();
-showMessage("requestMessage","ጥያቄው በትክክል ተልኳል።","success");
-loadCustomerRequests();
-}catch(error){console.error(error);showMessage("requestMessage","ጥያቄውን መላክ አልተቻለም።")}
+c o n s t r e s u l t = a w a i t
+client.from("Request").insert({customer_id:currentUser.id,category,transaction_type:transaction,area,budget:budget?
+Number(budget):null,requirements,status:"Pending"});
+if(result.error)throw result.error;
+$("customerRequestForm").reset();showMessage("requestMessage"," ","success");loadCustomerRequests()
+}catch(error){console.error(error);showMessage("requestMessage"," ")}
 finally{setBusy("requestBtn",false)}
 }
-
 async function loadCustomerRequests(){
-if(!currentUser){return}
-const box=$("customerRequests");
+if(!currentUser)return;const box=$("customerRequests");
 try{
-const result=await client.from("Request").select("*").eq("customer_id",currentUser.id).order("created_at",{ascending:false});
-if(result.error){throw result.error}
-const requests=result.data||[];
+c o n s t r e s u l t = a w a i t
+client.from("Request").select("*").eq("customer_id",currentUser.id).order("created_at",{ascending:false});
+if(result.error)throw result.error;const requests=result.data||[];
 $("customerRequestCount").textContent=requests.length;
-$("customerPendingCount").textContent=requests.filter(function(r){return String(r.status||"").toLowerCase()==="pending"}).length;
-$("customerCompletedCount").textContent=requests.filter(function(r){return String(r.status||"").toLowerCase()==="completed"}).length;
-if(!requests.length){box.innerHTML="<p>እስካሁን ምንም ጥያቄ የለህም።</p>";return}
-box.innerHTML=requests.map(function(r){return `
-<div class="request">
-<strong>${escapeHtml(r.category||"")}</strong>
-<p>ግብይት: ${escapeHtml(r.transaction_type||"")}</p>
-<p>አካባቢ: ${escapeHtml(r.area||"-")}</p>
-<p>Budget: ${escapeHtml(r.budget??"-")}</p>
-<p>${escapeHtml(r.requirements||"")}</p>
-<p>Status: <strong>${escapeHtml(r.status||"Pending")}</strong></p>
-</div>`}).join("");
-}catch(error){console.error(error);box.innerHTML="<p>ጥያቄዎችን ማምጣት አልተቻለም።</p>"}
+$("customerPendingCount").textContent=requests.filter(r=>String(r.status||"").toLowerCase()==="pending").length;
+$("customerCompletedCount").textContent=requests.filter(r=>String(r.status||"").toLowerCase()==="completed").len
+gth;
+if(!requests.length){box.innerHTML="<p> </p>";return}
+box.innerHTML=requests.map(r=>`<div class="request"><strong>${escapeHtml(r.category||"")}</strong><p>:
+$ { e s c a p e H t m l ( r . t r a n s a c t i o n _ t y p e | | " " ) } < / p > < p > : $ { e s c a p e H t m l ( r . a r e a | | " - " ) } < / p > < p > B u d g e t :
+$ { e s c a p e H t m l ( r . b u d g e t ? ? " - " ) } < / p > < p > $ { e s c a p e H t m l ( r . r e q u i r e m e n t s | | " " ) } < / p > < p > S t a t u s :
+<strong>${escapeHtml(r.status||"Pending")}</strong></p></div>`).join("")
+}catch(error){console.error(error);box.innerHTML="<p> </p>"}
 }
-
 async function saveBroker(){
-if(!currentUser){return}
-const broker={
-id:currentUser.id,
-name:$("brokerName").value.trim(),
-phone:$("brokerPhone").value.trim(),
-areas:$("brokerAreas").value.trim(),
-categories:$("brokerCategories").value.trim(),
-transaction:$("brokerTransaction").value,
-verification:$("brokerVerification").value.trim()
-};
-try{
-const result=await client.from("Broker").upsert(broker);
-if(result.error){throw result.error}
-showMessage("brokerStatus","የBroker መረጃው ተቀምጧል።","success");
-}catch(error){console.error(error);showMessage("brokerStatus","Broker መረጃ ማስቀመጥ አልተቻለም።")}
+if(!currentUser)return;
+c o n s t
+broker={id:currentUser.id,name:$("brokerName").value.trim(),phone:$("brokerPhone").value.trim(),areas:$("brokerA
+reas").value.trim(),categories:$("brokerCategories").value.trim(),transaction:$("brokerTransaction").value,verification
+:$("brokerVerification").value.trim()};
+t r y { c o n s t r e s u l t = a w a i t c l i e n t . f r o m ( " B r o k e r " ) . u p s e r t ( b r o k e r ) ; i f ( r e s u l t . e r r o r ) t h r o w
+result.error;showMessage("brokerStatus","Broker ","success")}
+catch(error){console.error(error);showMessage("brokerStatus","Broker ")}
 }
-
 async function loadBroker(){
-if(!currentUser){return}
-try{
-const result=await client.from("Broker").select("*").eq("id",currentUser.id).maybeSingle();
-if(result.error){console.warn("Broker error:",result.error);return}
-const data=result.data;if(!data){return}
-$("brokerName").value=data.name||"";
-$("brokerPhone").value=data.phone||"";
-$("brokerAreas").value=data.areas||"";
-$("brokerCategories").value=data.categories||"";
-$("brokerTransaction").value=data.transaction||"Both";
-$("brokerVerification").value=data.verification||"";
+if(!currentUser)return;
+t r y { c o n s t r e s u l t = a w a i t
+client.from("Broker").select("*").eq("id",currentUser.id).maybeSingle();if(result.error){console.warn("Broker
+error:",result.error);return}const data=result.data;if(!data)return;
+$("brokerName").value=data.name||"";$("brokerPhone").value=data.phone||"";$("brokerAreas").value=data.areas||"";$
+("brokerCategories").value=data.categories||"";$("brokerTransaction").value=data.transaction||"Both";$("brokerVerific
+ation").value=data.verification||""
 }catch(error){console.error(error)}
 }
-
-async function loadAdmin(){
-await loadAdminCustomers();await loadAdminBrokers();await loadAdminRequests();
-}
-
+async function loadAdmin(){await loadAdminCustomers();await loadAdminBrokers();await loadAdminRequests()}
 async function loadAdminCustomers(){
-try{
-const result=await client.from("User").select("*",{count:"exact",head:true}).eq("role","customer");
-if(result.error){throw result.error}
-$("adminCustomers").textContent=result.count||0;
-}catch(error){console.warn(error);$("adminCustomers").textContent="—"}
+t r y { c o n s t r e s u l t = a w a i t
+client.from("User").select("*",{count:"exact",head:true}).eq("role","customer");if(result.error)throw
+result.error;$("adminCustomers").textContent=result.count||0}
+catch(error){console.warn(error);$("adminCustomers").textContent="—"}
 }
-
 async function loadAdminBrokers(){
 const box=$("adminBrokersList");
-try{
-const result=await client.from("Broker").select("*").limit(100);
-if(result.error){throw result.error}
-const data=result.data||[];$("adminBrokers").textContent=data.length;
-if(!data.length){box.innerHTML="<p>Broker አልተገኘም።</p>";return}
-box.innerHTML=data.map(function(b){return `
-<div class="request">
-<strong>${escapeHtml(b.name||"-")}</strong>
-<p>📞 ${escapeHtml(b.phone||"-")}</p>
-<p>አካባቢ: ${escapeHtml(b.areas||"-")}</p>
-<p>ንብረት: ${escapeHtml(b.categories||"-")}</p>
-</div>`}).join("");
-}catch(error){
-console.warn(error);$("adminBrokers").textContent="—";
-box.innerHTML="<p>Broker table ካልተፈጠረ ይህ ክፍል አይሰራም።</p>";
+try{const result=await client.from("Broker").select("*").limit(100);if(result.error)throw result.error;const
+data=result.data||[];$("adminBrokers").textContent=data.length;
+if(!data.length){box.innerHTML="<p>Broker </p>";return}
+box.innerHTML=data.map(b=>`<div class="request"><strong>${escapeHtml(b.name||"-")}</strong><p>
+${escapeHtml(b.phone||"-")}</p><p>: ${escapeHtml(b.areas||"-")}</p><p>: ${escapeHtml(b.categories||"-
+")}</p></div>`).join("")
+}catch(error){console.warn(error);$("adminBrokers").textContent="—";box.innerHTML="<p>Broker table </p>"}
 }
-}
-
 async function loadAdminRequests(){
 const box=$("adminRequestsList");
-try{
-const result=await client.from("Request").select("*").order("created_at",{ascending:false}).limit(100);
-if(result.error){throw result.error}
-const data=result.data||[];$("adminRequests").textContent=data.length;
-if(!data.length){box.innerHTML="<p>ጥያቄ የለም።</p>";return}
-box.innerHTML=data.map(function(r){return `
-<div class="request">
-<strong>${escapeHtml(r.category||"-")}</strong>
-<p>Transaction: ${escapeHtml(r.transaction_type||"-")}</p>
-<p>Area: ${escapeHtml(r.area||"-")}</p>
-<p>Budget: ${escapeHtml(r.budget??"-")}</p>
-<p>Status: ${escapeHtml(r.status||"Pending")}</p>
-</div>`}).join("");
-}catch(error){
-console.warn(error);$("adminRequests").textContent="—";
-box.innerHTML="<p>Request table ካልተዘጋጀ ይህ ክፍል አይሰራም።</p>";
+t r y { c o n s t r e s u l t = a w a i t
+client.from("Request").select("*").order("created_at",{ascending:false}).limit(100);if(result.error)throw
+result.error;const data=result.data||[];$("adminRequests").textContent=data.length;
+if(!data.length){box.innerHTML="<p> </p>";return}
+b o x . i n n e r H T M L = d a t a . m a p ( r = > ` < d i v c l a s s = " r e q u e s t " > < s t r o n g > $ { e s c a p e H t m l ( r . c a t e g o r y | | " -
+")}</strong><p>Transaction: ${escapeHtml(r.transaction_type||"-")}</p><p>Area: ${escapeHtml(r.area||"-
+" ) } < / p > < p > B u d g e t : $ { e s c a p e H t m l ( r . b u d g e t ? ? " - " ) } < / p > < p > S t a t u s :
+${escapeHtml(r.status||"Pending")}</p></div>`).join("")
+}catch(error){console.warn(error);$("adminRequests").textContent="—";box.innerHTML="<p>Request table
+</p>"}
 }
-}
-
-function escapeHtml(value){
-return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-}
-
-function logout(){
-localStorage.removeItem("delalaye_session");
-currentUser=null;currentProfile=null;$("logoutBtn").classList.add("hidden");showLogin();
-}
-
-function toggleLanguage(){
-english=!english;
-if(english){$("loginTitle").textContent="Login"}
-else{$("loginTitle").textContent="ግባ"}
-}
-
+f u n c t i o n e s c a p e H t m l ( v a l u e ) { r e t u r n
+String(value??"").replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""").replace(/'/g,"
+'")}
+f u n c t i o n
+logout(){localStorage.removeItem("delalaye_session");currentUser=null;currentProfile=null;$("logoutBtn").classList.
+add("hidden");showLogin()}
+function toggleLanguage(){english=!english;$("loginTitle").textContent=english?"Login":""}
 document.addEventListener("DOMContentLoaded",initialize);
-</script>
-</body>
-</html>
+</script></body></html>
+7 / 7
