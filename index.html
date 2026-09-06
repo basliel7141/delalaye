@@ -1207,34 +1207,38 @@
     try {
 
       const result =
-        await client
-          .from("User")
-          .select("*")
-          .eq(
-            "id",
-            currentUser.id
-          )
-          .maybeSingle();
+        await client.functions.invoke(
+          "delalaye-auth",
+          {
+            body: {
+              action: "getProfile",
+              id: currentUser.id
+            }
+          }
+        );
 
 
       if (result.error) {
+        throw result.error;
+      }
 
-        console.warn(
-          "User profile error:",
-          result.error
+
+      const data =
+        result.data;
+
+
+      if (!data || !data.success) {
+
+        throw new Error(
+          data?.message ||
+          "Profile ማግኘት አልተቻለም።"
         );
-
-        currentProfile = null;
-
-        showRolePage();
-
-        return;
 
       }
 
 
       currentProfile =
-        result.data;
+        data.profile;
 
 
       if (
@@ -1260,6 +1264,8 @@
         "PROFILE ERROR:",
         error
       );
+
+      currentProfile = null;
 
       showRolePage();
 
@@ -1372,23 +1378,20 @@
     try {
 
       const result =
-        await client
-          .from("User")
-          .upsert(
-            {
+        await client.functions.invoke(
+          "delalaye-auth",
+          {
+            body: {
+              action: "saveRole",
               id: currentUser.id,
               phone:
                 currentUser.phone ||
                 currentUser.user_metadata?.phone ||
                 "",
               role: selectedRole
-            },
-            {
-              onConflict: "id"
             }
-          )
-          .select()
-          .single();
+          }
+        );
 
 
       if (result.error) {
@@ -1396,8 +1399,22 @@
       }
 
 
-      currentProfile =
+      const data =
         result.data;
+
+
+      if (!data || !data.success) {
+
+        throw new Error(
+          data?.message ||
+          "Role ማስቀመጥ አልተቻለም።"
+        );
+
+      }
+
+
+      currentProfile =
+        data.profile;
 
 
       openDashboard(
@@ -1414,7 +1431,8 @@
 
       showMessage(
         "roleMessage",
-        "Role ማስቀመጥ አልተቻለም። Supabase User table/RLS ያረጋግጡ።"
+        error?.message ||
+        "Role ማስቀመጥ አልተቻለም።"
       );
 
     } finally {
