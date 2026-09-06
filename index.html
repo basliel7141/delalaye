@@ -1,2266 +1,464 @@
+
 <!DOCTYPE html>
 <html lang="am">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ደላላዬ</title>
-
+<title></title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,"Noto Sans Ethiopic",sans-serif;
-  background:#f5f7fb;
-  color:#172033;
-}
-
-header{
-  background:#123b6d;
-  color:white;
-  padding:15px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-header h2{
-  margin:0;
-  font-size:22px;
-}
-
-button{
-  border:0;
-  border-radius:8px;
-  padding:12px 16px;
-  cursor:pointer;
-  font-weight:bold;
-  background:#123b6d;
-  color:white;
-}
-
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-.headerBtn{
-  background:white;
-  color:#123b6d;
-  padding:8px 12px;
-}
-
-.page{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-
-.card{
-  background:white;
-  border-radius:14px;
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:0 3px 15px rgba(0,0,0,.08);
-}
-
-.hidden{
-  display:none!important;
-}
-
-h1,h2,h3{
-  margin-top:0;
-}
-
-input,select,textarea{
-  width:100%;
-  padding:13px;
-  border:1px solid #ccd3df;
-  border-radius:8px;
-  margin:7px 0 14px;
-  font-size:16px;
-  background:white;
-}
-
-textarea{
-  min-height:110px;
-  resize:vertical;
-}
-
-label{
-  font-weight:bold;
-  display:block;
-  margin-top:8px;
-}
-
-.primary{
-  width:100%;
-  background:#123b6d;
-  margin-top:5px;
-}
-
-.secondary{
-  background:#eef3f9;
-  color:#123b6d;
-  width:100%;
-  margin-top:8px;
-}
-
-.success{
-  color:#087443;
-  background:#eaf8f0;
-  padding:12px;
-  border-radius:8px;
-  margin-bottom:12px;
-}
-
-.error{
-  color:#a61b1b;
-  background:#fff0f0;
-  padding:12px;
-  border-radius:8px;
-  margin-bottom:12px;
-}
-
-.roleGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.role{
-  border:2px solid #d8dfeb;
-  border-radius:12px;
-  padding:22px 10px;
-  text-align:center;
-  cursor:pointer;
-  background:white;
-}
-
-.role.active{
-  border-color:#123b6d;
-  background:#eef5ff;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.stat{
-  background:#f1f5fa;
-  padding:18px;
-  border-radius:10px;
-  text-align:center;
-}
-
-.stat strong{
-  display:block;
-  font-size:28px;
-  margin-top:5px;
-}
-
-.request{
-  border:1px solid #dde3ec;
-  border-radius:10px;
-  padding:15px;
-  margin:10px 0;
-}
-
-.topActions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.small{
-  font-size:13px;
-  color:#687386;
-}
-
-@media(max-width:650px){
-  .roleGrid,
-  .stats{
-    grid-template-columns:1fr;
-  }
-
-  header h2{
-    font-size:18px;
-  }
-
-  .page{
-    padding:12px;
-  }
-}
+body{margin:0;font-family:Arial,"Noto Sans Ethiopic",sans-serif;background:#f5f7fb;color:#172033}
+header{background:#123b6d;color:white;padding:15px 20px;display:flex;align-items:center;justify-content:space-
+between;gap:10px;position:sticky;top:0;z-index:10}
+header h2{margin:0;font-size:22px}
+b u t t o n { b o r d e r : 0 ; b o r d e r - r a d i u s : 8 p x ; p a d d i n g : 1 2 p x 1 6 p x ; c u r s o r : p o i n t e r ; f o n t -
+weight:bold;background:#123b6d;color:white}
+button:disabled{opacity:.6;cursor:not-allowed}
+.headerBtn{background:white;color:#123b6d;padding:8px 12px}
+.page{max-width:900px;margin:auto;padding:20px}
+.card{background:white;border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 3px 15px
+rgba(0,0,0,.08)}
+.hidden{display:none!important}
+h1,h2,h3{margin-top:0}
+input,select,textarea{width:100%;padding:13px;border:1px solid #ccd3df;border-radius:8px;margin:7px 0 14px;font-
+size:16px;background:white}
+textarea{min-height:110px;resize:vertical}
+label{font-weight:bold;display:block;margin-top:8px}
+.primary{width:100%;background:#123b6d;margin-top:5px}
+.secondary{background:#eef3f9;color:#123b6d;width:100%;margin-top:8px}
+.success{color:#087443;background:#eaf8f0;padding:12px;border-radius:8px;margin-bottom:12px}
+.error{color:#a61b1b;background:#fff0f0;padding:12px;border-radius:8px;margin-bottom:12px}
+.roleGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+. r o l e { b o r d e r : 2 p x s o l i d # d 8 d f e b ; b o r d e r - r a d i u s : 1 2 p x ; p a d d i n g : 2 2 p x 1 0 p x ; t e x t -
+align:center;cursor:pointer;background:white}
+.role.active{border-color:#123b6d;background:#eef5ff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:#f1f5fa;padding:18px;border-radius:10px;text-align:center}
+.stat strong{display:block;font-size:28px;margin-top:5px}
+.request{border:1px solid #dde3ec;border-radius:10px;padding:15px;margin:10px 0}
+.topActions{display:flex;gap:8px;flex-wrap:wrap}
+.small{font-size:13px;color:#687386}
+@ m e d i a ( m a x - w i d t h : 6 5 0 p x ) { . r o l e G r i d , . s t a t s { g r i d - t e m p l a t e - c o l u m n s : 1 f r } h e a d e r h 2 { f o n t -
+size:18px}.page{padding:12px}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <h2>ደላላዬ</h2>
-
-  <div class="topActions">
-    <button class="headerBtn" onclick="toggleLanguage()">EN / አማ</button>
-    <button id="logoutBtn" class="headerBtn hidden" onclick="logout()">Logout</button>
-  </div>
-</header>
-
-<div class="page">
-
-<section id="loginPage" class="card">
-
-  <h1 id="loginTitle">ግባ</h1>
-
-  <div id="loginMessage"></div>
-
-  <label>ስልክ ቁጥር</label>
-  <input
-    id="loginPhone"
-    type="tel"
-    inputmode="tel"
-    placeholder="09xxxxxxxx"
-  >
-
-  <label>የይለፍ ቃል</label>
-  <input
-    id="loginPassword"
-    type="password"
-    placeholder="Password"
-  >
-
-  <button id="loginBtn" class="primary" onclick="login()">
-    ግባ
-  </button>
-
-  <button class="secondary" onclick="showRegister()">
-    አዲስ መለያ ፍጠር
-  </button>
-
-  <button class="secondary" onclick="showForgot()">
-    የይለፍ ቃሌን ረሳሁ
-  </button>
-
-</section>
-
-
-<section id="registerPage" class="card hidden">
-
-  <h1>መለያ ፍጠር</h1>
-
-  <div id="registerMessage"></div>
-
-  <label>ስልክ ቁጥር</label>
-  <input
-    id="registerPhone"
-    type="tel"
-    inputmode="tel"
-    placeholder="09xxxxxxxx"
-  >
-
-  <label>የይለፍ ቃል</label>
-  <input
-    id="registerPassword"
-    type="password"
-    placeholder="ቢያንስ 6 ቁምፊ"
-  >
-
-  <label>የይለፍ ቃል እንደገና</label>
-  <input
-    id="registerPassword2"
-    type="password"
-    placeholder="Password again"
-  >
-
-  <button id="registerBtn" class="primary" onclick="register()">
-    መለያ ፍጠር
-  </button>
-
-  <button class="secondary" onclick="showLogin()">
-    ወደ Login ተመለስ
-  </button>
-
-</section>
-
-
-<section id="forgotPage" class="card hidden">
-
-  <h1>የይለፍ ቃል ረስተዋል?</h1>
-
-  <p class="small">
-    Password reset ሂደት በኋላ እንጨምረዋለን።
-  </p>
-
-  <button class="secondary" onclick="showLogin()">
-    ወደ Login ተመለስ
-  </button>
-
-</section>
-
-
-<section id="rolePage" class="card hidden">
-
-  <h1>የመለያ አይነት ምረጥ</h1>
-
-  <div id="roleMessage"></div>
-
-  <div class="roleGrid">
-
-    <div id="roleCustomer"
-         class="role"
-         onclick="selectRole('customer')">
-
-      <h3>👤</h3>
-      <strong>Customer</strong>
-      <p class="small">ገዢ / ተከራይ</p>
-
-    </div>
-
-    <div id="roleBroker"
-         class="role"
-         onclick="selectRole('broker')">
-
-      <h3>🏢</h3>
-      <strong>Broker</strong>
-      <p class="small">ደላላ</p>
-
-    </div>
-
-    <div id="roleAdmin"
-         class="role"
-         onclick="selectRole('admin')">
-
-      <h3>⚙️</h3>
-      <strong>Admin</strong>
-      <p class="small">አስተዳዳሪ</p>
-
-    </div>
-
-  </div>
-
-  <button id="saveRoleBtn"
-          class="primary"
-          onclick="saveRole()">
-    ቀጥል
-  </button>
-
-</section>
-
-
-<section id="customerPage" class="hidden">
-
-  <div class="card">
-
-    <h1>Customer Dashboard</h1>
-
-    <p id="customerPhone" class="small"></p>
-
-    <div class="stats">
-
-      <div class="stat">
-        <span>ጠቅላላ ጥያቄ</span>
-        <strong id="customerRequestCount">0</strong>
-      </div>
-
-      <div class="stat">
-        <span>Pending</span>
-        <strong id="customerPendingCount">0</strong>
-      </div>
-
-      <div class="stat">
-        <span>Completed</span>
-        <strong id="customerCompletedCount">0</strong>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2>የንብረት ጥያቄ ላክ</h2>
-
-    <div id="requestMessage"></div>
-
-    <form id="customerRequestForm"
-          onsubmit="submitRequest(event)">
-
-      <label>የንብረት አይነት</label>
-
-      <select id="requestCategory" required>
-        <option value="">ምረጥ</option>
-        <option value="House">ቤት</option>
-        <option value="Land">መሬት</option>
-        <option value="Apartment">አፓርታማ</option>
-        <option value="Vehicle">መኪና</option>
-        <option value="Other">ሌላ</option>
-      </select>
-
-      <label>የግብይት አይነት</label>
-
-      <select id="transactionType" required>
-        <option value="">ምረጥ</option>
-        <option value="Buy">መግዛት</option>
-        <option value="Rent">መከራየት</option>
-      </select>
-
-      <label>አካባቢ</label>
-
-      <input id="requestArea"
-             placeholder="ለምሳሌ ቦሌ">
-
-      <label>Budget</label>
-
-      <input id="requestBudget"
-           type="number"
-           placeholder="በብር">
-
-      <label>ተጨማሪ መስፈርቶች</label>
-
-      <textarea id="requestRequirements"
-                placeholder="የምትፈልገውን ንብረት ዝርዝር ጻፍ"></textarea>
-
-      <button id="requestBtn"
-              class="primary"
-              type="submit">
-        ጥያቄ ላክ
-      </button>
-
-    </form>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2>የእኔ ጥያቄዎች</h2>
-
-    <div id="customerRequests">
-      ጥያቄዎች በመጫን ላይ...
-    </div>
-
-  </div>
-
-</section>
-
-
-<section id="brokerPage" class="hidden">
-
-  <div class="card">
-
-    <h1>Broker Dashboard</h1>
-
-    <div id="brokerStatus"></div>
-
-    <h2>የBroker ምዝገባ</h2>
-
-    <div id="brokerRegistration">
-
-      <label>ስም</label>
-      <input id="brokerName" placeholder="ሙሉ ስም">
-
-      <label>ስልክ</label>
-      <input id="brokerPhone" placeholder="09xxxxxxxx">
-
-      <label>የምትሰራባቸው አካባቢዎች</label>
-
-      <input id="brokerAreas"
-             placeholder="ለምሳሌ ቦሌ, መገናኛ">
-
-      <label>የንብረት አይነት</label>
-
-      <input id="brokerCategories"
-             placeholder="ቤት, መሬት, መኪና">
-
-      <label>የግብይት አይነት</label>
-
-      <select id="brokerTransaction">
-
-        <option value="Both">ሁለቱም</option>
-        <option value="Buy">ሽያጭ</option>
-        <option value="Rent">ኪራይ</option>
-
-      </select>
-
-      <label>Verification</label>
-
-      <input id="brokerVerification"
-             placeholder="ማረጋገጫ መረጃ">
-
-      <button class="primary"
-              onclick="saveBroker()">
-        የBroker መረጃ አስቀምጥ
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2>የተመደቡ ጥያቄዎች</h2>
-
-    <div id="brokerRequestsBox">
-
-      <div id="brokerRequests">
-        ምንም ጥያቄ የለም።
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<section id="adminPage" class="hidden">
-
-  <div class="card">
-
-    <h1>Admin Dashboard</h1>
-
-    <p class="small">
-      የደላላዬ ስርዓት አስተዳደር
-    </p>
-
-    <div class="stats">
-
-      <div class="stat">
-        <span>Customers</span>
-        <strong id="adminCustomers">0</strong>
-      </div>
-
-      <div class="stat">
-        <span>Brokers</span>
-        <strong id="adminBrokers">0</strong>
-      </div>
-
-      <div class="stat">
-        <span>Requests</span>
-        <strong id="adminRequests">0</strong>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2>የተመዘገቡ Brokers</h2>
-
-    <div id="adminBrokersList">
-      በመጫን ላይ...
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2>የCustomer ጥያቄዎች</h2>
-
-    <div id="adminRequestsList">
-      በመጫን ላይ...
-    </div>
-
-  </div>
-
-</section>
-
+<h2></h2>
+<div class="topActions">
+<button class="headerBtn" onclick="toggleLanguage()">EN / </button>
+<button id="logoutBtn" class="headerBtn hidden" onclick="logout()">Logout</button>
 </div>
-
-
+</header>
+<div class="page">
+<section id="loginPage" class="card">
+<h1 id="loginTitle"></h1>
+<div id="loginMessage"></div>
+<label> </label>
+<input id="loginPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx">
+<label> </label>
+<input id="loginPassword" type="password" placeholder="Password">
+<button id="loginBtn" class="primary" onclick="login()"></button>
+<button class="secondary" onclick="showRegister()"> </button>
+<button class="secondary" onclick="showForgot()"> </button>
+</section>
+<section id="registerPage" class="card hidden">
+<h1> </h1>
+<div id="registerMessage"></div>
+<label> </label>
+<input id="registerPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxx">
+<label> </label>
+<input id="registerPassword" type="password" placeholder=" 6 ">
+<label> </label>
+<input id="registerPassword2" type="password" placeholder="Password again">
+<button id="registerBtn" class="primary" onclick="register()"> </button>
+<button class="secondary" onclick="showLogin()"> Login </button>
+</section>
+<section id="forgotPage" class="card hidden">
+<h1> ?</h1>
+<p class="small">Password reset </p>
+<button class="secondary" onclick="showLogin()"> Login </button>
+</section>
+<section id="rolePage" class="card hidden">
+<h1> </h1>
+<div id="roleMessage"></div>
+<div class="roleGrid">
+<div id="roleCustomer" class="role" onclick="selectRole('customer')"><h3></h3><strong>Customer</strong><p
+class="small"> / </p></div>
+<div id="roleBroker" class="role" onclick="selectRole('broker')"><h3></h3><strong>Broker</strong><p
+class="small"></p></div>
+<div id="roleAdmin" class="role" onclick="selectRole('admin')"><h3></h3><strong>Admin</strong><p
+class="small"></p></div>
+</div>
+<button id="saveRoleBtn" class="primary" onclick="saveRole()"></button>
+</section>
+<section id="customerPage" class="hidden">
+<div class="card">
+<h1>Customer Dashboard</h1>
+<p id="customerPhone" class="small"></p>
+<div class="stats">
+<div class="stat"><span> </span><strong id="customerRequestCount">0</strong></div>
+<div class="stat"><span>Pending</span><strong id="customerPendingCount">0</strong></div>
+<div class="stat"><span>Completed</span><strong id="customerCompletedCount">0</strong></div>
+</div>
+</div>
+<div class="card">
+<h2> </h2>
+<div id="requestMessage"></div>
+<form id="customerRequestForm" onsubmit="submitRequest(event)">
+<label> </label>
+<select id="requestCategory" required>
+<option value=""></option><option value="House"></option><option value="Land"></option><option
+value="Apartment"></option><option value="Vehicle"></option><option value="Other"></option>
+</select>
+<label> </label>
+<select id="transactionType" required>
+<option value=""></option><option value="Buy"></option><option value="Rent"></option>
+</select>
+<label></label><input id="requestArea" placeholder=" ">
+<label>Budget</label><input id="requestBudget" type="number" placeholder="">
+<label> </label><textarea id="requestRequirements" placeholder=" "></textarea>
+<button id="requestBtn" class="primary" type="submit"> </button>
+</form>
+</div>
+<div class="card"><h2> </h2><div id="customerRequests"> ...</div></div>
+</section>
+<section id="brokerPage" class="hidden">
+<div class="card">
+<h1>Broker Dashboard</h1><div id="brokerStatus"></div><h2>Broker </h2>
+<div id="brokerRegistration">
+<label></label><input id="brokerName" placeholder=" ">
+<label></label><input id="brokerPhone" placeholder="09xxxxxxxx">
+<label> </label><input id="brokerAreas" placeholder=" , ">
+<label> </label><input id="brokerCategories" placeholder=", , ">
+<label> </label>
+<select id="brokerTransaction"><option value="Both"></option><option value="Buy"></option><option
+value="Rent"></option></select>
+<label>Verification</label><input id="brokerVerification" placeholder=" ">
+<button class="primary" onclick="saveBroker()">Broker </button>
+</div>
+</div>
+<div class="card"><h2> </h2><div id="brokerRequestsBox"><div id="brokerRequests"> </div></div></div>
+</section>
+<section id="adminPage" class="hidden">
+<div class="card">
+<h1>Admin Dashboard</h1><p class="small"> </p>
+<div class="stats">
+<div class="stat"><span>Customers</span><strong id="adminCustomers">0</strong></div>
+<div class="stat"><span>Brokers</span><strong id="adminBrokers">0</strong></div>
+<div class="stat"><span>Requests</span><strong id="adminRequests">0</strong></div>
+</div>
+</div>
+<div class="card"><h2> Brokers</h2><div id="adminBrokersList"> ...</div></div>
+<div class="card"><h2>Customer </h2><div id="adminRequestsList"> ...</div></div>
+</section>
+</div>
 <script>
+const SUPABASE_URL="https://tpmsqpwxomgfxqeqognf.supabase.co";
+const SUPABASE_KEY="sb_publishable_7CfDLIIrEs158_WIkEkmJg_OmB-nHOx";
+const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentUser=null;
+let currentProfile=null;
+let selectedRole=null;
+let english=false;
 
-const SUPABASE_URL =
-"https://tpmsqpwxomgfxqeqognf.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_7CfDLIIrEs158_WIkEkmJg_OmB-nHOx";
-
-const client =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-let currentUser = null;
-let currentProfile = null;
-let selectedRole = null;
-let english = false;
-
-
-function $(id){
-  return document.getElementById(id);
-}
-
-
+function $(id){return document.getElementById(id)}
 function hideAllPages(){
-
-  [
-    "loginPage",
-    "registerPage",
-    "forgotPage",
-    "rolePage",
-    "customerPage",
-    "brokerPage",
-    "adminPage"
-  ].forEach(function(id){
-
-    const el = $(id);
-
-    if(el){
-      el.classList.add("hidden");
-    }
-
-  });
-
+["loginPage","registerPage","forgotPage","rolePage","customerPage","brokerPage","adminPage"].forEach(function(id
+){const el=$(id);if(el){el.classList.add("hidden")}})
 }
-
-
 function showMessage(id,message,type){
-
-  const el = $(id);
-
-  if(!el){
-    return;
-  }
-
-  type = type || "error";
-
-  el.innerHTML =
-    '<div class="' +
-    type +
-    '">' +
-    escapeHtml(message) +
-    '</div>';
-
+const el=$(id);if(!el){return}type=type||"error";
+el.innerHTML='<div class="'+type+'">'+escapeHtml(message)+'</div>';
 }
-
-
-function clearMessage(id){
-
-  const el = $(id);
-
-  if(el){
-    el.innerHTML = "";
-  }
-
-}
-
-
+function clearMessage(id){const el=$(id);if(el){el.innerHTML=""}}
 function setBusy(id,busy,text){
-
-  const el = $(id);
-
-  if(!el){
-    return;
-  }
-
-  if(busy){
-
-    el.disabled = true;
-
-    if(!el.dataset.oldText){
-      el.dataset.oldText =
-        el.textContent;
-    }
-
-    el.textContent =
-      text || "Please wait...";
-
-  }else{
-
-    el.disabled = false;
-
-    if(el.dataset.oldText){
-
-      el.textContent =
-        el.dataset.oldText;
-
-      delete el.dataset.oldText;
-
-    }
-
-  }
-
+const el=$(id);if(!el){return}
+if(busy){el.disabled=true;if(!el.dataset.oldText){el.dataset.oldText=el.textContent}el.textContent=text||"Please
+wait..."}
+else{el.disabled=false;if(el.dataset.oldText){el.textContent=el.dataset.oldText;delete el.dataset.oldText}}
 }
-
-
 function normalizePhone(value){
-
-  let phone =
-    String(value || "").trim();
-
-  phone =
-    phone.replace(/[^\d+]/g,"");
-
-
-  if(/^09\d{8}$/.test(phone)){
-
-    return "+251" +
-      phone.substring(1);
-
-  }
-
-
-  if(/^9\d{8}$/.test(phone)){
-
-    return "+251" +
-      phone;
-
-  }
-
-
-  if(/^2519\d{8}$/.test(phone)){
-
-    return "+" +
-      phone;
-
-  }
-
-
-  if(/^\+2519\d{8}$/.test(phone)){
-
-    return phone;
-
-  }
-
-
-  return phone;
-
+let phone=String(value||"").trim();phone=phone.replace(/[^\d+]/g,"");
+if(/^09\d{8}$/.test(phone)){return "+251"+phone.substring(1)}
+if(/^9\d{8}$/.test(phone)){return "+251"+phone}
+if(/^2519\d{8}$/.test(phone)){return "+"+phone}
+if(/^\+2519\d{8}$/.test(phone)){return phone}
+return phone;
 }
-
-
-function isValidEthiopianPhone(phone){
-
-  return /^\+2519\d{8}$/.test(phone);
-
-}
-
-
-function showLogin(){
-
-  hideAllPages();
-
-  $("loginPage")
-    .classList
-    .remove("hidden");
-
-  clearMessage("loginMessage");
-
-}
-
-
-function showRegister(){
-
-  hideAllPages();
-
-  $("registerPage")
-    .classList
-    .remove("hidden");
-
-  clearMessage("registerMessage");
-
-}
-
-
-function showForgot(){
-
-  hideAllPages();
-
-  $("forgotPage")
-    .classList
-    .remove("hidden");
-
-}
-
-
-/* =====================================================
-   REGISTER
-===================================================== */
+function isValidEthiopianPhone(phone){return /^\+2519\d{8}$/.test(phone)}
+function showLogin(){hideAllPages();$("loginPage").classList.remove("hidden");clearMessage("loginMessage")}
+f u n c t i o n
+showRegister(){hideAllPages();$("registerPage").classList.remove("hidden");clearMessage("registerMessage")}
+function showForgot(){hideAllPages();$("forgotPage").classList.remove("hidden")}
 
 async function register(){
-
-  clearMessage("registerMessage");
-
-  const phone =
-    normalizePhone(
-      $("registerPhone").value
-    );
-
-  const password =
-    $("registerPassword").value;
-
-  const password2 =
-    $("registerPassword2").value;
-
-
-  if(!isValidEthiopianPhone(phone)){
-
-    showMessage(
-      "registerMessage",
-      "ትክክለኛ የኢትዮጵያ ስልክ ቁጥር አስገባ። ለምሳሌ 0912345678"
-    );
-
-    return;
-
-  }
-
-
-  if(password.length < 6){
-
-    showMessage(
-      "registerMessage",
-      "Password ቢያንስ 6 ቁምፊ መሆን አለበት።"
-    );
-
-    return;
-
-  }
-
-
-  if(password !== password2){
-
-    showMessage(
-      "registerMessage",
-      "ሁለቱ Password አንድ አይደሉም።"
-    );
-
-    return;
-
-  }
-
-
-  setBusy(
-    "registerBtn",
-    true,
-    "በመመዝገብ ላይ..."
-  );
-
-
-  try{
-
-    const result =
-      await client.functions.invoke(
-        "auth",
-        {
-          body:{
-            action:"register",
-            phone:phone,
-            password:password
-          }
-        }
-      );
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    const data =
-      result.data;
-
-
-    if(!data || !data.success){
-
-      throw new Error(
-        data?.message ||
-        "Registration failed."
-      );
-
-    }
-
-
-    currentUser = {
-
-      id:data.id,
-
-      phone:data.phone,
-
-      user_metadata:{
-        phone:data.phone
-      }
-
-    };
-
-
-    localStorage.setItem(
-      "delalaye_session",
-      JSON.stringify({
-        id:data.id,
-        phone:data.phone
-      })
-    );
-
-
-    await afterLogin();
-
-
-  }catch(error){
-
-    console.error(
-      "REGISTER ERROR:",
-      error
-    );
-
-
-    showMessage(
-      "registerMessage",
-      error?.message ||
-      "መመዝገብ አልተቻለም።"
-    );
-
-
-  }finally{
-
-    setBusy(
-      "registerBtn",
-      false
-    );
-
-  }
-
+clearMessage("registerMessage");
+const phone=normalizePhone($("registerPhone").value);
+const password=$("registerPassword").value;
+const password2=$("registerPassword2").value;
+if(!isValidEthiopianPhone(phone)){showMessage("registerMessage"," 0912345678");return}
+if(password.length<6){showMessage("registerMessage","Password 6 ");return}
+if(password!==password2){showMessage("registerMessage"," Password ");return}
+setBusy("registerBtn",true," ...");
+try{
+c o n s t r e s u l t = a w a i t c l i e n t . f u n c t i o n s . i n v o k e ( " d e l a l a y e -
+auth",{body:{action:"register",phone:phone,password:password}});
+if(result.error){throw result.error}
+const data=result.data;
+if(!data||!data.success){throw new Error(data?.message||"Registration failed.")}
+currentUser={id:data.id,phone:data.phone,user_metadata:{phone:data.phone}};
+localStorage.setItem("delalaye_session",JSON.stringify({id:data.id,phone:data.phone}));
+await afterLogin();
+}catch(error){
+console.error("REGISTER ERROR:",error);
+showMessage("registerMessage",error?.message||" ");
+}finally{setBusy("registerBtn",false)}
 }
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
 
 async function login(){
-
-  clearMessage("loginMessage");
-
-  const phone =
-    normalizePhone(
-      $("loginPhone").value
-    );
-
-  const password =
-    $("loginPassword").value;
-
-
-  if(!isValidEthiopianPhone(phone)){
-
-    showMessage(
-      "loginMessage",
-      "ትክክለኛ የኢትዮጵያ ስልክ ቁጥር አስገባ። ለምሳሌ 0912345678"
-    );
-
-    return;
-
-  }
-
-
-  if(!password){
-
-    showMessage(
-      "loginMessage",
-      "Password አስገባ።"
-    );
-
-    return;
-
-  }
-
-
-  setBusy(
-    "loginBtn",
-    true,
-    "በመግባት ላይ..."
-  );
-
-
-  try{
-
-    const result =
-      await client.functions.invoke(
-        "auth",
-        {
-          body:{
-            action:"login",
-            phone:phone,
-            password:password
-          }
-        }
-      );
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    const data =
-      result.data;
-
-
-    if(!data || !data.success){
-
-      throw new Error(
-        data?.message ||
-        "Invalid phone number or password"
-      );
-
-    }
-
-
-    currentUser = {
-
-      id:data.id,
-
-      phone:data.phone,
-
-      user_metadata:{
-        phone:data.phone
-      }
-
-    };
-
-
-    localStorage.setItem(
-      "delalaye_session",
-      JSON.stringify({
-        id:data.id,
-        phone:data.phone
-      })
-    );
-
-
-    await afterLogin();
-
-
-  }catch(error){
-
-    console.error(
-      "LOGIN ERROR:",
-      error
-    );
-
-
-    showMessage(
-      "loginMessage",
-      error?.message ||
-      "የስልክ ቁጥሩ ወይም Password ትክክል አይደለም።"
-    );
-
-
-  }finally{
-
-    setBusy(
-      "loginBtn",
-      false
-    );
-
-  }
-
+clearMessage("loginMessage");
+const phone=normalizePhone($("loginPhone").value);
+const password=$("loginPassword").value;
+if(!isValidEthiopianPhone(phone)){showMessage("loginMessage"," 0912345678");return}
+if(!password){showMessage("loginMessage","Password ");return}
+setBusy("loginBtn",true," ...");
+try{
+const result=await client.functions.invoke("delalaye-auth",{body:{action:"login",phone:phone,password:password}});
+if(result.error){throw result.error}
+const data=result.data;
+if(!data||!data.success){throw new Error(data?.message||"Invalid phone number or password")}
+currentUser={id:data.id,phone:data.phone,user_metadata:{phone:data.phone}};
+localStorage.setItem("delalaye_session",JSON.stringify({id:data.id,phone:data.phone}));
+await afterLogin();
+}catch(error){
+console.error("LOGIN ERROR:",error);
+showMessage("loginMessage",error?.message||" Password ");
+}finally{setBusy("loginBtn",false)}
 }
-
-
-/* =====================================================
-   SESSION
-===================================================== */
 
 async function initialize(){
-
-  try{
-
-    const saved =
-      localStorage.getItem(
-        "delalaye_session"
-      );
-
-
-    if(saved){
-
-      const session =
-        JSON.parse(saved);
-
-
-      if(session.id && session.phone){
-
-        currentUser = {
-
-          id:session.id,
-
-          phone:session.phone,
-
-          user_metadata:{
-            phone:session.phone
-          }
-
-        };
-
-
-        await afterLogin();
-
-        return;
-
-      }
-
-    }
-
-
-    showLogin();
-
-
-  }catch(error){
-
-    console.error(
-      "SESSION ERROR:",
-      error
-    );
-
-
-    localStorage.removeItem(
-      "delalaye_session"
-    );
-
-
-    currentUser = null;
-
-    showLogin();
-
-  }
-
+try{
+const saved=localStorage.getItem("delalaye_session");
+if(saved){
+const session=JSON.parse(saved);
+if(session.id&&session.phone){
+currentUser={id:session.id,phone:session.phone,user_metadata:{phone:session.phone}};
+await afterLogin();return;
+}}
+showLogin();
+}catch(error){
+console.error("SESSION ERROR:",error);
+localStorage.removeItem("delalaye_session");currentUser=null;showLogin();
 }
-
-
-/* =====================================================
-   AFTER LOGIN
-===================================================== */
+}
 
 async function afterLogin(){
-
-  if(!currentUser){
-
-    showLogin();
-
-    return;
-
-  }
-
-
-  $("logoutBtn")
-    .classList
-    .remove("hidden");
-
-
-  try{
-
-    const result =
-      await client
-        .from("User")
-        .select("*")
-        .eq(
-          "id",
-          currentUser.id
-        )
-        .maybeSingle();
-
-
-    if(result.error){
-
-      console.warn(
-        "User profile error:",
-        result.error
-      );
-
-
-      currentProfile = null;
-
-      showRolePage();
-
-      return;
-
-    }
-
-
-    currentProfile =
-      result.data;
-
-
-    if(
-      !currentProfile ||
-      !currentProfile.role
-    ){
-
-      showRolePage();
-
-      return;
-
-    }
-
-
-    openDashboard(
-      currentProfile.role
-    );
-
-
-  }catch(error){
-
-    console.error(error);
-
-    showRolePage();
-
-  }
-
+if(!currentUser){showLogin();return}
+$("logoutBtn").classList.remove("hidden");
+try{
+const result=await client.from("User").select("*").eq("id",currentUser.id).maybeSingle();
+if(result.error){console.warn("User profile error:",result.error);currentProfile=null;showRolePage();return}
+currentProfile=result.data;
+if(!currentProfile||!currentProfile.role){showRolePage();return}
+openDashboard(currentProfile.role);
+}catch(error){console.error(error);showRolePage()}
 }
-
-
-/* =====================================================
-   ROLE
-===================================================== */
 
 function showRolePage(){
-
-  hideAllPages();
-
-  $("rolePage")
-    .classList
-    .remove("hidden");
-
-
-  selectedRole = null;
-
-
-  [
-    "roleCustomer",
-    "roleBroker",
-    "roleAdmin"
-  ].forEach(function(id){
-
-    $(id)
-      .classList
-      .remove("active");
-
-  });
-
+hideAllPages();$("rolePage").classList.remove("hidden");selectedRole=null;
+["roleCustomer","roleBroker","roleAdmin"].forEach(function(id){$(id).classList.remove("active")});
 }
-
-
 function selectRole(role){
-
-  selectedRole =
-    role;
-
-
-  [
-    "roleCustomer",
-    "roleBroker",
-    "roleAdmin"
-  ].forEach(function(id){
-
-    $(id)
-      .classList
-      .remove("active");
-
-  });
-
-
-  const map = {
-
-    customer:"roleCustomer",
-
-    broker:"roleBroker",
-
-    admin:"roleAdmin"
-
-  };
-
-
-  if(map[role]){
-
-    $(map[role])
-      .classList
-      .add("active");
-
-  }
-
+selectedRole=role;
+["roleCustomer","roleBroker","roleAdmin"].forEach(function(id){$(id).classList.remove("active")});
+const map={customer:"roleCustomer",broker:"roleBroker",admin:"roleAdmin"};
+if(map[role]){$(map[role]).classList.add("active")}
 }
-
-
-/* =====================================================
-   SAVE ROLE
-===================================================== */
 
 async function saveRole(){
-
-  clearMessage("roleMessage");
-
-
-  if(!selectedRole){
-
-    showMessage(
-      "roleMessage",
-      "የመለያ አይነት ምረጥ።"
-    );
-
-    return;
-
-  }
-
-
-  if(!currentUser){
-
-    showLogin();
-
-    return;
-
-  }
-
-
-  setBusy(
-    "saveRoleBtn",
-    true,
-    "በማስቀመጥ ላይ..."
-  );
-
-
-  try{
-
-    const phone =
-      currentUser.phone ||
-      currentUser.user_metadata?.phone ||
-      "";
-
-
-    const result =
-      await client
-        .from("User")
-        .upsert({
-
-          id:currentUser.id,
-
-          phone:phone,
-
-          role:selectedRole
-
-        })
-        .select()
-        .single();
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    currentProfile =
-      result.data;
-
-
-    openDashboard(
-      selectedRole
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "ROLE ERROR:",
-      error
-    );
-
-
-    showMessage(
-      "roleMessage",
-      "Role ማስቀመጥ አልተቻለም። Supabase User table/RLS መፈተሽ ያስፈልጋል።"
-    );
-
-
-  }finally{
-
-    setBusy(
-      "saveRoleBtn",
-      false
-    );
-
-  }
-
+clearMessage("roleMessage");
+if(!selectedRole){showMessage("roleMessage"," ");return}
+if(!currentUser){showLogin();return}
+setBusy("saveRoleBtn",true," ...");
+try{
+const phone=currentUser.phone||currentUser.user_metadata?.phone||"";
+const result=await client.from("User").upsert({id:currentUser.id,phone:phone,role:selectedRole}).select().single();
+if(result.error){throw result.error}
+currentProfile=result.data;openDashboard(selectedRole);
+}catch(error){
+console.error("ROLE ERROR:",error);
+showMessage("roleMessage","Role Supabase User table/RLS ");
+}finally{setBusy("saveRoleBtn",false)}
 }
-
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
 
 function openDashboard(role){
-
-  hideAllPages();
-
-  $("logoutBtn")
-    .classList
-    .remove("hidden");
-
-
-  if(role === "customer"){
-
-    $("customerPage")
-      .classList
-      .remove("hidden");
-
-
-    const phone =
-      currentProfile?.phone ||
-      currentUser?.phone ||
-      "";
-
-
-    $("customerPhone")
-      .textContent =
-      phone
-        ? "ስልክ: " + phone
-        : "";
-
-
-    loadCustomerRequests();
-
-
-  }else if(role === "broker"){
-
-    $("brokerPage")
-      .classList
-      .remove("hidden");
-
-
-    loadBroker();
-
-
-  }else if(role === "admin"){
-
-    $("adminPage")
-      .classList
-      .remove("hidden");
-
-
-    loadAdmin();
-
-  }else{
-
-    showRolePage();
-
-  }
-
+hideAllPages();$("logoutBtn").classList.remove("hidden");
+if(role==="customer"){
+$("customerPage").classList.remove("hidden");
+const phone=currentProfile?.phone||currentUser?.phone||"";
+$("customerPhone").textContent=phone?": "+phone:"";
+loadCustomerRequests();
+}else if(role==="broker"){
+$("brokerPage").classList.remove("hidden");loadBroker();
+}else if(role==="admin"){
+$("adminPage").classList.remove("hidden");loadAdmin();
+}else{showRolePage()}
 }
-
-
-/* =====================================================
-   CUSTOMER REQUEST
-===================================================== */
 
 async function submitRequest(event){
-
-  event.preventDefault();
-
-  clearMessage("requestMessage");
-
-
-  if(!currentUser){
-
-    showLogin();
-
-    return;
-
-  }
-
-
-  const category =
-    $("requestCategory").value;
-
-  const transaction =
-    $("transactionType").value;
-
-  const area =
-    $("requestArea")
-      .value
-      .trim();
-
-  const budget =
-    $("requestBudget")
-      .value;
-
-  const requirements =
-    $("requestRequirements")
-      .value
-      .trim();
-
-
-  if(!category || !transaction){
-
-    showMessage(
-      "requestMessage",
-      "የንብረት እና የግብይት አይነት ምረጥ።"
-    );
-
-    return;
-
-  }
-
-
-  setBusy(
-    "requestBtn",
-    true,
-    "በመላክ ላይ..."
-  );
-
-
-  try{
-
-    const result =
-      await client
-        .from("Request")
-        .insert({
-
-          customer_id:
-            currentUser.id,
-
-          category:
-            category,
-
-          transaction_type:
-            transaction,
-
-          area:
-            area,
-
-          budget:
-            budget
-              ? Number(budget)
-              : null,
-
-          requirements:
-            requirements,
-
-          status:
-            "Pending"
-
-        });
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    $("customerRequestForm")
-      .reset();
-
-
-    showMessage(
-      "requestMessage",
-      "ጥያቄው በትክክል ተልኳል።",
-      "success"
-    );
-
-
-    loadCustomerRequests();
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    showMessage(
-      "requestMessage",
-      "ጥያቄውን መላክ አልተቻለም።"
-    );
-
-
-  }finally{
-
-    setBusy(
-      "requestBtn",
-      false
-    );
-
-  }
-
+event.preventDefault();clearMessage("requestMessage");
+if(!currentUser){showLogin();return}
+const category=$("requestCategory").value;
+const transaction=$("transactionType").value;
+const area=$("requestArea").value.trim();
+const budget=$("requestBudget").value;
+const requirements=$("requestRequirements").value.trim();
+if(!category||!transaction){showMessage("requestMessage"," ");return}
+setBusy("requestBtn",true," ...");
+try{
+c o n s t r e s u l t = a w a i t
+client.from("Request").insert({customer_id:currentUser.id,category:category,transaction_type:transaction,area:area,bu
+dget:budget?Number(budget):null,requirements:requirements,status:"Pending"});
+if(result.error){throw result.error}
+$("customerRequestForm").reset();
+showMessage("requestMessage"," ","success");
+loadCustomerRequests();
+}catch(error){console.error(error);showMessage("requestMessage"," ")}
+finally{setBusy("requestBtn",false)}
 }
-
-
-/* =====================================================
-   CUSTOMER REQUEST LIST
-===================================================== */
 
 async function loadCustomerRequests(){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  const box =
-    $("customerRequests");
-
-
-  try{
-
-    const result =
-      await client
-        .from("Request")
-        .select("*")
-        .eq(
-          "customer_id",
-          currentUser.id
-        )
-        .order(
-          "created_at",
-          {ascending:false}
-        );
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    const requests =
-      result.data || [];
-
-
-    $("customerRequestCount")
-      .textContent =
-      requests.length;
-
-
-    $("customerPendingCount")
-      .textContent =
-      requests.filter(function(r){
-
-        return String(
-          r.status || ""
-        ).toLowerCase()
-        === "pending";
-
-      }).length;
-
-
-    $("customerCompletedCount")
-      .textContent =
-      requests.filter(function(r){
-
-        return String(
-          r.status || ""
-        ).toLowerCase()
-        === "completed";
-
-      }).length;
-
-
-    if(!requests.length){
-
-      box.innerHTML =
-        "<p>እስካሁን ምንም ጥያቄ የለህም።</p>";
-
-      return;
-
-    }
-
-
-    box.innerHTML =
-      requests.map(function(r){
-
-        return `
-
-          <div class="request">
-
-            <strong>
-              ${escapeHtml(
-                r.category || ""
-              )}
-            </strong>
-
-            <p>
-              ግብይት:
-              ${escapeHtml(
-                r.transaction_type || ""
-              )}
-            </p>
-
-            <p>
-              አካባቢ:
-              ${escapeHtml(
-                r.area || "-"
-              )}
-            </p>
-
-            <p>
-              Budget:
-              ${escapeHtml(
-                r.budget ?? "-"
-              )}
-            </p>
-
-            <p>
-              ${escapeHtml(
-                r.requirements || ""
-              )}
-            </p>
-
-            <p>
-              Status:
-              <strong>
-                ${escapeHtml(
-                  r.status || "Pending"
-                )}
-              </strong>
-            </p>
-
-          </div>
-
-        `;
-
-      }).join("");
-
-
-  }catch(error){
-
-    console.error(error);
-
-    box.innerHTML =
-      "<p>ጥያቄዎችን ማምጣት አልተቻለም።</p>";
-
-  }
-
+if(!currentUser){return}
+const box=$("customerRequests");
+try{
+c o n s t r e s u l t = a w a i t
+client.from("Request").select("*").eq("customer_id",currentUser.id).order("created_at",{ascending:false});
+if(result.error){throw result.error}
+const requests=result.data||[];
+$("customerRequestCount").textContent=requests.length;
+$ ( " c u s t o m e r P e n d i n g C o u n t " ) . t e x t C o n t e n t = r e q u e s t s . f i l t e r ( f u n c t i o n ( r ) { r e t u r n
+String(r.status||"").toLowerCase()==="pending"}).length;
+$ ( " c u s t o m e r C o m p l e t e d C o u n t " ) . t e x t C o n t e n t = r e q u e s t s . f i l t e r ( f u n c t i o n ( r ) { r e t u r n
+String(r.status||"").toLowerCase()==="completed"}).length;
+if(!requests.length){box.innerHTML="<p> </p>";return}
+box.innerHTML=requests.map(function(r){return `
+<div class="request">
+<strong>${escapeHtml(r.category||"")}</strong>
+<p>: ${escapeHtml(r.transaction_type||"")}</p>
+<p>: ${escapeHtml(r.area||"-")}</p>
+<p>Budget: ${escapeHtml(r.budget??"-")}</p>
+<p>${escapeHtml(r.requirements||"")}</p>
+<p>Status: <strong>${escapeHtml(r.status||"Pending")}</strong></p>
+</div>`}).join("");
+}catch(error){console.error(error);box.innerHTML="<p> </p>"}
 }
-
-
-/* =====================================================
-   BROKER
-===================================================== */
 
 async function saveBroker(){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  const broker = {
-
-    id:
-      currentUser.id,
-
-    name:
-      $("brokerName")
-        .value
-        .trim(),
-
-    phone:
-      $("brokerPhone")
-        .value
-        .trim(),
-
-    areas:
-      $("brokerAreas")
-        .value
-        .trim(),
-
-    categories:
-      $("brokerCategories")
-        .value
-        .trim(),
-
-    transaction:
-      $("brokerTransaction")
-        .value,
-
-    verification:
-      $("brokerVerification")
-        .value
-        .trim()
-
-  };
-
-
-  try{
-
-    const result =
-      await client
-        .from("Broker")
-        .upsert(broker);
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    showMessage(
-      "brokerStatus",
-      "የBroker መረጃው ተቀምጧል።",
-      "success"
-    );
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    showMessage(
-      "brokerStatus",
-      "Broker መረጃ ማስቀመጥ አልተቻለም።"
-    );
-
-  }
-
+if(!currentUser){return}
+const broker={
+id:currentUser.id,
+name:$("brokerName").value.trim(),
+phone:$("brokerPhone").value.trim(),
+areas:$("brokerAreas").value.trim(),
+categories:$("brokerCategories").value.trim(),
+transaction:$("brokerTransaction").value,
+verification:$("brokerVerification").value.trim()
+};
+try{
+const result=await client.from("Broker").upsert(broker);
+if(result.error){throw result.error}
+showMessage("brokerStatus","Broker ","success");
+}catch(error){console.error(error);showMessage("brokerStatus","Broker ")}
 }
-
-
-/* =====================================================
-   LOAD BROKER
-===================================================== */
 
 async function loadBroker(){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  try{
-
-    const result =
-      await client
-        .from("Broker")
-        .select("*")
-        .eq(
-          "id",
-          currentUser.id
-        )
-        .maybeSingle();
-
-
-    if(result.error){
-
-      console.warn(
-        "Broker error:",
-        result.error
-      );
-
-      return;
-
-    }
-
-
-    const data =
-      result.data;
-
-
-    if(!data){
-      return;
-    }
-
-
-    $("brokerName").value =
-      data.name || "";
-
-    $("brokerPhone").value =
-      data.phone || "";
-
-    $("brokerAreas").value =
-      data.areas || "";
-
-    $("brokerCategories").value =
-      data.categories || "";
-
-    $("brokerTransaction").value =
-      data.transaction || "Both";
-
-    $("brokerVerification").value =
-      data.verification || "";
-
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
+if(!currentUser){return}
+try{
+const result=await client.from("Broker").select("*").eq("id",currentUser.id).maybeSingle();
+if(result.error){console.warn("Broker error:",result.error);return}
+const data=result.data;if(!data){return}
+$("brokerName").value=data.name||"";
+$("brokerPhone").value=data.phone||"";
+$("brokerAreas").value=data.areas||"";
+$("brokerCategories").value=data.categories||"";
+$("brokerTransaction").value=data.transaction||"Both";
+$("brokerVerification").value=data.verification||"";
+}catch(error){console.error(error)}
 }
-
-
-/* =====================================================
-   ADMIN
-===================================================== */
 
 async function loadAdmin(){
-
-  await loadAdminCustomers();
-
-  await loadAdminBrokers();
-
-  await loadAdminRequests();
-
+await loadAdminCustomers();await loadAdminBrokers();await loadAdminRequests();
 }
-
-
-/* =====================================================
-   ADMIN CUSTOMERS
-===================================================== */
 
 async function loadAdminCustomers(){
-
-  try{
-
-    const result =
-      await client
-        .from("User")
-        .select("*",{count:"exact",head:true})
-        .eq(
-          "role",
-          "customer"
-        );
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    $("adminCustomers")
-      .textContent =
-      result.count || 0;
-
-
-  }catch(error){
-
-    console.warn(error);
-
-    $("adminCustomers")
-      .textContent =
-      "—";
-
-  }
-
+try{
+const result=await client.from("User").select("*",{count:"exact",head:true}).eq("role","customer");
+if(result.error){throw result.error}
+$("adminCustomers").textContent=result.count||0;
+}catch(error){console.warn(error);$("adminCustomers").textContent="—"}
 }
-
-
-/* =====================================================
-   ADMIN BROKERS
-===================================================== */
 
 async function loadAdminBrokers(){
-
-  const box =
-    $("adminBrokersList");
-
-
-  try{
-
-    const result =
-      await client
-        .from("Broker")
-        .select("*")
-        .limit(100);
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    const data =
-      result.data || [];
-
-
-    $("adminBrokers")
-      .textContent =
-      data.length;
-
-
-    if(!data.length){
-
-      box.innerHTML =
-        "<p>Broker አልተገኘም።</p>";
-
-      return;
-
-    }
-
-
-    box.innerHTML =
-      data.map(function(b){
-
-        return `
-
-          <div class="request">
-
-            <strong>
-              ${escapeHtml(
-                b.name || "-"
-              )}
-            </strong>
-
-            <p>
-              📞
-              ${escapeHtml(
-                b.phone || "-"
-              )}
-            </p>
-
-            <p>
-              አካባቢ:
-              ${escapeHtml(
-                b.areas || "-"
-              )}
-            </p>
-
-            <p>
-              ንብረት:
-              ${escapeHtml(
-                b.categories || "-"
-              )}
-            </p>
-
-          </div>
-
-        `;
-
-      }).join("");
-
-
-  }catch(error){
-
-    console.warn(error);
-
-    $("adminBrokers")
-      .textContent =
-      "—";
-
-
-    box.innerHTML =
-      "<p>Broker table ካልተፈጠረ ይህ ክፍል አይሰራም።</p>";
-
-  }
-
+const box=$("adminBrokersList");
+try{
+const result=await client.from("Broker").select("*").limit(100);
+if(result.error){throw result.error}
+const data=result.data||[];$("adminBrokers").textContent=data.length;
+if(!data.length){box.innerHTML="<p>Broker </p>";return}
+box.innerHTML=data.map(function(b){return `
+<div class="request">
+<strong>${escapeHtml(b.name||"-")}</strong>
+<p> ${escapeHtml(b.phone||"-")}</p>
+<p>: ${escapeHtml(b.areas||"-")}</p>
+<p>: ${escapeHtml(b.categories||"-")}</p>
+</div>`}).join("");
+}catch(error){
+console.warn(error);$("adminBrokers").textContent="—";
+box.innerHTML="<p>Broker table </p>";
 }
-
-
-/* =====================================================
-   ADMIN REQUESTS
-===================================================== */
+}
 
 async function loadAdminRequests(){
-
-  const box =
-    $("adminRequestsList");
-
-
-  try{
-
-    const result =
-      await client
-        .from("Request")
-        .select("*")
-        .order(
-          "created_at",
-          {ascending:false}
-        )
-        .limit(100);
-
-
-    if(result.error){
-
-      throw result.error;
-
-    }
-
-
-    const data =
-      result.data || [];
-
-
-    $("adminRequests")
-      .textContent =
-      data.length;
-
-
-    if(!data.length){
-
-      box.innerHTML =
-        "<p>ጥያቄ የለም።</p>";
-
-      return;
-
-    }
-
-
-    box.innerHTML =
-      data.map(function(r){
-
-        return `
-
-          <div class="request">
-
-            <strong>
-              ${escapeHtml(
-                r.category || "-"
-              )}
-            </strong>
-
-            <p>
-              Transaction:
-              ${escapeHtml(
-                r.transaction_type || "-"
-              )}
-            </p>
-
-            <p>
-              Area:
-              ${escapeHtml(
-                r.area || "-"
-              )}
-            </p>
-
-            <p>
-              Budget:
-              ${escapeHtml(
-                r.budget ?? "-"
-              )}
-            </p>
-
-            <p>
-              Status:
-              ${escapeHtml(
-                r.status || "Pending"
-              )}
-            </p>
-
-          </div>
-
-        `;
-
-      }).join("");
-
-
-  }catch(error){
-
-    console.warn(error);
-
-    $("adminRequests")
-      .textContent =
-      "—";
-
-
-    box.innerHTML =
-      "<p>Request table ካልተዘጋጀ ይህ ክፍል አይሰራም።</p>";
-
-  }
-
+const box=$("adminRequestsList");
+try{
+const result=await client.from("Request").select("*").order("created_at",{ascending:false}).limit(100);
+if(result.error){throw result.error}
+const data=result.data||[];$("adminRequests").textContent=data.length;
+if(!data.length){box.innerHTML="<p> </p>";return}
+box.innerHTML=data.map(function(r){return `
+<div class="request">
+<strong>${escapeHtml(r.category||"-")}</strong>
+<p>Transaction: ${escapeHtml(r.transaction_type||"-")}</p>
+<p>Area: ${escapeHtml(r.area||"-")}</p>
+<p>Budget: ${escapeHtml(r.budget??"-")}</p>
+<p>Status: ${escapeHtml(r.status||"Pending")}</p>
+</div>`}).join("");
+}catch(error){
+console.warn(error);$("adminRequests").textContent="—";
+box.innerHTML="<p>Request table </p>";
 }
-
-
-/* =====================================================
-   SECURITY
-===================================================== */
+}
 
 function escapeHtml(value){
-
-  return String(
-    value ?? ""
-  )
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
+r e t u r n
+String(value??"").replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""").replace(/'/g,"
+'");
 }
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
 
 function logout(){
-
-  localStorage.removeItem(
-    "delalaye_session"
-  );
-
-  currentUser = null;
-
-  currentProfile = null;
-
-  $("logoutBtn")
-    .classList
-    .add("hidden");
-
-  showLogin();
-
+localStorage.removeItem("delalaye_session");
+currentUser=null;currentProfile=null;$("logoutBtn").classList.add("hidden");showLogin();
 }
-
-
-/* =====================================================
-   LANGUAGE
-===================================================== */
 
 function toggleLanguage(){
-
-  english =
-    !english;
-
-
-  if(english){
-
-    $("loginTitle")
-      .textContent =
-      "Login";
-
-  }else{
-
-    $("loginTitle")
-      .textContent =
-      "ግባ";
-
-  }
-
+english=!english;
+if(english){$("loginTitle").textContent="Login"}
+else{$("loginTitle").textContent=""}
 }
-
-
-/* =====================================================
-   START
-===================================================== */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  initialize
-);
-
+document.addEventListener("DOMContentLoaded",initialize);
 </script>
-
 </body>
 </html>
+11 / 11
